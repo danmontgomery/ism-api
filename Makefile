@@ -10,7 +10,7 @@ run: build
 	./$(BINARY)
 
 test:
-	go test -v -race $(PKG)
+	gotestsum --format pkgname-and-test-fails -- -race $(PKG)
 
 lint: vet
 	@echo "Lint passed (go vet)"
