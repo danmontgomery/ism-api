@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISM API — Classification Marking Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>ISM API Demo</h1>
+    <div id="api-config">
+      <label for="api-url">API Base URL:</label>
+      <input type="text" id="api-url" value="http://localhost:8080" />
+      <button id="btn-connect">Connect</button>
+      <span id="api-status" class="status-disconnected">Not connected</span>
+    </div>
+  </header>
+
+  <main>
+    <div id="wizard-panel">
+      <h2>Classification Wizard</h2>
+
+      <!-- Step 1: Classification -->
+      <section class="wizard-section" id="section-classification">
+        <h3>1. Classification Level</h3>
+        <select id="field-classification">
+          <option value="">— Select —</option>
+        </select>
+      </section>
+
+      <!-- Step 2: Owner/Producer -->
+      <section class="wizard-section hidden" id="section-ownerProducer">
+        <h3>2. Owner/Producer</h3>
+        <p class="hint" id="hint-ownerProducer"></p>
+        <select id="field-ownerProducer" multiple size="6"></select>
+      </section>
+
+      <!-- Step 3: CUI Categories -->
+      <section class="wizard-section hidden" id="section-categoryMarkings">
+        <h3>CUI Categories</h3>
+        <p class="hint" id="hint-categoryMarkings"></p>
+        <div id="field-categoryMarkings" class="checkbox-group"></div>
+      </section>
+
+      <!-- Step 4: Dissemination Controls -->
+      <section class="wizard-section hidden" id="section-disseminationControls">
+        <h3>Dissemination Controls</h3>
+        <p class="hint" id="hint-disseminationControls"></p>
+        <div id="field-disseminationControls" class="checkbox-group"></div>
+      </section>
+
+      <!-- Step 4a: Releasable To -->
+      <section class="wizard-section hidden" id="section-releasableTo">
+        <h3>Releasable To</h3>
+        <p class="hint" id="hint-releasableTo"></p>
+        <select id="field-releasableTo" multiple size="6"></select>
+      </section>
+
+      <!-- Step 4b: Display Only To -->
+      <section class="wizard-section hidden" id="section-displayOnlyTo">
+        <h3>Display Only To</h3>
+        <p class="hint" id="hint-displayOnlyTo"></p>
+        <select id="field-displayOnlyTo" multiple size="6"></select>
+      </section>
+
+      <!-- Step 5: Distribution Statement -->
+      <section class="wizard-section hidden" id="section-distributionStatement">
+        <h3>Distribution Statement</h3>
+        <p class="hint" id="hint-distributionStatement"></p>
+        <select id="field-distributionStatement">
+          <option value="">— None —</option>
+        </select>
+      </section>
+
+      <!-- Step 6: Authority Block -->
+      <section class="wizard-section hidden" id="section-authority">
+        <h3>Classification Authority</h3>
+        <div class="field-group">
+          <label for="field-classifiedBy">Classified By (OCA):</label>
+          <input type="text" id="field-classifiedBy" placeholder="Original Classification Authority" />
+        </div>
+        <div class="field-group">
+          <label for="field-classificationReason">Classification Reason:</label>
+          <input type="text" id="field-classificationReason" placeholder="EO 13526, sec 1.4(a)" />
+        </div>
+        <div class="field-group">
+          <label for="field-derivativelyClassifiedBy">Derivatively Classified By:</label>
+          <input type="text" id="field-derivativelyClassifiedBy" placeholder="Derivative classifier" />
+        </div>
+        <div class="field-group">
+          <label for="field-derivedFrom">Derived From:</label>
+          <input type="text" id="field-derivedFrom" placeholder="Source material reference" />
+        </div>
+        <div class="field-group">
+          <label for="field-compilationReason">Compilation Reason:</label>
+          <input type="text" id="field-compilationReason" placeholder="Optional: when compilation exceeds components" />
+        </div>
+      </section>
+
+      <!-- Step 7: Declassification -->
+      <section class="wizard-section hidden" id="section-declass">
+        <h3>Declassification</h3>
+        <div class="field-group">
+          <label for="field-declassDate">Declass Date (YYYYMMDD):</label>
+          <input type="text" id="field-declassDate" placeholder="20360101" />
+        </div>
+        <div class="field-group">
+          <label for="field-declassEvent">Declass Event:</label>
+          <input type="text" id="field-declassEvent" placeholder="Event-based trigger" />
+        </div>
+        <div class="field-group">
+          <label for="field-declassException">Declass Exception:</label>
+          <select id="field-declassException">
+            <option value="">— None —</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Step 8: FGI Sources -->
+      <section class="wizard-section hidden" id="section-fgi">
+        <h3>Foreign Government Information</h3>
+        <div class="field-group">
+          <label>FGI Source Open:</label>
+          <select id="field-fgiSourceOpen" multiple size="5"></select>
+        </div>
+        <div class="field-group">
+          <label>FGI Source Protected:</label>
+          <select id="field-fgiSourceProtected" multiple size="5"></select>
+        </div>
+      </section>
+
+      <!-- Step 9: Non-IC Markings -->
+      <section class="wizard-section hidden" id="section-nonICMarkings">
+        <h3>Non-IC Markings</h3>
+        <div id="field-nonICMarkings" class="checkbox-group"></div>
+      </section>
+
+      <div id="wizard-actions">
+        <button id="btn-validate">Validate</button>
+        <button id="btn-reset">Reset</button>
+      </div>
+    </div>
+
+    <div id="preview-panel">
+      <h2>Live Preview</h2>
+
+      <div id="banner-display">
+        <div id="banner-line" class="banner">UNCLASSIFIED</div>
+        <div class="banner-labels">
+          <span class="label">Banner Line</span>
+        </div>
+        <div id="portion-mark" class="portion">(U)</div>
+        <div class="banner-labels">
+          <span class="label">Portion Mark</span>
+        </div>
+      </div>
+
+      <div id="validation-results" class="hidden">
+        <h3>Validation Results</h3>
+        <div id="validation-status"></div>
+        <ul id="validation-errors"></ul>
+      </div>
+
+      <details id="json-details">
+        <summary>ISM Object (JSON)</summary>
+        <pre id="ism-json">{}</pre>
+      </details>
+
+      <details id="guidance-details">
+        <summary>Guidance Response</summary>
+        <pre id="guidance-json">{}</pre>
+      </details>
+    </div>
+  </main>
+
+  <footer>
+    <p>ISM API Sample Client — Vanilla JS/HTML, zero dependencies</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
