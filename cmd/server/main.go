@@ -4,6 +4,11 @@ import (
 	"log"
 	"os"
 
+	"github.com/danielmontgomery/ism-api/internal/guidance"
+	"github.com/danielmontgomery/ism-api/internal/guidance/resolvers"
+	"github.com/danielmontgomery/ism-api/internal/handler"
+	"github.com/danielmontgomery/ism-api/internal/refdata"
+	"github.com/danielmontgomery/ism-api/internal/validation"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,11 +18,20 @@ func main() {
 		port = "8080"
 	}
 
-	r := gin.Default()
+	reg := refdata.NewRegistry()
+	validator := validation.NewEngine(reg)
+	guider := guidance.NewEngine(reg,
+		&resolvers.ClassificationResolver{},
+		&resolvers.CUIResolver{},
+		&resolvers.DisseminationResolver{},
+		&resolvers.DistributionResolver{},
+		&resolvers.AuthorityResolver{},
+		&resolvers.DeclassResolver{},
+	)
 
-	r.GET("/healthz", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": "ok"})
-	})
+	r := gin.New()
+	h := handler.New(reg, validator, guider)
+	h.Register(r)
 
 	log.Printf("Starting ISM API server on :%s", port)
 	if err := r.Run(":" + port); err != nil {
