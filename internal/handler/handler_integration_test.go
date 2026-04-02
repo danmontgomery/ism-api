@@ -922,3 +922,70 @@ func TestCORS_NoOriginStillSetsHeader(t *testing.T) {
 		t.Errorf("Access-Control-Allow-Origin = %q, want *", got)
 	}
 }
+
+func TestCORS_BrowserClientFlow(t *testing.T) {
+	// Simulates the example client's full browser flow:
+	// 1. Preflight + GET each reference-data endpoint
+	// 2. Preflight + POST to /api/v1/banner
+	// All responses must include CORS headers.
+	r := testRouter()
+	origin := "http://localhost:3000"
+
+	refEndpoints := []string{
+		"/api/v1/ref/classifications",
+		"/api/v1/ref/cui-categories",
+		"/api/v1/ref/dissemination-controls",
+		"/api/v1/ref/distribution-statements",
+		"/api/v1/ref/country-codes",
+		"/api/v1/ref/declass-exceptions",
+		"/api/v1/ref/non-ic-markings",
+	}
+
+	for _, ep := range refEndpoints {
+		req := httptest.NewRequest(http.MethodGet, ep, nil)
+		req.Header.Set("Origin", origin)
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+
+		if w.Code != 200 {
+			t.Errorf("%s: status = %d, want 200", ep, w.Code)
+		}
+		if got := w.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+			t.Errorf("%s: Access-Control-Allow-Origin = %q, want *", ep, got)
+		}
+	}
+
+	// Preflight for POST /api/v1/banner (browser sends OPTIONS first)
+	preflight := httptest.NewRequest(http.MethodOptions, "/api/v1/banner", nil)
+	preflight.Header.Set("Origin", origin)
+	preflight.Header.Set("Access-Control-Request-Method", "POST")
+	preflight.Header.Set("Access-Control-Request-Headers", "Content-Type")
+	pw := httptest.NewRecorder()
+	r.ServeHTTP(pw, preflight)
+
+	if pw.Code != 204 {
+		t.Fatalf("preflight /api/v1/banner: status = %d, want 204", pw.Code)
+	}
+	if got := pw.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+		t.Errorf("preflight /api/v1/banner: Access-Control-Allow-Origin = %q, want *", got)
+	}
+
+	// Actual POST to /api/v1/banner (the request the browser sends after preflight)
+	body := map[string]any{
+		"classification": "U",
+		"ownerProducer":  []string{"USA"},
+	}
+	b, _ := json.Marshal(body)
+	postReq := httptest.NewRequest(http.MethodPost, "/api/v1/banner", bytes.NewReader(b))
+	postReq.Header.Set("Content-Type", "application/json")
+	postReq.Header.Set("Origin", origin)
+	postW := httptest.NewRecorder()
+	r.ServeHTTP(postW, postReq)
+
+	if postW.Code != 200 {
+		t.Fatalf("POST /api/v1/banner: status = %d, want 200", postW.Code)
+	}
+	if got := postW.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+		t.Errorf("POST /api/v1/banner: Access-Control-Allow-Origin = %q, want *", got)
+	}
+}
