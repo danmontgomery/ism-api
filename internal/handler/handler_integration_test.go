@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/danielmontgomery/ism-api/api"
 	"github.com/danielmontgomery/ism-api/internal/guidance"
 	"github.com/danielmontgomery/ism-api/internal/guidance/resolvers"
 	"github.com/danielmontgomery/ism-api/internal/handler"
@@ -31,7 +32,7 @@ func testRouter() *gin.Engine {
 		&resolvers.DeclassResolver{},
 	)
 	r := gin.New()
-	h := handler.New(reg, validator, guider)
+	h := handler.New(reg, validator, guider, api.Content)
 	h.Register(r)
 	return r
 }

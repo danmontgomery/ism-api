@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"io/fs"
+
 	"github.com/danielmontgomery/ism-api/internal/guidance"
 	"github.com/danielmontgomery/ism-api/internal/refdata"
 	"github.com/danielmontgomery/ism-api/internal/validation"
@@ -12,14 +14,16 @@ type Handler struct {
 	reg       *refdata.Registry
 	validator *validation.Engine
 	guider    *guidance.Engine
+	docsFS    fs.FS
 }
 
 // New creates a Handler with the given dependencies.
-func New(reg *refdata.Registry, validator *validation.Engine, guider *guidance.Engine) *Handler {
+func New(reg *refdata.Registry, validator *validation.Engine, guider *guidance.Engine, docsFS fs.FS) *Handler {
 	return &Handler{
 		reg:       reg,
 		validator: validator,
 		guider:    guider,
+		docsFS:    docsFS,
 	}
 }
 
@@ -28,6 +32,8 @@ func (h *Handler) Register(r *gin.Engine) {
 	r.Use(CORS(), RequestID(), Logger(), Recovery())
 
 	r.GET("/healthz", h.Health)
+	r.GET("/openapi.yaml", h.OpenAPISpec)
+	r.GET("/docs", h.ScalarDocs)
 
 	v1 := r.Group("/api/v1")
 	{

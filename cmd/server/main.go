@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/danielmontgomery/ism-api/api"
 	"github.com/danielmontgomery/ism-api/internal/guidance"
 	"github.com/danielmontgomery/ism-api/internal/guidance/resolvers"
 	"github.com/danielmontgomery/ism-api/internal/handler"
@@ -30,7 +31,7 @@ func main() {
 	)
 
 	r := gin.New()
-	h := handler.New(reg, validator, guider)
+	h := handler.New(reg, validator, guider, api.Content)
 	h.Register(r)
 
 	log.Printf("Starting ISM API server on :%s", port)
