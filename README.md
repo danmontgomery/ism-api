@@ -22,6 +22,8 @@ PORT=9090 go run ./cmd/server
 
 | Method | Path | Description |
 |--------|------|-------------|
+| GET | `/docs` | Scalar API reference UI |
+| GET | `/openapi.yaml` | OpenAPI 3.0 specification |
 | GET | `/healthz` | Health check |
 | GET | `/api/v1/ref/classifications` | Classification levels |
 | GET | `/api/v1/ref/cui-categories` | CUI category codes |
@@ -36,6 +38,21 @@ PORT=9090 go run ./cmd/server
 | POST | `/api/v1/banner` | Render banner line and portion mark |
 
 All responses use the envelope format: `{ "data": ..., "errors": [...] }`.
+
+## Documentation
+
+The API ships with an interactive [Scalar](https://scalar.com) API reference UI and a machine-readable OpenAPI 3.0 spec.
+
+```bash
+# Build and launch the server with docs
+make docs
+# Then open http://localhost:8080/docs
+```
+
+| URL | Description |
+|-----|-------------|
+| `http://localhost:8080/docs` | Interactive API reference (Scalar UI) |
+| `http://localhost:8080/openapi.yaml` | OpenAPI 3.0 specification (YAML) |
 
 ## Sample Client
 

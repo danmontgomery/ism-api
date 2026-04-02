@@ -1,4 +1,4 @@
-.PHONY: build test lint run clean fmt vet
+.PHONY: build test lint run clean fmt vet docs
 
 BINARY := ism-api
 PKG := ./...
@@ -20,6 +20,10 @@ vet:
 
 fmt:
 	gofmt -w .
+
+docs: build
+	@echo "Starting server... API docs at http://localhost:8080/docs"
+	./$(BINARY)
 
 clean:
 	rm -f $(BINARY)
