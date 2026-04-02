@@ -164,6 +164,34 @@ input[type="text"]:focus, select:focus {
   color: #e53935;
 }
 
+/* Authority block field groups */
+
+.authority-group {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background: #fafafa;
+}
+
+.authority-group h4 {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+  font-style: italic;
+  margin-top: 0.125rem;
+}
+
 .checkbox-group {
   display: flex;
   flex-wrap: wrap;

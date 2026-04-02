@@ -76,25 +76,37 @@
       <!-- Step 6: Authority Block -->
       <section class="wizard-section hidden" id="section-authority">
         <h3>Classification Authority</h3>
-        <div class="field-group">
-          <label for="field-classifiedBy">Classified By (OCA):</label>
-          <input type="text" id="field-classifiedBy" placeholder="Original Classification Authority" />
+        <p class="hint" id="hint-authority">Provide either original or derivative classification authority (or both).</p>
+        <div class="authority-group" id="group-oca">
+          <h4>Original Classification</h4>
+          <div class="field-group" id="fg-classifiedBy">
+            <label for="field-classifiedBy">Classified By:</label>
+            <input type="text" id="field-classifiedBy" placeholder="Original Classification Authority" />
+            <span class="field-hint" id="fhint-classifiedBy"></span>
+          </div>
+          <div class="field-group" id="fg-classificationReason">
+            <label for="field-classificationReason">Reason:</label>
+            <input type="text" id="field-classificationReason" placeholder="EO 13526, sec 1.4(a)" />
+            <span class="field-hint" id="fhint-classificationReason"></span>
+          </div>
         </div>
-        <div class="field-group">
-          <label for="field-classificationReason">Classification Reason:</label>
-          <input type="text" id="field-classificationReason" placeholder="EO 13526, sec 1.4(a)" />
+        <div class="authority-group" id="group-derivative">
+          <h4>Derivative Classification</h4>
+          <div class="field-group" id="fg-derivativelyClassifiedBy">
+            <label for="field-derivativelyClassifiedBy">Derivatively Classified By:</label>
+            <input type="text" id="field-derivativelyClassifiedBy" placeholder="Derivative classifier" />
+            <span class="field-hint" id="fhint-derivativelyClassifiedBy"></span>
+          </div>
+          <div class="field-group" id="fg-derivedFrom">
+            <label for="field-derivedFrom">Derived From:</label>
+            <input type="text" id="field-derivedFrom" placeholder="Source material reference" />
+            <span class="field-hint" id="fhint-derivedFrom"></span>
+          </div>
         </div>
-        <div class="field-group">
-          <label for="field-derivativelyClassifiedBy">Derivatively Classified By:</label>
-          <input type="text" id="field-derivativelyClassifiedBy" placeholder="Derivative classifier" />
-        </div>
-        <div class="field-group">
-          <label for="field-derivedFrom">Derived From:</label>
-          <input type="text" id="field-derivedFrom" placeholder="Source material reference" />
-        </div>
-        <div class="field-group">
+        <div class="field-group" id="fg-compilationReason">
           <label for="field-compilationReason">Compilation Reason:</label>
           <input type="text" id="field-compilationReason" placeholder="Optional: when compilation exceeds components" />
+          <span class="field-hint" id="fhint-compilationReason"></span>
         </div>
       </section>
 

@@ -152,7 +152,7 @@
       refData.countryCodes.forEach(function (c) {
         var opt = document.createElement("option");
         opt.value = c.code;
-        opt.textContent = c.code + " — " + c.label;
+        opt.textContent = c.code + " — " + c.name;
         sel.appendChild(opt);
       });
     });
@@ -386,20 +386,17 @@
     var authGuide = byField["classifiedBy"];
     if (authGuide && authGuide.status !== "not_applicable") {
       show("section-authority");
-      applyFieldRequirement("field-classifiedBy", byField["classifiedBy"]);
-      applyFieldRequirement(
-        "field-classificationReason",
-        byField["classificationReason"]
-      );
-      applyFieldRequirement(
-        "field-derivativelyClassifiedBy",
-        byField["derivativelyClassifiedBy"]
-      );
-      applyFieldRequirement("field-derivedFrom", byField["derivedFrom"]);
-      applyFieldRequirement(
-        "field-compilationReason",
-        byField["compilationReason"]
-      );
+      var authFields = [
+        "classifiedBy",
+        "classificationReason",
+        "derivativelyClassifiedBy",
+        "derivedFrom",
+        "compilationReason",
+      ];
+      authFields.forEach(function (name) {
+        applyFieldRequirement("field-" + name, byField[name]);
+        applyFieldHint("fhint-" + name, byField[name]);
+      });
     }
 
     // Declassification — show for C/S
@@ -443,6 +440,22 @@
       group.classList.add("required");
     } else {
       group.classList.remove("required");
+    }
+  }
+
+  function applyFieldHint(hintId, guide) {
+    var el = $(hintId);
+    if (!el) return;
+    if (!guide) {
+      el.textContent = "";
+      return;
+    }
+    if (guide.required || guide.status === "required") {
+      el.textContent = "Required";
+    } else if (guide.requiredIf) {
+      el.textContent = "Required if " + guide.requiredIf;
+    } else {
+      el.textContent = "";
     }
   }
 
