@@ -7,10 +7,11 @@ import (
 	"github.com/danielmontgomery/ism-api/internal/model"
 )
 
-// Result holds the rendered banner line and portion mark for an ISM object.
+// Result holds the rendered banner line, portion mark, and authority block for an ISM object.
 type Result struct {
-	BannerLine  string `json:"bannerLine"`
-	PortionMark string `json:"portionMark"`
+	BannerLine     string `json:"bannerLine"`
+	PortionMark    string `json:"portionMark"`
+	AuthorityBlock string `json:"authorityBlock"`
 }
 
 // Full classification labels for banner lines.
@@ -110,9 +111,60 @@ func Render(ism *model.ISM) Result {
 	}
 
 	return Result{
-		BannerLine:  banner,
-		PortionMark: "(" + portion + ")",
+		BannerLine:     banner,
+		PortionMark:    "(" + portion + ")",
+		AuthorityBlock: renderAuthorityBlock(ism),
 	}
+}
+
+// renderAuthorityBlock produces the authority block text for classified markings.
+// Returns empty string for U and CUI, or if no authority fields are populated.
+func renderAuthorityBlock(ism *model.ISM) string {
+	if ism.Classification != model.ClassificationC && ism.Classification != model.ClassificationS {
+		return ""
+	}
+
+	var lines []string
+
+	// Original classification authority.
+	if ism.ClassifiedBy != "" {
+		lines = append(lines, "Classified By: "+ism.ClassifiedBy)
+		if ism.ClassificationReason != "" {
+			lines = append(lines, "Reason: "+ism.ClassificationReason)
+		}
+	}
+
+	// Derivative classification authority.
+	if ism.DerivedFrom != "" {
+		lines = append(lines, "Derived From: "+ism.DerivedFrom)
+	}
+
+	// Compilation reason.
+	if ism.CompilationReason != "" {
+		lines = append(lines, "Compilation: "+ism.CompilationReason)
+	}
+
+	// If no authority lines were generated, return empty.
+	if len(lines) == 0 {
+		return ""
+	}
+
+	// Declassification line.
+	switch {
+	case ism.DeclassDate != "":
+		lines = append(lines, "Declassify On: "+ism.DeclassDate)
+	case ism.DeclassEvent != "":
+		lines = append(lines, "Declassify On: "+ism.DeclassEvent)
+	case ism.DeclassException != "":
+		lines = append(lines, "Declassify On: "+ism.DeclassException)
+	default:
+		// Only show "not specified" for derivative (which requires declass info).
+		if ism.DerivedFrom != "" {
+			lines = append(lines, "Declassify On: (not specified)")
+		}
+	}
+
+	return strings.Join(lines, "\n")
 }
 
 // sortControls returns dissemination controls sorted by their canonical banner

@@ -297,3 +297,137 @@ func TestRender(t *testing.T) {
 		})
 	}
 }
+
+func TestRenderAuthorityBlock(t *testing.T) {
+	tests := []struct {
+		name string
+		ism  model.ISM
+		want string
+	}{
+		{
+			name: "empty for unclassified",
+			ism:  model.ISM{Classification: model.ClassificationU},
+			want: "",
+		},
+		{
+			name: "empty for CUI",
+			ism:  model.ISM{Classification: model.ClassificationCUI},
+			want: "",
+		},
+		{
+			name: "empty for classified with no authority fields",
+			ism: model.ISM{
+				Classification: model.ClassificationS,
+				OwnerProducer:  []string{"USA"},
+			},
+			want: "",
+		},
+		{
+			name: "original classification only",
+			ism: model.ISM{
+				Classification: model.ClassificationS,
+				OwnerProducer:  []string{"USA"},
+				ClassifiedBy:   "John Smith",
+			},
+			want: "Classified By: John Smith",
+		},
+		{
+			name: "original classification with reason",
+			ism: model.ISM{
+				Classification:       model.ClassificationS,
+				OwnerProducer:        []string{"USA"},
+				ClassifiedBy:         "John Smith",
+				ClassificationReason: "1.4(a)",
+			},
+			want: "Classified By: John Smith\nReason: 1.4(a)",
+		},
+		{
+			name: "derivative classification only",
+			ism: model.ISM{
+				Classification:           model.ClassificationS,
+				OwnerProducer:            []string{"USA"},
+				DerivativelyClassifiedBy: "Jane Doe",
+				DerivedFrom:              "Source Document A",
+			},
+			want: "Derived From: Source Document A\nDeclassify On: (not specified)",
+		},
+		{
+			name: "derivative classification with declass date",
+			ism: model.ISM{
+				Classification:           model.ClassificationS,
+				OwnerProducer:            []string{"USA"},
+				DerivativelyClassifiedBy: "Jane Doe",
+				DerivedFrom:              "Source Document A",
+				DeclassDate:              "20360101",
+			},
+			want: "Derived From: Source Document A\nDeclassify On: 20360101",
+		},
+		{
+			name: "original and derivative combined",
+			ism: model.ISM{
+				Classification:           model.ClassificationS,
+				OwnerProducer:            []string{"USA"},
+				ClassifiedBy:             "John Smith",
+				ClassificationReason:     "1.4(a)",
+				DerivativelyClassifiedBy: "Jane Doe",
+				DerivedFrom:              "Source Document A",
+				DeclassDate:              "20360101",
+			},
+			want: "Classified By: John Smith\nReason: 1.4(a)\nDerived From: Source Document A\nDeclassify On: 20360101",
+		},
+		{
+			name: "declass event instead of date",
+			ism: model.ISM{
+				Classification:           model.ClassificationS,
+				OwnerProducer:            []string{"USA"},
+				DerivativelyClassifiedBy: "Jane Doe",
+				DerivedFrom:              "Multiple Sources",
+				DeclassEvent:             "Upon completion of project X",
+			},
+			want: "Derived From: Multiple Sources\nDeclassify On: Upon completion of project X",
+		},
+		{
+			name: "declass exception",
+			ism: model.ISM{
+				Classification:           model.ClassificationS,
+				OwnerProducer:            []string{"USA"},
+				DerivativelyClassifiedBy: "Jane Doe",
+				DerivedFrom:              "Multiple Sources",
+				DeclassException:         "25X1",
+			},
+			want: "Derived From: Multiple Sources\nDeclassify On: 25X1",
+		},
+		{
+			name: "original with declass date",
+			ism: model.ISM{
+				Classification:       model.ClassificationC,
+				OwnerProducer:        []string{"USA"},
+				ClassifiedBy:         "Director NSA",
+				ClassificationReason: "1.4(c)",
+				DeclassDate:          "20360601",
+			},
+			want: "Classified By: Director NSA\nReason: 1.4(c)\nDeclassify On: 20360601",
+		},
+		{
+			name: "compilation reason included",
+			ism: model.ISM{
+				Classification:           model.ClassificationS,
+				OwnerProducer:            []string{"USA"},
+				DerivativelyClassifiedBy: "Jane Doe",
+				DerivedFrom:              "Multiple Sources",
+				CompilationReason:        "Compilation reveals additional intelligence value",
+				DeclassDate:              "20360101",
+			},
+			want: "Derived From: Multiple Sources\nCompilation: Compilation reveals additional intelligence value\nDeclassify On: 20360101",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := Render(&tt.ism)
+			if got.AuthorityBlock != tt.want {
+				t.Errorf("AuthorityBlock:\n  got:  %q\n  want: %q", got.AuthorityBlock, tt.want)
+			}
+		})
+	}
+}

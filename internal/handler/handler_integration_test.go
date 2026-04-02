@@ -553,6 +553,64 @@ func TestBanner_Secret(t *testing.T) {
 	}
 }
 
+func TestBanner_AuthorityBlock(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{
+		"ism": map[string]any{
+			"classification":       "S",
+			"ownerProducer":        []string{"USA"},
+			"classifiedBy":         "John Smith",
+			"classificationReason": "1.4(a)",
+			"declassDate":          "20360101",
+		},
+	}
+	w := postJSON(r, "/api/v1/banner", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	var result struct {
+		BannerLine     string `json:"bannerLine"`
+		PortionMark    string `json:"portionMark"`
+		AuthorityBlock string `json:"authorityBlock"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	if result.BannerLine != "SECRET" {
+		t.Errorf("bannerLine = %q, want SECRET", result.BannerLine)
+	}
+	wantAuth := "Classified By: John Smith\nReason: 1.4(a)\nDeclassify On: 20360101"
+	if result.AuthorityBlock != wantAuth {
+		t.Errorf("authorityBlock = %q, want %q", result.AuthorityBlock, wantAuth)
+	}
+}
+
+func TestBanner_AuthorityBlockEmpty(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{
+		"ism": map[string]any{
+			"classification": "U",
+		},
+	}
+	w := postJSON(r, "/api/v1/banner", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	var result struct {
+		AuthorityBlock string `json:"authorityBlock"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	if result.AuthorityBlock != "" {
+		t.Errorf("authorityBlock = %q, want empty for U", result.AuthorityBlock)
+	}
+}
+
 // ============================================================
 // Middleware: X-Request-ID pass-through
 // ============================================================

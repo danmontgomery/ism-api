@@ -525,12 +525,22 @@
         var cls = currentISM.classification || "U";
         $("banner-line").className = "banner cls-" + cls;
         $("portion-mark").className = "portion cls-" + cls;
+
+        // Authority block preview.
+        if (data.authorityBlock) {
+          $("authority-block").textContent = data.authorityBlock;
+          $("authority-block").className = "authority-text cls-" + cls;
+          show("authority-block-display");
+        } else {
+          hide("authority-block-display");
+        }
       })
       .catch(function (err) {
         $("banner-line").textContent = "Error: " + err.message;
         $("banner-line").className = "banner";
         $("portion-mark").textContent = "—";
         $("portion-mark").className = "portion";
+        hide("authority-block-display");
       });
   }
 

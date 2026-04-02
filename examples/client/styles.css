@@ -304,6 +304,29 @@ input[type="text"]:focus, select:focus {
   letter-spacing: 0.05em;
 }
 
+/* Authority block preview */
+
+#authority-block-display {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+#authority-block-display.hidden {
+  display: none;
+}
+
+.authority-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: "Courier New", monospace;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  margin: 0;
+  white-space: pre-line;
+}
+
 /* Classification colors */
 .cls-U    { color: #2e7d32; background: #e8f5e9; }
 .cls-CUI  { color: #6a1b9a; background: #f3e5f5; }
