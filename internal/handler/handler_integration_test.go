@@ -849,3 +849,76 @@ func TestWrongMethod_Returns404Or405(t *testing.T) {
 		t.Errorf("status = %d, want 404 or 405", w.Code)
 	}
 }
+
+// ============================================================
+// CORS middleware
+// ============================================================
+
+func TestCORS_SimpleRequest(t *testing.T) {
+	r := testRouter()
+	req := httptest.NewRequest(http.MethodGet, "/healthz", nil)
+	req.Header.Set("Origin", "http://localhost:3000")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+	if got := w.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+		t.Errorf("Access-Control-Allow-Origin = %q, want *", got)
+	}
+}
+
+func TestCORS_PreflightRequest(t *testing.T) {
+	r := testRouter()
+	req := httptest.NewRequest(http.MethodOptions, "/api/v1/validate", nil)
+	req.Header.Set("Origin", "http://localhost:3000")
+	req.Header.Set("Access-Control-Request-Method", "POST")
+	req.Header.Set("Access-Control-Request-Headers", "Content-Type")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	if w.Code != 204 {
+		t.Fatalf("preflight status = %d, want 204", w.Code)
+	}
+	if got := w.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+		t.Errorf("Access-Control-Allow-Origin = %q, want *", got)
+	}
+	if got := w.Header().Get("Access-Control-Allow-Methods"); got == "" {
+		t.Error("missing Access-Control-Allow-Methods header")
+	}
+	if got := w.Header().Get("Access-Control-Allow-Headers"); got == "" {
+		t.Error("missing Access-Control-Allow-Headers header")
+	}
+}
+
+func TestCORS_PostEndpointIncludesHeaders(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{
+		"ism": map[string]any{"classification": "U"},
+	}
+	b, _ := json.Marshal(body)
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/validate", bytes.NewReader(b))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Origin", "http://localhost:3000")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+	if got := w.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+		t.Errorf("Access-Control-Allow-Origin = %q, want *", got)
+	}
+}
+
+func TestCORS_NoOriginStillSetsHeader(t *testing.T) {
+	r := testRouter()
+	w := getJSON(r, "/healthz")
+
+	// CORS headers should still be present even without Origin header,
+	// so server-to-server calls aren't affected.
+	if got := w.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+		t.Errorf("Access-Control-Allow-Origin = %q, want *", got)
+	}
+}

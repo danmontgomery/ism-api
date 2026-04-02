@@ -25,7 +25,7 @@ func New(reg *refdata.Registry, validator *validation.Engine, guider *guidance.E
 
 // Register mounts all routes on the given Gin engine.
 func (h *Handler) Register(r *gin.Engine) {
-	r.Use(RequestID(), Logger(), Recovery())
+	r.Use(CORS(), RequestID(), Logger(), Recovery())
 
 	r.GET("/healthz", h.Health)
 

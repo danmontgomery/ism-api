@@ -44,6 +44,24 @@ func Logger() gin.HandlerFunc {
 	}
 }
 
+// CORS sets permissive cross-origin headers so browser-based clients on
+// different ports (e.g. localhost:3000) can reach the API. Preflight OPTIONS
+// requests are handled with a 204 and short-circuited.
+func CORS() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, X-Request-ID")
+		c.Header("Access-Control-Max-Age", "86400")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	}
+}
+
 // Recovery catches panics and returns a 500 response.
 func Recovery() gin.HandlerFunc {
 	return func(c *gin.Context) {

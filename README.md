@@ -53,7 +53,7 @@ A vanilla JavaScript/HTML demo application is included in [`examples/client/`](e
 
    Open `examples/client/index.html` in a browser. The client defaults to `http://localhost:8080` as the API base URL.
 
-   > **CORS note:** If serving the HTML from a different origin (e.g., a static file server on another port), the API server must allow cross-origin requests. For local development, you can use a simple proxy or serve both from the same origin. When opening via `file://` protocol, some browsers block fetch requests — use a local HTTP server instead:
+   > **CORS note:** The API server includes permissive CORS headers (`Access-Control-Allow-Origin: *`) so browser-based clients on any origin can call it. When opening via `file://` protocol, some browsers block fetch requests — use a local HTTP server instead:
    >
    > ```bash
    > # Python 3
