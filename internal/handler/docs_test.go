@@ -61,8 +61,8 @@ func TestOpenAPISpec_ContainsVersion(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	body := w.Body.String()
-	if !strings.Contains(body, "3.1.0") {
-		t.Error("response body does not contain OpenAPI version '3.1.0'")
+	if !strings.Contains(body, "3.0.3") {
+		t.Error("response body does not contain OpenAPI version '3.0.3'")
 	}
 }
 
