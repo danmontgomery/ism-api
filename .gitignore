@@ -1,3 +1,11 @@
+# Compiled binary
+ism-api
+
+# Polecat runtime state
+.runtime/
+
+# Claude Code agent files
+.claude/
 
 # Beads / Dolt files (added by bd init)
 .dolt/
