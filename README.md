@@ -54,6 +54,38 @@ make docs
 | `http://localhost:8080/docs` | Interactive API reference (Scalar UI) |
 | `http://localhost:8080/openapi.yaml` | OpenAPI 3.0 specification (YAML) |
 
+## Docker
+
+### Build
+
+```bash
+docker build -t ism-api .
+```
+
+### Run
+
+```bash
+# Run on default port 8080
+docker run -p 8080:8080 ism-api
+
+# Run on a custom port
+docker run -e PORT=9090 -p 9090:9090 ism-api
+```
+
+The container runs as a non-root user and includes a health check on `/healthz`.
+
+### Docker Compose
+
+```yaml
+services:
+  ism-api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+```
+
 ## Sample Client
 
 A vanilla JavaScript/HTML demo application is included in [`examples/client/`](examples/client/) that demonstrates all API capabilities with zero dependencies.
