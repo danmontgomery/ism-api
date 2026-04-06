@@ -784,6 +784,29 @@ func TestSmoke_Secret_DerivedClassification(t *testing.T) {
 	}, "SECRET", "(S)")
 }
 
+func TestSmoke_Secret_Joint(t *testing.T) {
+	smokeISM(t, "S-joint-USA-GBR", model.ISM{
+		Classification:       model.ClassificationS,
+		OwnerProducer:        []string{"USA", "GBR"},
+		Joint:                true,
+		ClassifiedBy:         "OCA Name",
+		ClassificationReason: "Reason 1.4(a)",
+		DeclassDate:          "20360101",
+	}, "JOINT SECRET USA GBR", "(JS USA GBR)")
+}
+
+func TestSmoke_Secret_Joint_WithNOFORN(t *testing.T) {
+	smokeISM(t, "S-joint-NOFORN", model.ISM{
+		Classification:        model.ClassificationS,
+		OwnerProducer:         []string{"USA", "GBR"},
+		Joint:                 true,
+		DisseminationControls: []string{"NOFORN"},
+		ClassifiedBy:          "OCA Name",
+		ClassificationReason:  "Reason 1.4(a)",
+		DeclassDate:           "20360101",
+	}, "JOINT SECRET USA GBR//NOFORN", "(JS USA GBR//NF)")
+}
+
 // ============================================================
 // Error scenarios: 400 vs 200
 // ============================================================

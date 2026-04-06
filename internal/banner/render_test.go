@@ -201,6 +201,63 @@ func TestRender(t *testing.T) {
 			wantPortion: "(S//DISPLAY ONLY USA, GBR)",
 		},
 
+		// --- Joint / Multiple ownerProducer ---
+		{
+			name: "S joint with two owners",
+			ism: model.ISM{
+				Classification: model.ClassificationS,
+				OwnerProducer:  []string{"USA", "GBR"},
+				Joint:          true,
+			},
+			wantBanner:  "JOINT SECRET USA GBR",
+			wantPortion: "(JS USA GBR)",
+		},
+		{
+			name: "C joint with two owners",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"USA", "GBR"},
+				Joint:          true,
+			},
+			wantBanner:  "JOINT CONFIDENTIAL USA GBR",
+			wantPortion: "(JC USA GBR)",
+		},
+		{
+			name: "S joint with three owners",
+			ism: model.ISM{
+				Classification: model.ClassificationS,
+				OwnerProducer:  []string{"USA", "GBR", "CAN"},
+				Joint:          true,
+			},
+			wantBanner:  "JOINT SECRET USA GBR CAN",
+			wantPortion: "(JS USA GBR CAN)",
+		},
+		{
+			name: "S joint with NOFORN",
+			ism: model.ISM{
+				Classification:        model.ClassificationS,
+				OwnerProducer:         []string{"USA", "GBR"},
+				Joint:                 true,
+				DisseminationControls: []string{"NOFORN"},
+			},
+			wantBanner:  "JOINT SECRET USA GBR//NOFORN",
+			wantPortion: "(JS USA GBR//NF)",
+		},
+		{
+			name: "S joint with dissem + FGI + non-IC",
+			ism: model.ISM{
+				Classification:        model.ClassificationS,
+				OwnerProducer:         []string{"USA", "GBR"},
+				Joint:                 true,
+				DisseminationControls: []string{"REL", "OC"},
+				ReleasableTo:          []string{"USA", "GBR"},
+				FGISourceOpen:         []string{"FRA"},
+				NonICMarkings:         []string{"LIMDIS"},
+			},
+			wantBanner:  "JOINT SECRET USA GBR//OC/REL TO USA, GBR/FGI FRA/LIMDIS",
+			wantPortion: "(JS USA GBR//OC/REL TO USA, GBR/FGI/LIMDIS)",
+		},
+
 		// --- Ordering ---
 		{
 			name: "controls sorted into canonical order",

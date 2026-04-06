@@ -67,6 +67,13 @@ func Render(ism *model.ISM) Result {
 	bannerClass := classificationBanner[ism.Classification]
 	portionClass := classificationPortion[ism.Classification]
 
+	// Joint documents: prepend "JOINT" and append ownerProducer countries.
+	if ism.Joint && len(ism.OwnerProducer) > 1 {
+		countries := strings.Join(ism.OwnerProducer, " ")
+		bannerClass = "JOINT " + bannerClass + " " + countries
+		portionClass = "J" + portionClass + " " + countries
+	}
+
 	var bannerParts []string
 	var portionParts []string
 
