@@ -1,4 +1,4 @@
-module github.com/danielmontgomery/ism-api
+module expr.ai/ism-api
 
 go 1.23
 

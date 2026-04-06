@@ -1,6 +1,6 @@
 package refdata
 
-import "github.com/danielmontgomery/ism-api/internal/model"
+import "expr.ai/ism-api/internal/model"
 
 // Classifications returns all supported classification levels in display order.
 func Classifications() []ClassificationEntry {

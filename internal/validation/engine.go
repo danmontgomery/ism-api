@@ -1,8 +1,8 @@
 package validation
 
 import (
-	"github.com/danielmontgomery/ism-api/internal/model"
-	"github.com/danielmontgomery/ism-api/internal/refdata"
+	"expr.ai/ism-api/internal/model"
+	"expr.ai/ism-api/internal/refdata"
 )
 
 // Rule is the interface that all validation rules implement.

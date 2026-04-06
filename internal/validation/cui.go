@@ -3,8 +3,8 @@ package validation
 import (
 	"sort"
 
-	"github.com/danielmontgomery/ism-api/internal/model"
-	"github.com/danielmontgomery/ism-api/internal/refdata"
+	"expr.ai/ism-api/internal/model"
+	"expr.ai/ism-api/internal/refdata"
 )
 
 // CUIRule validates CUI-specific fields: category validity, alphabetization,

@@ -1,6 +1,6 @@
 package refdata
 
-import "github.com/danielmontgomery/ism-api/internal/model"
+import "expr.ai/ism-api/internal/model"
 
 // ClassificationEntry is a reference data entry for a classification level.
 type ClassificationEntry struct {

@@ -6,12 +6,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/danielmontgomery/ism-api/api"
-	"github.com/danielmontgomery/ism-api/internal/guidance"
-	"github.com/danielmontgomery/ism-api/internal/guidance/resolvers"
-	"github.com/danielmontgomery/ism-api/internal/handler"
-	"github.com/danielmontgomery/ism-api/internal/refdata"
-	"github.com/danielmontgomery/ism-api/internal/validation"
+	"expr.ai/ism-api/api"
+	"expr.ai/ism-api/internal/guidance"
+	"expr.ai/ism-api/internal/guidance/resolvers"
+	"expr.ai/ism-api/internal/handler"
+	"expr.ai/ism-api/internal/refdata"
+	"expr.ai/ism-api/internal/validation"
 	"github.com/gin-gonic/gin"
 )
 

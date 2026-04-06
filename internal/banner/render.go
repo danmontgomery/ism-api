@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/danielmontgomery/ism-api/internal/model"
+	"expr.ai/ism-api/internal/model"
 )
 
 // Result holds the rendered banner line, portion mark, and authority block for an ISM object.

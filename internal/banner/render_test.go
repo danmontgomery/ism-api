@@ -3,7 +3,7 @@ package banner
 import (
 	"testing"
 
-	"github.com/danielmontgomery/ism-api/internal/model"
+	"expr.ai/ism-api/internal/model"
 )
 
 func TestRender(t *testing.T) {

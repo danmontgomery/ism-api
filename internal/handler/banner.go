@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/danielmontgomery/ism-api/internal/banner"
-	"github.com/danielmontgomery/ism-api/internal/model"
+	"expr.ai/ism-api/internal/banner"
+	"expr.ai/ism-api/internal/model"
 	"github.com/gin-gonic/gin"
 )
 

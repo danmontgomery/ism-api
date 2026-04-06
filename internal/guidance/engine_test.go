@@ -3,8 +3,8 @@ package guidance
 import (
 	"testing"
 
-	"github.com/danielmontgomery/ism-api/internal/model"
-	"github.com/danielmontgomery/ism-api/internal/refdata"
+	"expr.ai/ism-api/internal/model"
+	"expr.ai/ism-api/internal/refdata"
 )
 
 // stubResolver returns fixed guidance for testing the engine aggregation.

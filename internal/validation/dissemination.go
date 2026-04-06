@@ -1,8 +1,8 @@
 package validation
 
 import (
-	"github.com/danielmontgomery/ism-api/internal/model"
-	"github.com/danielmontgomery/ism-api/internal/refdata"
+	"expr.ai/ism-api/internal/model"
+	"expr.ai/ism-api/internal/refdata"
 )
 
 // DisseminationRule validates dissemination controls: REL requires releasableTo,

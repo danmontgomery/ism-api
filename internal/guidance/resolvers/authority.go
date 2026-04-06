@@ -1,9 +1,9 @@
 package resolvers
 
 import (
-	"github.com/danielmontgomery/ism-api/internal/guidance"
-	"github.com/danielmontgomery/ism-api/internal/model"
-	"github.com/danielmontgomery/ism-api/internal/refdata"
+	"expr.ai/ism-api/internal/guidance"
+	"expr.ai/ism-api/internal/model"
+	"expr.ai/ism-api/internal/refdata"
 )
 
 // AuthorityResolver provides guidance for classification authority fields:

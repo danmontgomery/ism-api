@@ -1,6 +1,6 @@
 package refdata
 
-import "github.com/danielmontgomery/ism-api/internal/model"
+import "expr.ai/ism-api/internal/model"
 
 // DisseminationControls returns all supported dissemination control markings
 // with their compatibility metadata for validation and UI guidance.
