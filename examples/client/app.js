@@ -228,6 +228,7 @@
     // Owner/Producer
     var op = getMultiSelectValues("field-ownerProducer");
     if (op.length) ism.ownerProducer = op;
+    if (op.length > 1) ism.joint = true;
 
     // CUI Categories
     var cats = getCheckedValues("field-categoryMarkings");

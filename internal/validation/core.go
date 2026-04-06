@@ -31,10 +31,14 @@ func (r *CoreRule) Validate(ism *model.ISM, reg *refdata.Registry) *ValidationRe
 		}
 	}
 
-	// Joint consistency: joint=true requires multiple ownerProducer entries.
+	// Joint consistency: joint must be true iff len(ownerProducer) > 1.
 	if ism.Joint && len(ism.OwnerProducer) < 2 {
 		res.AddError("joint", "core.joint_requires_multiple_owners",
 			"joint=true requires at least two ownerProducer entries")
+	}
+	if len(ism.OwnerProducer) > 1 && !ism.Joint {
+		res.AddError("joint", "core.joint_required_for_multiple_owners",
+			"joint must be true when multiple ownerProducers are specified")
 	}
 
 	// Validate ownerProducer country codes.

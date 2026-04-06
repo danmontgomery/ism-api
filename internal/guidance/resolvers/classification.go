@@ -50,12 +50,21 @@ func (r *ClassificationResolver) Resolve(ism *model.ISM, reg *refdata.Registry) 
 		})
 	}
 
-	// joint — locked, auto-determined by ownerProducer count.
-	results = append(results, guidance.FieldGuidance{
-		Field:  "joint",
-		Status: guidance.StatusLocked,
-		Reason: "Automatically set to true when multiple ownerProducers are present",
-	})
+	// joint — required when multiple ownerProducers, not applicable otherwise.
+	if len(ism.OwnerProducer) > 1 {
+		results = append(results, guidance.FieldGuidance{
+			Field:    "joint",
+			Status:   guidance.StatusRequired,
+			Required: true,
+			Reason:   "joint must be true when multiple ownerProducers are specified",
+		})
+	} else {
+		results = append(results, guidance.FieldGuidance{
+			Field:  "joint",
+			Status: guidance.StatusNotApplicable,
+			Reason: "joint only applies when multiple ownerProducers are present",
+		})
+	}
 
 	// version — always available.
 	results = append(results, guidance.FieldGuidance{

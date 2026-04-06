@@ -112,6 +112,16 @@ func TestCoreRule(t *testing.T) {
 			valid: true,
 		},
 		{
+			name: "multiple owners without joint",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"USA", "GBR"},
+				Joint:          false,
+			},
+			wantCode: "core.joint_required_for_multiple_owners",
+			valid:    false,
+		},
+		{
 			name: "invalid ownerProducer code",
 			ism: model.ISM{
 				Classification: model.ClassificationC,

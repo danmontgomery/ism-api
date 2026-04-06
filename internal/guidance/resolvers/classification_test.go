@@ -23,7 +23,7 @@ func TestClassificationResolver(t *testing.T) {
 			checks: []fieldCheck{
 				{field: "classification", status: guidance.StatusRequired, required: true, hasAllowed: true},
 				{field: "ownerProducer", status: guidance.StatusNotApplicable},
-				{field: "joint", status: guidance.StatusLocked},
+				{field: "joint", status: guidance.StatusNotApplicable},
 				{field: "version", status: guidance.StatusAvailable},
 			},
 		},
@@ -33,7 +33,7 @@ func TestClassificationResolver(t *testing.T) {
 			checks: []fieldCheck{
 				{field: "classification", status: guidance.StatusRequired, required: true, hasAllowed: true},
 				{field: "ownerProducer", status: guidance.StatusNotApplicable},
-				{field: "joint", status: guidance.StatusLocked},
+				{field: "joint", status: guidance.StatusNotApplicable},
 			},
 		},
 		{
@@ -56,6 +56,33 @@ func TestClassificationResolver(t *testing.T) {
 			ism:  model.ISM{Classification: model.ClassificationS},
 			checks: []fieldCheck{
 				{field: "ownerProducer", status: guidance.StatusRequired, required: true},
+			},
+		},
+		{
+			name: "single ownerProducer — joint not applicable",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"USA"},
+			},
+			checks: []fieldCheck{
+				{field: "joint", status: guidance.StatusNotApplicable},
+			},
+		},
+		{
+			name: "multiple ownerProducers — joint required",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"USA", "GBR"},
+			},
+			checks: []fieldCheck{
+				{field: "joint", status: guidance.StatusRequired, required: true},
+			},
+		},
+		{
+			name: "no ownerProducer — joint not applicable",
+			ism:  model.ISM{Classification: model.ClassificationU},
+			checks: []fieldCheck{
+				{field: "joint", status: guidance.StatusNotApplicable},
 			},
 		},
 		{
