@@ -1,0 +1,5 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:lic:license"
+CVEnumLicLicense.cve = list { 
+# (U) 
+"osc1"? } 

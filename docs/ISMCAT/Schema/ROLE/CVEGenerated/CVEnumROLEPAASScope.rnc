@@ -1,0 +1,7 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:role:paasscope"
+CVEnumROLEPAASScope.cve = 
+# (U) 
+"OSO" | 
+# (U) 
+"PCF"

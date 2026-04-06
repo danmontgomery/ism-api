@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:role:paasscope">
+   <define name="CVEnumROLEPAASScope.cve">
+      <choice>
+         <value>OSO</value>
+         <value>PCF</value>
+      </choice>
+   </define>
+</grammar>

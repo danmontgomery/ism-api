@@ -1,0 +1,11 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:role:nebula:namedrole"
+CVEnumROLENebulaNamedRole.cve = 
+# (U) 
+"Bulk" | 
+# (U) 
+"Content_Provider" | 
+# (U) 
+"Direct" | 
+# (U) 
+"Proxy"

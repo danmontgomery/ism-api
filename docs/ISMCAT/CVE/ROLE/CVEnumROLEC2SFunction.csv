@@ -1,0 +1,10 @@
+﻿"ValueClassification","Value","DescriptionClassification","Description","DeprecationDate"
+"(U) ","CAPMGR","(U) ","Account Data Administrator",
+"(U) ","NETADMIN","(U) ","Network Administrator",
+"(U) ","PROVISIONING","(U) ","Provisioning Administrator",
+"(U) ","READONLY","(U) ","Read Only",
+"(U) ","S3ONLY","(U) ","S3 Access Only",
+"(U) ","SVCADMIN","(U) ","Service Administrator",
+"(U) ","WLDEVELOPER","(U) ","Workload Developer",
+"(U) ","[A-Z0-9_]{1,64}","(U) ","Custom Function that can be created by Service Providers",
+

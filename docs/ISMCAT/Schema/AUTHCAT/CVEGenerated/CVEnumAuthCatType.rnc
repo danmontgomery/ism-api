@@ -1,0 +1,11 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:authcat:authcattype"
+CVEnumAuthCatType.cve = list { 
+# (U) 
+"IC_DATA"?, 
+# (U) 
+"PPD42_MASINT"?, 
+# (U) 
+"SYSTEM_MSNMGT"?, 
+# (U) 
+"TEST_DATA"? } 

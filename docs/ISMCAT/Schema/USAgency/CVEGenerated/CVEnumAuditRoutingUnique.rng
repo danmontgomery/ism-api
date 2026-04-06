@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:usagency:auditRoutingUnique">
+   <define name="CVEnumAuditRoutingUnique.cve">
+      <list>
+         <optional><!--(U) -->
+            <value>USA.USAFRICOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCENTCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCYBERCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USEUCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USFK</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USNORTHCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USPACOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSOCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSOUTHCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSTRATCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USTRANSCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DARPA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DISA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DODCIO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DODIG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DODIO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DSS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DTRA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JCS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JIDA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MDA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OUSDATL</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OUSDI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.INA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.TSA</value>
+         </optional>
+      </list>
+   </define>
+</grammar>

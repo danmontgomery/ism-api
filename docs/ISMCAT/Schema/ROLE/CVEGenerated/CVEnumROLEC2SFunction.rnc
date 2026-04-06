@@ -1,0 +1,19 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:role:c2sfunction"
+CVEnumROLEC2SFunction.cve = 
+# (U) 
+"CAPMGR" | 
+# (U) 
+"NETADMIN" | 
+# (U) 
+"PROVISIONING" | 
+# (U) 
+"READONLY" | 
+# (U) 
+"S3ONLY" | 
+# (U) 
+"SVCADMIN" | 
+# (U) 
+"WLDEVELOPER" | 
+# (U) 
+"[A-Z0-9_]{1,64}"

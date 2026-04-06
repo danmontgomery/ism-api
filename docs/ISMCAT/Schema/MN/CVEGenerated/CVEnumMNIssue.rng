@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:mn:issue">
+   <define name="CVEnumMNIssue.cve">
+      <choice>
+         <value>CN</value>
+         <value>CST</value>
+         <value>DI</value>
+         <value>ET</value>
+         <value>EI</value>
+         <value>HND</value>
+         <value>IC</value>
+         <value>PSI</value>
+         <value>THS</value>
+         <value>WPW</value>
+         <value>ANY</value>
+      </choice>
+   </define>
+</grammar>

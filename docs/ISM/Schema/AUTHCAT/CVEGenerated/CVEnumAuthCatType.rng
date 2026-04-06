@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:authcat:authcattype">
+   <define name="CVEnumAuthCatType.cve">
+      <list>
+         <optional><!--(U) -->
+            <value>IC_DATA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>PPD42_MASINT</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>SYSTEM_MSNMGT</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>TEST_DATA</value>
+         </optional>
+      </list>
+   </define>
+</grammar>

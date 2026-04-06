@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:role:c2sscope">
+   <define name="CVEnumROLEC2SScope.cve">
+      <choice>
+         <value>Ent</value>
+         <value>Msn</value>
+      </choice>
+   </define>
+</grammar>

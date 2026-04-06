@@ -1,0 +1,837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:usagency:auditRoutingOrganization">
+   <define name="CVEnumAuditRoutingOrg.cve">
+      <list>
+         <optional><!--(U) -->
+            <value>USA.USAFRICOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCENTCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCYBERCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USEUCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USFK</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USNORTHCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USPACOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSOCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSOUTHCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSTRATCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USTRANSCOM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DARPA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DISA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DODCIO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DODIG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DODIO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DSS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DTRA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JCS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JIDA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MDA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OUSDATL</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OUSDI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.INA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.TSA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ABMC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ACCESS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ACFR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ACHP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ACUS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ADF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.AMICC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.AMTRAK</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ARC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ARCTIC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.BBG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.BMGS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CAOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CCJJ</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CCR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CEA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CFA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CFI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CFOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CFTC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CHCOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CIA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CIOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CIRF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CITA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CNCS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.COMP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CPSC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CSAC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CSHIB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CSOSA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DEA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DENALI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DFC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DHS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DIA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DNFSB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DNI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOJ</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOL</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DOT</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.DRBC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.EAC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ED</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.EEOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.EIBUS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.EOP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.EPA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ESC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FAC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FASAB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FBI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FCA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FCC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FCIC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FCSIC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FDIC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FEB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FERC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FFB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FFIEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FGDC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FHRA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FICE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FICMNEW</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FICSP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FLCTT</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FLICC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FLRA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FMC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FMCS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FMSHRC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FRS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FRTIB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.FTC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.GSA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.HELSINKI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.HHS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.HMM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.HSTSF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.HUD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.IACB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.IADRWG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.IAF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.IBB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ICH</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ICPRB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.IMCNHCC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.IMLS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ITC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JBEA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JFSP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JMMFF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JUSFC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JWFFSB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.LSC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MBCC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MCC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MKUF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MMC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MRC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MSPB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NARA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NASA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NBCFM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NCD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NCFRR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NCPC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NCUA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NEA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NEH</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NGA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NIGC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NLRB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NMB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NPF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NPPC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NRC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NRO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NSA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NSF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NTSB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.NWTRB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OGE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OMB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.ONCIX</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OPIC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OPM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OSC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OSHRC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OVP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.PBGC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.PCC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.PEACE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.PRC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.PRESIDIO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.RISC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.RRB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SBA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SJI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SMITH</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SRBC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SSA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SSAB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SSS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.STATE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.TAP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.TDA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.TREAS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.TVA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USAF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USAID</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USAOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USDA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USIP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USMC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USN</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USPS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USSF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USTR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USUN</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.VA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.VDNC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.VEF</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.WHCPS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.WHMO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.AOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CBO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.CRS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.GAO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.GPO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-ADM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-AGR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-APP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-ARM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-BUD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-CAO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-CHAP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-CLRK</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-EC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-EDW</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-E_C</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-FIN</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-FOR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-HIST</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-HLS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-JUD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-LDRS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-LRC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-NAT</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-OGR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-OIG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-OLC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-PAR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-RUL</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-SAA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-SCI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-SMB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-T_I</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-VET</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.H-W_M</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.HPSCI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.J-JCP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.J-JCT</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.J-JEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.JCLDS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.LOC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MACPAC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.MedPAC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OWLC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-AGE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-AGR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-APP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-ARM</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-BNK</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-BUD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-CHAP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-COE</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-CST</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-ENR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-EPW</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-FIN</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-FOR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-HELP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-HSG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-IND</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-JUD</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-LDRS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-MAJSEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-MINSEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-PAR</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-R_A</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-SAA</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-SEC</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-SMB</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.S-VET</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SCPS</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SSCI</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USBG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCO</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.USCP</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.OtherUSG</value>
+         </optional>
+         <optional><!--(U) -->
+            <value>USA.SLT</value>
+         </optional>
+      </list>
+   </define>
+</grammar>

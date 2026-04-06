@@ -1,0 +1,53 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:usagency:auditRoutingUnique"
+CVEnumAuditRoutingUnique.cve = list { 
+# (U) 
+"USA.USAFRICOM"?, 
+# (U) 
+"USA.USCENTCOM"?, 
+# (U) 
+"USA.USCYBERCOM"?, 
+# (U) 
+"USA.USEUCOM"?, 
+# (U) 
+"USA.USFK"?, 
+# (U) 
+"USA.USNORTHCOM"?, 
+# (U) 
+"USA.USPACOM"?, 
+# (U) 
+"USA.USSOCOM"?, 
+# (U) 
+"USA.USSOUTHCOM"?, 
+# (U) 
+"USA.USSTRATCOM"?, 
+# (U) 
+"USA.USTRANSCOM"?, 
+# (U) 
+"USA.DARPA"?, 
+# (U) 
+"USA.DISA"?, 
+# (U) 
+"USA.DODCIO"?, 
+# (U) 
+"USA.DODIG"?, 
+# (U) 
+"USA.DODIO"?, 
+# (U) 
+"USA.DSS"?, 
+# (U) 
+"USA.DTRA"?, 
+# (U) 
+"USA.JCS"?, 
+# (U) 
+"USA.JIDA"?, 
+# (U) 
+"USA.MDA"?, 
+# (U) 
+"USA.OUSDATL"?, 
+# (U) 
+"USA.OUSDI"?, 
+# (U) 
+"USA.INA"?, 
+# (U) 
+"USA.TSA"? } 

@@ -12,3 +12,6 @@ server
 .dolt/
 *.db
 .beads-credential-key
+
+# Mac
+.DS_Store

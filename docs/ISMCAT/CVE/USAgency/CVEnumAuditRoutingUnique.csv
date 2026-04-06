@@ -1,0 +1,77 @@
+﻿"ValueClassification","Value","DescriptionClassification","Description","DeprecationDate"
+"(U) ","USA.USAFRICOM","(U) ","
+				United States Africa Command (Type: COCOM)
+			",
+"(U) ","USA.USCENTCOM","(U) ","
+				United States Central Command (Type: COCOM)
+			",
+"(U) ","USA.USCYBERCOM","(U) ","
+				United States Strategic Command, US Cyber Command (Type: COCOM)
+			",
+"(U) ","USA.USEUCOM","(U) ","
+				United States European Command (Type: COCOM)
+			",
+"(U) ","USA.USFK","(U) ","
+				United States Pacific Command, US Forces Korea (Type: COCOM)
+			",
+"(U) ","USA.USNORTHCOM","(U) ","
+				United States Northern Command (Type: COCOM)
+			",
+"(U) ","USA.USPACOM","(U) ","
+				United States Pacific Command (Type: COCOM)
+			",
+"(U) ","USA.USSOCOM","(U) ","
+				United States Special Operations Command (Type: COCOM)
+			",
+"(U) ","USA.USSOUTHCOM","(U) ","
+				United States Southern Command (Type: COCOM)
+			",
+"(U) ","USA.USSTRATCOM","(U) ","
+				United States Strategic Command (Type: COCOM)
+			",
+"(U) ","USA.USTRANSCOM","(U) ","
+				United States Transportation Command (Type: COCOM)
+			",
+"(U) ","USA.DARPA","(U) ","
+				Defense Advanced Research Projects Agency  (Type: DOD)
+			",
+"(U) ","USA.DISA","(U) ","
+				Defense Information Systems Agency (Type: DOD)
+			",
+"(U) ","USA.DODCIO","(U) ","
+				Assistant Secretary of Defense for Networks and Information Integration and DoD Chief Information Officer (Type: DOD)
+			",
+"(U) ","USA.DODIG","(U) ","
+				Department of Defense Inspector General (Type: DOD)
+			",
+"(U) ","USA.DODIO","(U) ","
+				Assistant to the Secretary of Defense for Intelligence Oversight (Type: DOD)
+			",
+"(U) ","USA.DSS","(U) ","
+				Defense Security Service (Type: DOD)
+			",
+"(U) ","USA.DTRA","(U) ","
+				Defense Threat-Reduction Agency (Type: DOD)
+			",
+"(U) ","USA.JCS","(U) ","
+				Office of the Joint Chiefs of Staff (Type: DOD)
+			",
+"(U) ","USA.JIDA","(U) ","
+				Joint Improvised-Threat Defeat Agency (Type: DOD)
+			",
+"(U) ","USA.MDA","(U) ","
+				Missile Defense Agency (Type: DOD)
+			",
+"(U) ","USA.OUSDATL","(U) ","
+				Office of the Undersecretary of Defense (Acquisition, Technology and Logistics) (Type: DOD)
+			",
+"(U) ","USA.OUSDI","(U) ","
+				Office of the Undersecretary of Defense (Intelligence) (Type: DOD)
+			",
+"(U) ","USA.INA","(U) ","
+				United States Department of Homeland Security, Office of Intelligence and Analysis (Type: IC)
+			",
+"(U) ","USA.TSA","(U) ","
+				United States Department of Homeland Security, Transportation Security Administration (Type: IC)
+			",
+

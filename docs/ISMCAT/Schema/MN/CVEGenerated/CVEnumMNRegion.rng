@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:mn:region">
+   <define name="CVEnumMNRegion.cve">
+      <choice>
+         <value>AFce</value>
+         <value>AFea</value>
+         <value>AFno</value>
+         <value>AFso</value>
+         <value>AFwe</value>
+         <value>AMca</value>
+         <value>AMce</value>
+         <value>AMno</value>
+         <value>AMso</value>
+         <value>AMan</value>
+         <value>ASea</value>
+         <value>ASse</value>
+         <value>ASso</value>
+         <value>EAca</value>
+         <value>EAce</value>
+         <value>EAru</value>
+         <value>EUba</value>
+         <value>EUce</value>
+         <value>EUno</value>
+         <value>EUso</value>
+         <value>MEme</value>
+         <value>OCoc</value>
+         <value>ANAN</value>
+      </choice>
+   </define>
+</grammar>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:lic:license">
+   <define name="CVEnumLicLicense.cve">
+      <list>
+         <optional><!--(U) -->
+            <value>osc1</value>
+         </optional>
+      </list>
+   </define>
+</grammar>

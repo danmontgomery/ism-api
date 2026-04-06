@@ -1,0 +1,25 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:mn:issue"
+CVEnumMNIssue.cve = 
+# (U) 
+"CN" | 
+# (U) 
+"CST" | 
+# (U) 
+"DI" | 
+# (U) 
+"ET" | 
+# (U) 
+"EI" | 
+# (U) 
+"HND" | 
+# (U) 
+"IC" | 
+# (U) 
+"PSI" | 
+# (U) 
+"THS" | 
+# (U) 
+"WPW" | 
+# (U) 
+"ANY"

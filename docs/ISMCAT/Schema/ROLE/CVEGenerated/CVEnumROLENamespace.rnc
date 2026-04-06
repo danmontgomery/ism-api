@@ -1,0 +1,11 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:role:namespace"
+CVEnumROLENamespace.cve = 
+# (U) 
+"C2S" | 
+# (U) 
+"ENT" | 
+# (U) 
+"Nebula" | 
+# (U) 
+"PAAS"

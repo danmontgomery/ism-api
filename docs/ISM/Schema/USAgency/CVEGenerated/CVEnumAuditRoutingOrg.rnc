@@ -1,0 +1,555 @@
+# UNCLASSIFIED
+default namespace = "urn:us:gov:ic:cvenum:usagency:auditRoutingOrganization"
+CVEnumAuditRoutingOrg.cve = list { 
+# (U) 
+"USA.USAFRICOM"?, 
+# (U) 
+"USA.USCENTCOM"?, 
+# (U) 
+"USA.USCYBERCOM"?, 
+# (U) 
+"USA.USEUCOM"?, 
+# (U) 
+"USA.USFK"?, 
+# (U) 
+"USA.USNORTHCOM"?, 
+# (U) 
+"USA.USPACOM"?, 
+# (U) 
+"USA.USSOCOM"?, 
+# (U) 
+"USA.USSOUTHCOM"?, 
+# (U) 
+"USA.USSTRATCOM"?, 
+# (U) 
+"USA.USTRANSCOM"?, 
+# (U) 
+"USA.DARPA"?, 
+# (U) 
+"USA.DISA"?, 
+# (U) 
+"USA.DODCIO"?, 
+# (U) 
+"USA.DODIG"?, 
+# (U) 
+"USA.DODIO"?, 
+# (U) 
+"USA.DSS"?, 
+# (U) 
+"USA.DTRA"?, 
+# (U) 
+"USA.JCS"?, 
+# (U) 
+"USA.JIDA"?, 
+# (U) 
+"USA.MDA"?, 
+# (U) 
+"USA.OUSDATL"?, 
+# (U) 
+"USA.OUSDI"?, 
+# (U) 
+"USA.INA"?, 
+# (U) 
+"USA.TSA"?, 
+# (U) 
+"USA.ABMC"?, 
+# (U) 
+"USA.ACCESS"?, 
+# (U) 
+"USA.ACFR"?, 
+# (U) 
+"USA.ACHP"?, 
+# (U) 
+"USA.ACUS"?, 
+# (U) 
+"USA.ADF"?, 
+# (U) 
+"USA.AMICC"?, 
+# (U) 
+"USA.AMTRAK"?, 
+# (U) 
+"USA.ARC"?, 
+# (U) 
+"USA.ARCTIC"?, 
+# (U) 
+"USA.BBG"?, 
+# (U) 
+"USA.BMGS"?, 
+# (U) 
+"USA.CAOC"?, 
+# (U) 
+"USA.CCJJ"?, 
+# (U) 
+"USA.CCR"?, 
+# (U) 
+"USA.CEA"?, 
+# (U) 
+"USA.CFA"?, 
+# (U) 
+"USA.CFI"?, 
+# (U) 
+"USA.CFOC"?, 
+# (U) 
+"USA.CFTC"?, 
+# (U) 
+"USA.CHCOC"?, 
+# (U) 
+"USA.CIA"?, 
+# (U) 
+"USA.CIOC"?, 
+# (U) 
+"USA.CIRF"?, 
+# (U) 
+"USA.CITA"?, 
+# (U) 
+"USA.CNCS"?, 
+# (U) 
+"USA.COMP"?, 
+# (U) 
+"USA.CPSC"?, 
+# (U) 
+"USA.CSAC"?, 
+# (U) 
+"USA.CSHIB"?, 
+# (U) 
+"USA.CSOSA"?, 
+# (U) 
+"USA.DEA"?, 
+# (U) 
+"USA.DENALI"?, 
+# (U) 
+"USA.DFC"?, 
+# (U) 
+"USA.DHS"?, 
+# (U) 
+"USA.DIA"?, 
+# (U) 
+"USA.DNFSB"?, 
+# (U) 
+"USA.DNI"?, 
+# (U) 
+"USA.DOC"?, 
+# (U) 
+"USA.DOD"?, 
+# (U) 
+"USA.DOE"?, 
+# (U) 
+"USA.DOI"?, 
+# (U) 
+"USA.DOJ"?, 
+# (U) 
+"USA.DOL"?, 
+# (U) 
+"USA.DOT"?, 
+# (U) 
+"USA.DRBC"?, 
+# (U) 
+"USA.EAC"?, 
+# (U) 
+"USA.ED"?, 
+# (U) 
+"USA.EEOC"?, 
+# (U) 
+"USA.EIBUS"?, 
+# (U) 
+"USA.EOP"?, 
+# (U) 
+"USA.EPA"?, 
+# (U) 
+"USA.ESC"?, 
+# (U) 
+"USA.FAC"?, 
+# (U) 
+"USA.FASAB"?, 
+# (U) 
+"USA.FBI"?, 
+# (U) 
+"USA.FCA"?, 
+# (U) 
+"USA.FCC"?, 
+# (U) 
+"USA.FCIC"?, 
+# (U) 
+"USA.FCSIC"?, 
+# (U) 
+"USA.FDIC"?, 
+# (U) 
+"USA.FEB"?, 
+# (U) 
+"USA.FEC"?, 
+# (U) 
+"USA.FERC"?, 
+# (U) 
+"USA.FFB"?, 
+# (U) 
+"USA.FFIEC"?, 
+# (U) 
+"USA.FGDC"?, 
+# (U) 
+"USA.FHRA"?, 
+# (U) 
+"USA.FICE"?, 
+# (U) 
+"USA.FICMNEW"?, 
+# (U) 
+"USA.FICSP"?, 
+# (U) 
+"USA.FLCTT"?, 
+# (U) 
+"USA.FLICC"?, 
+# (U) 
+"USA.FLRA"?, 
+# (U) 
+"USA.FMC"?, 
+# (U) 
+"USA.FMCS"?, 
+# (U) 
+"USA.FMSHRC"?, 
+# (U) 
+"USA.FRS"?, 
+# (U) 
+"USA.FRTIB"?, 
+# (U) 
+"USA.FTC"?, 
+# (U) 
+"USA.GSA"?, 
+# (U) 
+"USA.HELSINKI"?, 
+# (U) 
+"USA.HHS"?, 
+# (U) 
+"USA.HMM"?, 
+# (U) 
+"USA.HSTSF"?, 
+# (U) 
+"USA.HUD"?, 
+# (U) 
+"USA.IACB"?, 
+# (U) 
+"USA.IADRWG"?, 
+# (U) 
+"USA.IAF"?, 
+# (U) 
+"USA.IBB"?, 
+# (U) 
+"USA.ICH"?, 
+# (U) 
+"USA.ICPRB"?, 
+# (U) 
+"USA.IMCNHCC"?, 
+# (U) 
+"USA.IMLS"?, 
+# (U) 
+"USA.ITC"?, 
+# (U) 
+"USA.JBEA"?, 
+# (U) 
+"USA.JFSP"?, 
+# (U) 
+"USA.JMMFF"?, 
+# (U) 
+"USA.JUSFC"?, 
+# (U) 
+"USA.JWFFSB"?, 
+# (U) 
+"USA.LSC"?, 
+# (U) 
+"USA.MBCC"?, 
+# (U) 
+"USA.MCC"?, 
+# (U) 
+"USA.MKUF"?, 
+# (U) 
+"USA.MMC"?, 
+# (U) 
+"USA.MRC"?, 
+# (U) 
+"USA.MSPB"?, 
+# (U) 
+"USA.NARA"?, 
+# (U) 
+"USA.NASA"?, 
+# (U) 
+"USA.NBCFM"?, 
+# (U) 
+"USA.NCD"?, 
+# (U) 
+"USA.NCFRR"?, 
+# (U) 
+"USA.NCPC"?, 
+# (U) 
+"USA.NCUA"?, 
+# (U) 
+"USA.NEA"?, 
+# (U) 
+"USA.NEH"?, 
+# (U) 
+"USA.NGA"?, 
+# (U) 
+"USA.NIGC"?, 
+# (U) 
+"USA.NLRB"?, 
+# (U) 
+"USA.NMB"?, 
+# (U) 
+"USA.NPF"?, 
+# (U) 
+"USA.NPPC"?, 
+# (U) 
+"USA.NRC"?, 
+# (U) 
+"USA.NRO"?, 
+# (U) 
+"USA.NSA"?, 
+# (U) 
+"USA.NSF"?, 
+# (U) 
+"USA.NTSB"?, 
+# (U) 
+"USA.NWTRB"?, 
+# (U) 
+"USA.OGE"?, 
+# (U) 
+"USA.OMB"?, 
+# (U) 
+"USA.ONCIX"?, 
+# (U) 
+"USA.OPIC"?, 
+# (U) 
+"USA.OPM"?, 
+# (U) 
+"USA.OSC"?, 
+# (U) 
+"USA.OSHRC"?, 
+# (U) 
+"USA.OVP"?, 
+# (U) 
+"USA.PBGC"?, 
+# (U) 
+"USA.PCC"?, 
+# (U) 
+"USA.PEACE"?, 
+# (U) 
+"USA.PRC"?, 
+# (U) 
+"USA.PRESIDIO"?, 
+# (U) 
+"USA.RISC"?, 
+# (U) 
+"USA.RRB"?, 
+# (U) 
+"USA.SBA"?, 
+# (U) 
+"USA.SEC"?, 
+# (U) 
+"USA.SJI"?, 
+# (U) 
+"USA.SMITH"?, 
+# (U) 
+"USA.SRBC"?, 
+# (U) 
+"USA.SSA"?, 
+# (U) 
+"USA.SSAB"?, 
+# (U) 
+"USA.SSS"?, 
+# (U) 
+"USA.STATE"?, 
+# (U) 
+"USA.TAP"?, 
+# (U) 
+"USA.TDA"?, 
+# (U) 
+"USA.TREAS"?, 
+# (U) 
+"USA.TVA"?, 
+# (U) 
+"USA.USA"?, 
+# (U) 
+"USA.USAF"?, 
+# (U) 
+"USA.USAID"?, 
+# (U) 
+"USA.USAOC"?, 
+# (U) 
+"USA.USCG"?, 
+# (U) 
+"USA.USDA"?, 
+# (U) 
+"USA.USIP"?, 
+# (U) 
+"USA.USMC"?, 
+# (U) 
+"USA.USN"?, 
+# (U) 
+"USA.USPS"?, 
+# (U) 
+"USA.USSF"?, 
+# (U) 
+"USA.USTR"?, 
+# (U) 
+"USA.USUN"?, 
+# (U) 
+"USA.VA"?, 
+# (U) 
+"USA.VDNC"?, 
+# (U) 
+"USA.VEF"?, 
+# (U) 
+"USA.WHCPS"?, 
+# (U) 
+"USA.WHMO"?, 
+# (U) 
+"USA.AOC"?, 
+# (U) 
+"USA.CBO"?, 
+# (U) 
+"USA.CRS"?, 
+# (U) 
+"USA.GAO"?, 
+# (U) 
+"USA.GPO"?, 
+# (U) 
+"USA.H-ADM"?, 
+# (U) 
+"USA.H-AGR"?, 
+# (U) 
+"USA.H-APP"?, 
+# (U) 
+"USA.H-ARM"?, 
+# (U) 
+"USA.H-BUD"?, 
+# (U) 
+"USA.H-CAO"?, 
+# (U) 
+"USA.H-CHAP"?, 
+# (U) 
+"USA.H-CLRK"?, 
+# (U) 
+"USA.H-EC"?, 
+# (U) 
+"USA.H-EDW"?, 
+# (U) 
+"USA.H-E_C"?, 
+# (U) 
+"USA.H-FIN"?, 
+# (U) 
+"USA.H-FOR"?, 
+# (U) 
+"USA.H-HIST"?, 
+# (U) 
+"USA.H-HLS"?, 
+# (U) 
+"USA.H-JUD"?, 
+# (U) 
+"USA.H-LDRS"?, 
+# (U) 
+"USA.H-LRC"?, 
+# (U) 
+"USA.H-NAT"?, 
+# (U) 
+"USA.H-OGR"?, 
+# (U) 
+"USA.H-OIG"?, 
+# (U) 
+"USA.H-OLC"?, 
+# (U) 
+"USA.H-PAR"?, 
+# (U) 
+"USA.H-RUL"?, 
+# (U) 
+"USA.H-SAA"?, 
+# (U) 
+"USA.H-SCI"?, 
+# (U) 
+"USA.H-SMB"?, 
+# (U) 
+"USA.H-T_I"?, 
+# (U) 
+"USA.H-VET"?, 
+# (U) 
+"USA.H-W_M"?, 
+# (U) 
+"USA.HPSCI"?, 
+# (U) 
+"USA.J-JCP"?, 
+# (U) 
+"USA.J-JCT"?, 
+# (U) 
+"USA.J-JEC"?, 
+# (U) 
+"USA.JCLDS"?, 
+# (U) 
+"USA.LOC"?, 
+# (U) 
+"USA.MACPAC"?, 
+# (U) 
+"USA.MedPAC"?, 
+# (U) 
+"USA.OWLC"?, 
+# (U) 
+"USA.S-AGE"?, 
+# (U) 
+"USA.S-AGR"?, 
+# (U) 
+"USA.S-APP"?, 
+# (U) 
+"USA.S-ARM"?, 
+# (U) 
+"USA.S-BNK"?, 
+# (U) 
+"USA.S-BUD"?, 
+# (U) 
+"USA.S-CHAP"?, 
+# (U) 
+"USA.S-COE"?, 
+# (U) 
+"USA.S-CST"?, 
+# (U) 
+"USA.S-ENR"?, 
+# (U) 
+"USA.S-EPW"?, 
+# (U) 
+"USA.S-FIN"?, 
+# (U) 
+"USA.S-FOR"?, 
+# (U) 
+"USA.S-HELP"?, 
+# (U) 
+"USA.S-HSG"?, 
+# (U) 
+"USA.S-IND"?, 
+# (U) 
+"USA.S-JUD"?, 
+# (U) 
+"USA.S-LDRS"?, 
+# (U) 
+"USA.S-MAJSEC"?, 
+# (U) 
+"USA.S-MINSEC"?, 
+# (U) 
+"USA.S-PAR"?, 
+# (U) 
+"USA.S-R_A"?, 
+# (U) 
+"USA.S-SAA"?, 
+# (U) 
+"USA.S-SEC"?, 
+# (U) 
+"USA.S-SMB"?, 
+# (U) 
+"USA.S-VET"?, 
+# (U) 
+"USA.SCPS"?, 
+# (U) 
+"USA.SSCI"?, 
+# (U) 
+"USA.USBG"?, 
+# (U) 
+"USA.USCO"?, 
+# (U) 
+"USA.USCP"?, 
+# (U) 
+"USA.OtherUSG"?, 
+# (U) 
+"USA.SLT"? } 

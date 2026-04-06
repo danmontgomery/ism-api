@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:role:c2sfunction">
+   <define name="CVEnumROLEC2SFunction.cve">
+      <choice>
+         <value>CAPMGR</value>
+         <value>NETADMIN</value>
+         <value>PROVISIONING</value>
+         <value>READONLY</value>
+         <value>S3ONLY</value>
+         <value>SVCADMIN</value>
+         <value>WLDEVELOPER</value>
+         <value>[A-Z0-9_]{1,64}</value>
+      </choice>
+   </define>
+</grammar>

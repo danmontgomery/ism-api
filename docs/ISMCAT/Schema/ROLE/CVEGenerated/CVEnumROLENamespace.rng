@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--UNCLASSIFIED-->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         ns="urn:us:gov:ic:cvenum:role:namespace">
+   <define name="CVEnumROLENamespace.cve">
+      <choice>
+         <value>C2S</value>
+         <value>ENT</value>
+         <value>Nebula</value>
+         <value>PAAS</value>
+      </choice>
+   </define>
+</grammar>
