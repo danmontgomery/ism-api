@@ -2,6 +2,18 @@
 
 A REST API for constructing, validating, and rendering DoD/IC security classification markings per the [json-ism spec](https://github.com/540co/json-ism).
 
+## ISM Coverage
+
+This API currently does not cover TS or related markings.
+
+The test suite covers the all of the latest XSDs (V2022-NOV) published on dni.gov. Anything not implemented is skipped in tests, which you will see in output. As coverage is completed, skipped tests will be replaced with passing tests.
+
+See this by running tests:
+
+```bash
+make test
+```
+
 ## Quick Start
 
 ```bash
