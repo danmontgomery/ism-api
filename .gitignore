@@ -8,7 +8,8 @@ server
 # Claude Code agent files
 .claude/
 
-# Beads / Dolt files (added by bd init)
+# Beads / Dolt files
+.beads/
 .dolt/
 *.db
 .beads-credential-key
