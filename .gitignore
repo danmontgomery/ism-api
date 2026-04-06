@@ -8,12 +8,15 @@ server
 # Claude Code agent files
 .claude/
 
-# Beads / Dolt files
+# Beads / Dolt files (managed by Gas Town rig, not in-repo)
 .beads/
 .dolt/
 *.db
 .beads-credential-key
 
+# Claude Code (injected at runtime by Gas Town)
+CLAUDE.md
+CLAUDE.local.md
+
 # Mac
 .DS_Store
-CLAUDE.local.md

@@ -1,4 +1,4 @@
-# ISM API — Project Rules
+# ISM API — Development Rules
 
 ## TDD Workflow
 
