@@ -13,5 +13,6 @@ func NonICMarkings() []NonICMarking {
 		{Code: "DS", Label: "Limited Distribution"},
 		{Code: "XD", Label: "Exclusively for Administrative or Operational Purposes"},
 		{Code: "ND", Label: "No Distribution"},
+		{Code: "NNPI", Label: "Naval Nuclear Propulsion Information"},
 	}
 }
