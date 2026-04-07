@@ -86,6 +86,7 @@ type Registry struct {
 	NonUSControls          []NonUSControl
 	ExemptFrom             []ExemptFromEntry
 	CompliesWith           []CompliesWithEntry
+	AtomicEnergyMarkings   []AtomicEnergyMarking
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
@@ -101,6 +102,7 @@ func NewRegistry() *Registry {
 		NonUSControls:          NonUSControls(),
 		ExemptFrom:             ExemptFrom(),
 		CompliesWith:           CompliesWith(),
+		AtomicEnergyMarkings:  AtomicEnergyMarkings(),
 	}
 }
 
@@ -198,6 +200,16 @@ func (r *Registry) ValidExemptFrom(code string) bool {
 func (r *Registry) ValidCompliesWith(code string) bool {
 	for _, c := range r.CompliesWith {
 		if c.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
+// ValidAtomicEnergyMarking returns true if code is a known atomic energy marking.
+func (r *Registry) ValidAtomicEnergyMarking(code string) bool {
+	for _, a := range r.AtomicEnergyMarkings {
+		if a.Code == code {
 			return true
 		}
 	}

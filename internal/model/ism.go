@@ -51,6 +51,9 @@ type ISM struct {
 	// Compliance
 	CompliesWith []string `json:"compliesWith,omitempty"`
 
+	// Atomic Energy
+	AtomicEnergyMarkings []string `json:"atomicEnergyMarkings,omitempty"`
+
 	// Other
 	NonICMarkings []string `json:"nonICMarkings,omitempty"`
 	NonUSControls []string `json:"nonUSControls,omitempty"`

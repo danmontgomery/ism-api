@@ -46,3 +46,8 @@ func (h *Handler) RefExemptFrom(c *gin.Context) {
 func (h *Handler) RefCompliesWith(c *gin.Context) {
 	respondData(c, h.reg.CompliesWith)
 }
+
+// RefAtomicEnergyMarkings returns all atomic energy marking codes.
+func (h *Handler) RefAtomicEnergyMarkings(c *gin.Context) {
+	respondData(c, h.reg.AtomicEnergyMarkings)
+}
