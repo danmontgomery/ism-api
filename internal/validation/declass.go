@@ -1,9 +1,15 @@
 package validation
 
 import (
+	"regexp"
+	"time"
+
 	"expr.ai/ism-api/internal/model"
 	"expr.ai/ism-api/internal/refdata"
 )
+
+// declassDateRE matches exactly 8 digits (YYYYMMDD).
+var declassDateRE = regexp.MustCompile(`^\d{8}$`)
 
 // DeclassRule validates declassification fields: date/event mutual exclusion,
 // 25X exception code validity, and applicability only to C/S classifications.
@@ -30,6 +36,17 @@ func (r *DeclassRule) Validate(ism *model.ISM, reg *refdata.Registry) *Validatio
 		res.AddError("declassDate", "declass.not_applicable",
 			"declassification fields are only applicable to C and S classifications")
 		return res
+	}
+
+	// DeclassDate must be YYYYMMDD and represent a valid calendar date.
+	if ism.DeclassDate != "" {
+		if !declassDateRE.MatchString(ism.DeclassDate) {
+			res.AddError("declassDate", "declass.invalid_date_format",
+				"declassDate must be in YYYYMMDD format (e.g. 20360101)")
+		} else if _, err := time.Parse("20060102", ism.DeclassDate); err != nil {
+			res.AddError("declassDate", "declass.invalid_date",
+				"declassDate is not a valid calendar date")
+		}
 	}
 
 	// DeclassDate and DeclassEvent are mutually exclusive.

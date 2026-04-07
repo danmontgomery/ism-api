@@ -41,7 +41,7 @@ func TestEngine_ValidSecret(t *testing.T) {
 		OwnerProducer:  []string{"USA"},
 		ClassifiedBy:   "John Doe",
 		ClassificationReason: "National Security",
-		DeclassDate:    "2030-01-01",
+		DeclassDate:    "20300101",
 	})
 	if !r.Valid {
 		t.Errorf("expected valid, got errors: %+v", r.Errors)
@@ -759,11 +759,11 @@ func TestDeclassRule(t *testing.T) {
 		valid    bool
 	}{
 		{
-			name: "C with declassDate",
+			name: "C with declassDate YYYYMMDD",
 			ism: model.ISM{
 				Classification: model.ClassificationC,
 				OwnerProducer:  []string{"USA"},
-				DeclassDate:    "2030-01-01",
+				DeclassDate:    "20300101",
 			},
 			valid: true,
 		},
@@ -781,7 +781,7 @@ func TestDeclassRule(t *testing.T) {
 			ism: model.ISM{
 				Classification: model.ClassificationC,
 				OwnerProducer:  []string{"USA"},
-				DeclassDate:    "2030-01-01",
+				DeclassDate:    "20300101",
 				DeclassEvent:   "Peace treaty",
 			},
 			wantCode: "declass.date_event_exclusive",
@@ -791,9 +791,29 @@ func TestDeclassRule(t *testing.T) {
 			name: "U with declassDate — not applicable",
 			ism: model.ISM{
 				Classification: model.ClassificationU,
-				DeclassDate:    "2030-01-01",
+				DeclassDate:    "20300101",
 			},
 			wantCode: "declass.not_applicable",
+			valid:    false,
+		},
+		{
+			name: "C with YYYY-MM-DD format — invalid",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"USA"},
+				DeclassDate:    "2030-01-01",
+			},
+			wantCode: "declass.invalid_date_format",
+			valid:    false,
+		},
+		{
+			name: "C with invalid calendar date",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"USA"},
+				DeclassDate:    "20301301",
+			},
+			wantCode: "declass.invalid_date",
 			valid:    false,
 		},
 		{
