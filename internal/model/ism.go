@@ -10,10 +10,12 @@ type ISM struct {
 	Joint         bool           `json:"joint,omitempty"`
 
 	// CUI Fields
-	CategoryMarkings  []string `json:"categoryMarkings,omitempty"`
-	ControlledByName  string   `json:"controlledByName,omitempty"`
-	ControlledByOffice string  `json:"controlledByOffice,omitempty"`
-	POC               string   `json:"poc,omitempty"`
+	CUIBasic           string   `json:"cuiBasic,omitempty"`
+	CUISpecified       []string `json:"cuiSpecified,omitempty"`
+	CategoryMarkings   []string `json:"categoryMarkings,omitempty"`
+	ControlledByName   string   `json:"controlledByName,omitempty"`
+	ControlledByOffice string   `json:"controlledByOffice,omitempty"`
+	POC                string   `json:"poc,omitempty"`
 
 	// Dissemination Controls
 	DisseminationControls []string `json:"disseminationControls,omitempty"`

@@ -46,7 +46,7 @@ func TestCUIResolver(t *testing.T) {
 			name: "CUI — categoryMarkings available with allowed values",
 			ism:  model.ISM{Classification: model.ClassificationCUI},
 			checks: []fieldCheck{
-				{field: "categoryMarkings", status: guidance.StatusAvailable, hasAllowed: true, allowedCount: 12},
+				{field: "categoryMarkings", status: guidance.StatusAvailable, hasAllowed: true, allowedCount: 64},
 				{field: "controlledByName", status: guidance.StatusAvailable},
 				{field: "controlledByOffice", status: guidance.StatusAvailable},
 				{field: "poc", status: guidance.StatusAvailable},

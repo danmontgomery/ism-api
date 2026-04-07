@@ -70,8 +70,8 @@ func TestCUICategories(t *testing.T) {
 			t.Errorf("CUI category %q has empty description", c.Code)
 		}
 	}
-	if specified != 6 {
-		t.Errorf("expected 6 specified categories, got %d", specified)
+	if specified != 58 {
+		t.Errorf("expected 58 specified categories, got %d", specified)
 	}
 	if basic != 6 {
 		t.Errorf("expected 6 basic categories, got %d", basic)
