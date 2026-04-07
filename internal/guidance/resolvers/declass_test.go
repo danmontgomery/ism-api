@@ -88,6 +88,15 @@ func TestDeclassResolver(t *testing.T) {
 				{field: "declassEvent", status: guidance.StatusLocked},
 			},
 		},
+		{
+			name: "TS — all declass fields available",
+			ism:  model.ISM{Classification: model.ClassificationTS},
+			checks: []fieldCheck{
+				{field: "declassDate", status: guidance.StatusAvailable},
+				{field: "declassEvent", status: guidance.StatusAvailable},
+				{field: "declassException", status: guidance.StatusAvailable, hasAllowed: true},
+			},
+		},
 	}
 
 	for _, tt := range tests {

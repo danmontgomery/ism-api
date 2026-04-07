@@ -93,6 +93,17 @@ func TestAuthorityResolver(t *testing.T) {
 				{field: "derivedFrom", status: guidance.StatusRequired, required: true},
 			},
 		},
+		{
+			name: "TS — authority fields available",
+			ism:  model.ISM{Classification: model.ClassificationTS},
+			checks: []fieldCheck{
+				{field: "classifiedBy", status: guidance.StatusAvailable},
+				{field: "classificationReason", status: guidance.StatusAvailable},
+				{field: "derivativelyClassifiedBy", status: guidance.StatusAvailable},
+				{field: "derivedFrom", status: guidance.StatusAvailable},
+				{field: "compilationReason", status: guidance.StatusAvailable},
+			},
+		},
 	}
 
 	for _, tt := range tests {

@@ -22,8 +22,8 @@ func (r *AuthorityResolver) Fields() []string {
 }
 
 func (r *AuthorityResolver) Resolve(ism *model.ISM, reg *refdata.Registry) []guidance.FieldGuidance {
-	if ism.Classification != model.ClassificationC && ism.Classification != model.ClassificationS {
-		return notApplicableAll(r.Fields(), "Only applicable for Confidential or Secret classifications")
+	if !ism.Classification.AtLeast(model.ClassificationC) {
+		return notApplicableAll(r.Fields(), "Only applicable for classified markings (C, S, TS)")
 	}
 
 	var results []guidance.FieldGuidance
