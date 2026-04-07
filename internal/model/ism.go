@@ -58,6 +58,9 @@ type ISM struct {
 	NoticeType    []string `json:"noticeType,omitempty"`
 	NoticeProseID string   `json:"noticeProseID,omitempty"`
 
+	// SCI Controls
+	SCIControls []string `json:"sciControls,omitempty"`
+
 	// Special Access Required
 	SARIdentifier []string `json:"sarIdentifier,omitempty"`
 

@@ -95,6 +95,7 @@ type Registry struct {
 	CompliesWith           []CompliesWithEntry
 	AtomicEnergyMarkings   []AtomicEnergyMarking
 	NoticeTypes            []NoticeType
+	SCIControls            []SCIControl
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
@@ -112,6 +113,7 @@ func NewRegistry() *Registry {
 		CompliesWith:           CompliesWith(),
 		AtomicEnergyMarkings:  AtomicEnergyMarkings(),
 		NoticeTypes:           NoticeTypes(),
+		SCIControls:           SCIControls(),
 	}
 }
 
@@ -233,6 +235,26 @@ func (r *Registry) ValidNoticeType(code string) bool {
 		}
 	}
 	return false
+}
+
+// ValidSCIControl returns true if code is a known SCI control.
+func (r *Registry) ValidSCIControl(code string) bool {
+	for _, s := range r.SCIControls {
+		if s.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
+// LookupSCIControl returns the SCIControl for the given code, or nil.
+func (r *Registry) LookupSCIControl(code string) *SCIControl {
+	for i := range r.SCIControls {
+		if r.SCIControls[i].Code == code {
+			return &r.SCIControls[i]
+		}
+	}
+	return nil
 }
 
 // LookupDisseminationControl returns the DisseminationControl for the given code, or nil.
