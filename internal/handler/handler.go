@@ -49,6 +49,7 @@ func (h *Handler) Register(r *gin.Engine) {
 			ref.GET("/exempt-from", h.RefExemptFrom)
 			ref.GET("/complies-with", h.RefCompliesWith)
 			ref.GET("/atomic-energy-markings", h.RefAtomicEnergyMarkings)
+			ref.GET("/notice-types", h.RefNoticeTypes)
 		}
 
 		v1.POST("/validate", h.Validate)

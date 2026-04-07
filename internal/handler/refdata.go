@@ -51,3 +51,8 @@ func (h *Handler) RefCompliesWith(c *gin.Context) {
 func (h *Handler) RefAtomicEnergyMarkings(c *gin.Context) {
 	respondData(c, h.reg.AtomicEnergyMarkings)
 }
+
+// RefNoticeTypes returns all notice type codes.
+func (h *Handler) RefNoticeTypes(c *gin.Context) {
+	respondData(c, h.reg.NoticeTypes)
+}

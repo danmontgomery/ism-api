@@ -54,6 +54,9 @@ type ISM struct {
 	// Atomic Energy
 	AtomicEnergyMarkings []string `json:"atomicEnergyMarkings,omitempty"`
 
+	// Notices
+	NoticeType []string `json:"noticeType,omitempty"`
+
 	// Other
 	NonICMarkings []string `json:"nonICMarkings,omitempty"`
 	NonUSControls []string `json:"nonUSControls,omitempty"`

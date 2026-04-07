@@ -74,6 +74,13 @@ type CompliesWithEntry struct {
 	Label string `json:"label"`
 }
 
+// NoticeType is a reference data entry for an ISM notice type.
+type NoticeType struct {
+	Code     string `json:"code"`
+	Label    string `json:"label"`
+	Category string `json:"category"`
+}
+
 // Registry aggregates all compiled-in reference data for the ISM API.
 type Registry struct {
 	Classifications        []ClassificationEntry
@@ -87,6 +94,7 @@ type Registry struct {
 	ExemptFrom             []ExemptFromEntry
 	CompliesWith           []CompliesWithEntry
 	AtomicEnergyMarkings   []AtomicEnergyMarking
+	NoticeTypes            []NoticeType
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
@@ -103,6 +111,7 @@ func NewRegistry() *Registry {
 		ExemptFrom:             ExemptFrom(),
 		CompliesWith:           CompliesWith(),
 		AtomicEnergyMarkings:  AtomicEnergyMarkings(),
+		NoticeTypes:           NoticeTypes(),
 	}
 }
 
@@ -210,6 +219,16 @@ func (r *Registry) ValidCompliesWith(code string) bool {
 func (r *Registry) ValidAtomicEnergyMarking(code string) bool {
 	for _, a := range r.AtomicEnergyMarkings {
 		if a.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
+// ValidNoticeType returns true if code is a known notice type.
+func (r *Registry) ValidNoticeType(code string) bool {
+	for _, n := range r.NoticeTypes {
+		if n.Code == code {
 			return true
 		}
 	}
