@@ -152,7 +152,22 @@
     selectors.forEach(function (id) {
       var sel = $(id);
       sel.innerHTML = "";
+
+      // Pin USA to the top of the ownerProducer list.
+      if (id === "field-ownerProducer") {
+        var usa = refData.countryCodes.find(function (c) {
+          return c.code === "USA";
+        });
+        if (usa) {
+          var pinned = document.createElement("option");
+          pinned.value = usa.code;
+          pinned.textContent = usa.code + " — " + usa.name;
+          sel.appendChild(pinned);
+        }
+      }
+
       refData.countryCodes.forEach(function (c) {
+        if (id === "field-ownerProducer" && c.code === "USA") return;
         var opt = document.createElement("option");
         opt.value = c.code;
         opt.textContent = c.code + " — " + c.name;

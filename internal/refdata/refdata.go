@@ -1,6 +1,11 @@
 package refdata
 
-import "expr.ai/ism-api/internal/model"
+import (
+	"cmp"
+	"slices"
+
+	"expr.ai/ism-api/internal/model"
+)
 
 // ClassificationEntry is a reference data entry for a classification level.
 type ClassificationEntry struct {
@@ -99,8 +104,9 @@ type Registry struct {
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
+// All slices are sorted alphabetically by code for consistent API responses.
 func NewRegistry() *Registry {
-	return &Registry{
+	r := &Registry{
 		Classifications:        Classifications(),
 		CUICategories:          CUICategories(),
 		DisseminationControls:  DisseminationControls(),
@@ -111,10 +117,52 @@ func NewRegistry() *Registry {
 		NonUSControls:          NonUSControls(),
 		ExemptFrom:             ExemptFrom(),
 		CompliesWith:           CompliesWith(),
-		AtomicEnergyMarkings:  AtomicEnergyMarkings(),
-		NoticeTypes:           NoticeTypes(),
-		SCIControls:           SCIControls(),
+		AtomicEnergyMarkings:   AtomicEnergyMarkings(),
+		NoticeTypes:            NoticeTypes(),
+		SCIControls:            SCIControls(),
 	}
+
+	slices.SortFunc(r.Classifications, func(a, b ClassificationEntry) int {
+		return cmp.Compare(string(a.Code), string(b.Code))
+	})
+	slices.SortFunc(r.CUICategories, func(a, b CUICategory) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.DisseminationControls, func(a, b DisseminationControl) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.DistributionStatements, func(a, b DistributionStatement) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.CountryCodes, func(a, b CountryCode) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.DeclassExceptions, func(a, b DeclassException) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.NonICMarkings, func(a, b NonICMarking) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.NonUSControls, func(a, b NonUSControl) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.ExemptFrom, func(a, b ExemptFromEntry) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.CompliesWith, func(a, b CompliesWithEntry) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.AtomicEnergyMarkings, func(a, b AtomicEnergyMarking) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.NoticeTypes, func(a, b NoticeType) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+	slices.SortFunc(r.SCIControls, func(a, b SCIControl) int {
+		return cmp.Compare(a.Code, b.Code)
+	})
+
+	return r
 }
 
 // ValidClassification returns true if code is a known classification.
