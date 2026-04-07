@@ -85,6 +85,7 @@ func DeclassApplicableClassifications() []model.Classification {
 	return []model.Classification{
 		model.ClassificationC,
 		model.ClassificationS,
+		model.ClassificationTS,
 	}
 }
 

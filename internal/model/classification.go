@@ -10,6 +10,7 @@ const (
 	ClassificationCUI Classification = "CUI"
 	ClassificationC   Classification = "C"
 	ClassificationS   Classification = "S"
+	ClassificationTS  Classification = "TS"
 )
 
 // classificationOrder defines the ordering from least to most restrictive.
@@ -18,6 +19,7 @@ var classificationOrder = map[Classification]int{
 	ClassificationCUI: 1,
 	ClassificationC:   2,
 	ClassificationS:   3,
+	ClassificationTS:  4,
 }
 
 // Valid returns true if the classification is a known value.
@@ -26,7 +28,7 @@ func (c Classification) Valid() bool {
 	return ok
 }
 
-// Level returns the numeric ordering (0=U, 1=CUI, 2=C, 3=S).
+// Level returns the numeric ordering (0=U, 1=CUI, 2=C, 3=S, 4=TS).
 // Returns -1 for unknown classifications.
 func (c Classification) Level() int {
 	if lvl, ok := classificationOrder[c]; ok {
@@ -62,5 +64,6 @@ func AllClassifications() []Classification {
 		ClassificationCUI,
 		ClassificationC,
 		ClassificationS,
+		ClassificationTS,
 	}
 }

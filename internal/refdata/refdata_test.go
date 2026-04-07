@@ -36,8 +36,8 @@ func TestNewRegistry(t *testing.T) {
 
 func TestClassifications(t *testing.T) {
 	cs := Classifications()
-	if len(cs) != 4 {
-		t.Fatalf("expected 4 classifications, got %d", len(cs))
+	if len(cs) != 5 {
+		t.Fatalf("expected 5 classifications, got %d", len(cs))
 	}
 	// Verify ordering
 	for i := 0; i < len(cs)-1; i++ {
@@ -219,8 +219,8 @@ func TestRegistryValidation(t *testing.T) {
 	if !r.ValidClassification(model.ClassificationS) {
 		t.Error("S should be valid classification")
 	}
-	if r.ValidClassification("TS") {
-		t.Error("TS should not be valid classification")
+	if !r.ValidClassification("TS") {
+		t.Error("TS should be valid classification")
 	}
 
 	// CUI lookups
@@ -333,7 +333,7 @@ func TestCompatibility(t *testing.T) {
 	}
 
 	applicable := DeclassApplicableClassifications()
-	if len(applicable) != 2 {
-		t.Errorf("expected 2 declass-applicable classifications, got %d", len(applicable))
+	if len(applicable) != 3 {
+		t.Errorf("expected 3 declass-applicable classifications, got %d", len(applicable))
 	}
 }

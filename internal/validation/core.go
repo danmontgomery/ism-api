@@ -19,7 +19,7 @@ func (r *CoreRule) Validate(ism *model.ISM, reg *refdata.Registry) *ValidationRe
 	// Classification must be a valid enum value.
 	if !ism.Classification.Valid() {
 		res.AddError("classification", "core.invalid_classification",
-			"classification must be one of: U, CUI, C, S")
+			"classification must be one of: U, CUI, C, S, TS")
 		return res // Further checks depend on valid classification.
 	}
 

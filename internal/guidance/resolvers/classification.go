@@ -31,7 +31,7 @@ func (r *ClassificationResolver) Resolve(ism *model.ISM, reg *refdata.Registry) 
 
 	// ownerProducer — required for C/S, available for CUI, not_applicable for U.
 	switch ism.Classification {
-	case model.ClassificationC, model.ClassificationS:
+	case model.ClassificationC, model.ClassificationS, model.ClassificationTS:
 		results = append(results, guidance.FieldGuidance{
 			Field:    "ownerProducer",
 			Status:   guidance.StatusRequired,

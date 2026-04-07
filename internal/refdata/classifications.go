@@ -9,5 +9,6 @@ func Classifications() []ClassificationEntry {
 		{Code: model.ClassificationCUI, Label: "Controlled Unclassified Information", Level: 1},
 		{Code: model.ClassificationC, Label: "Confidential", Level: 2},
 		{Code: model.ClassificationS, Label: "Secret", Level: 3},
+		{Code: model.ClassificationTS, Label: "Top Secret", Level: 4},
 	}
 }

@@ -89,7 +89,7 @@ func TestClassificationResolver(t *testing.T) {
 			name: "classification allowed values include all levels",
 			ism:  model.ISM{},
 			checks: []fieldCheck{
-				{field: "classification", required: true, hasAllowed: true, allowedCount: 4},
+				{field: "classification", required: true, hasAllowed: true, allowedCount: 5},
 			},
 		},
 	}

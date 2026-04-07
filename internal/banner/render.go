@@ -20,6 +20,7 @@ var classificationBanner = map[model.Classification]string{
 	model.ClassificationCUI: "CUI",
 	model.ClassificationC:   "CONFIDENTIAL",
 	model.ClassificationS:   "SECRET",
+	model.ClassificationTS:  "TOP SECRET",
 }
 
 // Abbreviated classification labels for portion marks.
@@ -28,6 +29,7 @@ var classificationPortion = map[model.Classification]string{
 	model.ClassificationCUI: "CUI",
 	model.ClassificationC:   "C",
 	model.ClassificationS:   "S",
+	model.ClassificationTS:  "TS",
 }
 
 // disseminationOrder defines the canonical banner ordering index for each
@@ -127,7 +129,7 @@ func Render(ism *model.ISM) Result {
 // renderAuthorityBlock produces the authority block text for classified markings.
 // Returns empty string for U and CUI, or if no authority fields are populated.
 func renderAuthorityBlock(ism *model.ISM) string {
-	if ism.Classification != model.ClassificationC && ism.Classification != model.ClassificationS {
+	if ism.Classification != model.ClassificationC && ism.Classification != model.ClassificationS && ism.Classification != model.ClassificationTS {
 		return ""
 	}
 

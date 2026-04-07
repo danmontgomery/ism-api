@@ -64,8 +64,14 @@ func TestCoreRule(t *testing.T) {
 		},
 		{
 			name:     "invalid classification",
-			ism:      model.ISM{Classification: "TS"},
+			ism:      model.ISM{Classification: "BOGUS"},
 			wantCode: "core.invalid_classification",
+			valid:    false,
+		},
+		{
+			name:     "TS missing ownerProducer",
+			ism:      model.ISM{Classification: model.ClassificationTS},
+			wantCode: "core.owner_producer_required",
 			valid:    false,
 		},
 		{

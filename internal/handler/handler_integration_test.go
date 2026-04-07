@@ -175,8 +175,8 @@ func TestRefClassificationsShape(t *testing.T) {
 	}
 	json.Unmarshal(env.Data, &items)
 
-	if len(items) != 4 {
-		t.Fatalf("got %d classifications, want 4", len(items))
+	if len(items) != 5 {
+		t.Fatalf("got %d classifications, want 5", len(items))
 	}
 
 	// Check expected fields present on each entry.
