@@ -55,6 +55,12 @@ type NonICMarking struct {
 	Label string `json:"label"`
 }
 
+// NonUSControl is a reference data entry for a non-US control marking.
+type NonUSControl struct {
+	Code  string `json:"code"`
+	Label string `json:"label"`
+}
+
 // Registry aggregates all compiled-in reference data for the ISM API.
 type Registry struct {
 	Classifications        []ClassificationEntry
@@ -64,6 +70,7 @@ type Registry struct {
 	CountryCodes           []CountryCode
 	DeclassExceptions      []DeclassException
 	NonICMarkings          []NonICMarking
+	NonUSControls          []NonUSControl
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
@@ -76,6 +83,7 @@ func NewRegistry() *Registry {
 		CountryCodes:           CountryCodes(),
 		DeclassExceptions:      DeclassExceptions(),
 		NonICMarkings:          NonICMarkings(),
+		NonUSControls:          NonUSControls(),
 	}
 }
 
@@ -142,6 +150,16 @@ func (r *Registry) ValidDeclassException(code string) bool {
 // ValidNonICMarking returns true if code is a known non-IC marking.
 func (r *Registry) ValidNonICMarking(code string) bool {
 	for _, n := range r.NonICMarkings {
+		if n.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
+// ValidNonUSControl returns true if code is a known non-US control marking.
+func (r *Registry) ValidNonUSControl(code string) bool {
+	for _, n := range r.NonUSControls {
 		if n.Code == code {
 			return true
 		}
