@@ -140,6 +140,43 @@ func TestXSD_Validation_ClassificationGates(t *testing.T) {
 	}
 }
 
+// TestXSD_Validation_SCI_RequiresSCIControls verifies that the SCI dissemination
+// control requires the sciControls field to be populated.
+func TestXSD_Validation_SCI_RequiresSCIControls(t *testing.T) {
+	engine := validation.NewEngine(reg())
+
+	t.Run("SCI_without_sciControls", func(t *testing.T) {
+		ism := &model.ISM{
+			Classification:        model.ClassificationTS,
+			OwnerProducer:         []string{"USA"},
+			DisseminationControls: []string{"SCI"},
+			ClassifiedBy:          "Test",
+			DeclassDate:           "20350101",
+		}
+		result := engine.Validate(ism)
+		if result.Valid {
+			t.Error("SCI without sciControls should be invalid")
+		}
+	})
+
+	t.Run("SCI_with_sciControls", func(t *testing.T) {
+		ism := &model.ISM{
+			Classification:        model.ClassificationTS,
+			OwnerProducer:         []string{"USA"},
+			DisseminationControls: []string{"SCI"},
+			SCIControls:           []string{"SI", "TK"},
+			ClassifiedBy:          "Test",
+			DeclassDate:           "20350101",
+		}
+		result := engine.Validate(ism)
+		for _, e := range result.Errors {
+			if e.Field == "sciControls" && e.Severity == validation.SeverityError {
+				t.Errorf("SCI with sciControls should not have sciControls error: %s", e.Message)
+			}
+		}
+	})
+}
+
 // TestXSD_Validation_AllExclusivePairs verifies all documented exclusive pairs.
 func TestXSD_Validation_AllExclusivePairs(t *testing.T) {
 	engine := validation.NewEngine(reg())

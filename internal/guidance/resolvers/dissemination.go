@@ -11,7 +11,7 @@ import (
 type DisseminationResolver struct{}
 
 func (r *DisseminationResolver) Fields() []string {
-	return []string{"disseminationControls", "releasableTo", "displayOnlyTo"}
+	return []string{"disseminationControls", "releasableTo", "displayOnlyTo", "sciControls"}
 }
 
 func (r *DisseminationResolver) Resolve(ism *model.ISM, reg *refdata.Registry) []guidance.FieldGuidance {
@@ -60,6 +60,26 @@ func (r *DisseminationResolver) Resolve(ism *model.ISM, reg *refdata.Registry) [
 			Status:     guidance.StatusNotApplicable,
 			RequiredIf: "DISPLAY ONLY dissemination control is selected",
 			Reason:     "Only applicable when DISPLAY ONLY dissemination control is set",
+		})
+	}
+
+	// sciControls — available when SCI dissemination control is selected.
+	if hasControl(ism.DisseminationControls, "SCI") {
+		var sciAllowed []guidance.AllowedValue
+		for _, sc := range reg.SCIControls {
+			sciAllowed = append(sciAllowed, guidance.AllowedValue{Code: sc.Code, Label: sc.Label})
+		}
+		results = append(results, guidance.FieldGuidance{
+			Field:         "sciControls",
+			Status:        guidance.StatusAvailable,
+			AllowedValues: sciAllowed,
+		})
+	} else {
+		results = append(results, guidance.FieldGuidance{
+			Field:      "sciControls",
+			Status:     guidance.StatusNotApplicable,
+			RequiredIf: "SCI dissemination control is selected",
+			Reason:     "Only applicable when SCI dissemination control is set",
 		})
 	}
 

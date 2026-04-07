@@ -141,5 +141,12 @@ func DisseminationControls() []DisseminationControl {
 			Label:       "Exempt from ICD 501 Discovery",
 			Description: "Information exempt from discovery provisions of Intelligence Community Directive 501",
 		},
+		{
+			Code:              "SCI",
+			Label:             "Sensitive Compartmented Information",
+			Description:       "Information requiring SCI access controls; selecting this enables the SCI controls picker",
+			RequiresField:     "sciControls",
+			MinClassification: model.ClassificationTS,
+		},
 	}
 }

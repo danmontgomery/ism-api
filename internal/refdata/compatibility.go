@@ -41,6 +41,7 @@ func DisseminationFieldRequirements() []FieldRequirement {
 		{Control: "REL", Field: "releasableTo"},
 		{Control: "EYES", Field: "releasableTo"},
 		{Control: "DISPLAY ONLY", Field: "displayOnlyTo"},
+		{Control: "SCI", Field: "sciControls"},
 	}
 }
 
@@ -57,6 +58,7 @@ func DisseminationClassificationGates() []ClassificationGate {
 		{Control: "FISA", MinClassification: model.ClassificationC},
 		{Control: "RAWFISA", MinClassification: model.ClassificationC},
 		{Control: "NOCON", MinClassification: model.ClassificationC},
+		{Control: "SCI", MinClassification: model.ClassificationTS},
 	}
 }
 

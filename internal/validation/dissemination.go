@@ -48,6 +48,11 @@ func (r *DisseminationRule) Validate(ism *model.ISM, reg *refdata.Registry) *Val
 				res.AddError("displayOnlyTo", "dissemination.missing_display_only_to",
 					req.Control+" requires displayOnlyTo to be populated")
 			}
+		case "sciControls":
+			if len(ism.SCIControls) == 0 {
+				res.AddError("sciControls", "dissemination.missing_sci_controls",
+					req.Control+" requires sciControls to be populated")
+			}
 		}
 	}
 

@@ -84,6 +84,33 @@ func TestDisseminationResolver(t *testing.T) {
 				{field: "displayOnlyTo", status: guidance.StatusNotApplicable},
 			},
 		},
+		{
+			name: "TS with SCI — sciControls available with allowed values",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				DisseminationControls: []string{"SCI"},
+			},
+			checks: []fieldCheck{
+				{field: "sciControls", status: guidance.StatusAvailable, hasAllowed: true},
+			},
+		},
+		{
+			name: "TS without SCI — sciControls not applicable",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				DisseminationControls: []string{"NOFORN"},
+			},
+			checks: []fieldCheck{
+				{field: "sciControls", status: guidance.StatusNotApplicable},
+			},
+		},
+		{
+			name: "U — SCI not in allowed dissemination controls",
+			ism:  model.ISM{Classification: model.ClassificationU},
+			checks: []fieldCheck{
+				{field: "sciControls", status: guidance.StatusNotApplicable},
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -127,6 +154,30 @@ func TestDisseminationResolver_ClassificationFiltering(t *testing.T) {
 	}
 	if !foundNoforn {
 		t.Error("S should include NOFORN in allowed dissemination controls")
+	}
+
+	// Secret should NOT include SCI (requires TS).
+	for _, av := range sControls.AllowedValues {
+		if av.Code == "SCI" {
+			t.Error("S should not include SCI in allowed dissemination controls — requires TS")
+		}
+	}
+
+	// Top Secret should include SCI.
+	tsResults := r.Resolve(&model.ISM{Classification: model.ClassificationTS}, reg)
+	tsControls := findField(tsResults, "disseminationControls")
+	if tsControls == nil {
+		t.Fatal("disseminationControls not found for TS")
+	}
+	foundSCI := false
+	for _, av := range tsControls.AllowedValues {
+		if av.Code == "SCI" {
+			foundSCI = true
+			break
+		}
+	}
+	if !foundSCI {
+		t.Error("TS should include SCI in allowed dissemination controls")
 	}
 }
 
