@@ -28,6 +28,7 @@ func main() {
 		&resolvers.DistributionResolver{},
 		&resolvers.AuthorityResolver{},
 		&resolvers.DeclassResolver{},
+		&resolvers.SCIResolver{},
 	)
 
 	r := gin.New()

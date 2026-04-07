@@ -30,6 +30,7 @@ func testRouter() *gin.Engine {
 		&resolvers.DistributionResolver{},
 		&resolvers.AuthorityResolver{},
 		&resolvers.DeclassResolver{},
+		&resolvers.SCIResolver{},
 	)
 	r := gin.New()
 	h := handler.New(reg, validator, guider, api.Content)
@@ -126,6 +127,7 @@ func TestRefEndpoints(t *testing.T) {
 		{"country-codes", "/api/v1/ref/country-codes", "code"},
 		{"declass-exceptions", "/api/v1/ref/declass-exceptions", "code"},
 		{"non-ic-markings", "/api/v1/ref/non-ic-markings", "code"},
+		{"sci-controls", "/api/v1/ref/sci-controls", "code"},
 	}
 
 	for _, tc := range paths {
@@ -1070,4 +1072,118 @@ func TestCORS_BrowserClientFlow(t *testing.T) {
 	if got := postW.Header().Get("Access-Control-Allow-Origin"); got != "*" {
 		t.Errorf("POST /api/v1/banner: Access-Control-Allow-Origin = %q, want *", got)
 	}
+}
+
+// ============================================================
+// SCI controls reference endpoint
+// ============================================================
+
+func TestRefSCIControlsShape(t *testing.T) {
+	r := testRouter()
+	w := getJSON(r, "/api/v1/ref/sci-controls")
+	env := parseEnvelope(t, w.Body)
+
+	var items []struct {
+		Code     string `json:"code"`
+		Label    string `json:"label"`
+		Category string `json:"category"`
+	}
+	json.Unmarshal(env.Data, &items)
+
+	if len(items) != 20 {
+		t.Fatalf("got %d SCI controls, want 20", len(items))
+	}
+	for _, item := range items {
+		if item.Code == "" || item.Label == "" || item.Category == "" {
+			t.Errorf("SCI control entry missing required fields: %+v", item)
+		}
+	}
+}
+
+// ============================================================
+// SCI guidance integration
+// ============================================================
+
+func TestGuidance_TS_SCIControlsAvailable(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{
+		"ism": map[string]any{
+			"classification": "TS",
+			"ownerProducer":  []string{"USA"},
+		},
+	}
+	w := postJSON(r, "/api/v1/guidance", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	var result struct {
+		Fields []struct {
+			Field         string `json:"field"`
+			Status        string `json:"status"`
+			AllowedValues []struct {
+				Code string `json:"code"`
+			} `json:"allowedValues"`
+		} `json:"fields"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	var sciField *struct {
+		Field         string `json:"field"`
+		Status        string `json:"status"`
+		AllowedValues []struct {
+			Code string `json:"code"`
+		} `json:"allowedValues"`
+	}
+	for i := range result.Fields {
+		if result.Fields[i].Field == "sciControls" {
+			sciField = &result.Fields[i]
+			break
+		}
+	}
+	if sciField == nil {
+		t.Fatal("sciControls field not found in guidance response")
+	}
+	if sciField.Status != "available" {
+		t.Errorf("sciControls status = %q, want available for TS", sciField.Status)
+	}
+	if len(sciField.AllowedValues) != 20 {
+		t.Errorf("sciControls allowedValues count = %d, want 20", len(sciField.AllowedValues))
+	}
+}
+
+func TestGuidance_Secret_SCIControlsNotApplicable(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{
+		"ism": map[string]any{
+			"classification": "S",
+			"ownerProducer":  []string{"USA"},
+		},
+	}
+	w := postJSON(r, "/api/v1/guidance", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	var result struct {
+		Fields []struct {
+			Field  string `json:"field"`
+			Status string `json:"status"`
+		} `json:"fields"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	for _, f := range result.Fields {
+		if f.Field == "sciControls" {
+			if f.Status != "not_applicable" {
+				t.Errorf("sciControls status = %q, want not_applicable for S", f.Status)
+			}
+			return
+		}
+	}
+	t.Error("sciControls field not found in guidance response")
 }
