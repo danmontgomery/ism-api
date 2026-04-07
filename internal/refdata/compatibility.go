@@ -55,6 +55,7 @@ func DisseminationClassificationGates() []ClassificationGate {
 		{Control: "EYES", MinClassification: model.ClassificationC},
 		{Control: "DSEN", MinClassification: model.ClassificationC},
 		{Control: "FISA", MinClassification: model.ClassificationC},
+		{Control: "RAWFISA", MinClassification: model.ClassificationC},
 		{Control: "NOCON", MinClassification: model.ClassificationC},
 	}
 }

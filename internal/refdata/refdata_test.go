@@ -80,8 +80,8 @@ func TestCUICategories(t *testing.T) {
 
 func TestDisseminationControls(t *testing.T) {
 	controls := DisseminationControls()
-	if len(controls) != 18 {
-		t.Fatalf("expected 18 dissemination controls, got %d", len(controls))
+	if len(controls) != 24 {
+		t.Fatalf("expected 24 dissemination controls, got %d", len(controls))
 	}
 	codes := make(map[string]bool)
 	for _, c := range controls {

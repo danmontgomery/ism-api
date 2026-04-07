@@ -110,5 +110,36 @@ func DisseminationControls() []DisseminationControl {
 			Label:       "Distribution List",
 			Description: "Distribution limited to a specific named list",
 		},
+		{
+			Code:              "RAWFISA",
+			Label:             "Raw FISA",
+			Description:       "Raw data obtained under Foreign Intelligence Surveillance Act authority",
+			MinClassification: model.ClassificationC,
+		},
+		{
+			Code:        "FOUO",
+			Label:       "For Official Use Only",
+			Description: "Information not warranting classification but requiring controlled dissemination",
+		},
+		{
+			Code:        "WAIVED",
+			Label:       "Waived",
+			Description: "Dissemination restriction has been waived by the originator",
+		},
+		{
+			Code:        "AC",
+			Label:       "Attorney-Client Privilege",
+			Description: "Information protected by attorney-client privilege",
+		},
+		{
+			Code:        "AWP",
+			Label:       "Attorney Work Product",
+			Description: "Information protected as attorney work product",
+		},
+		{
+			Code:        "EXEMPT FROM ICD501 DISCOVERY",
+			Label:       "Exempt from ICD 501 Discovery",
+			Description: "Information exempt from discovery provisions of Intelligence Community Directive 501",
+		},
 	}
 }
