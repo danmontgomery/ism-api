@@ -39,7 +39,7 @@ type DistributionStatement struct {
 type CountryCode struct {
 	Code string `json:"code"`
 	Name string `json:"name"`
-	Type string `json:"type"` // "country", "coalition", or "organization"
+	Type string `json:"type"` // "country", "coalition", "organization", or "marker"
 }
 
 // DeclassException is a reference data entry for a 25X declassification exemption.
