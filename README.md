@@ -4,8 +4,6 @@ A REST API for constructing, validating, and rendering DoD/IC security classific
 
 ## ISM Coverage
 
-This API currently does not cover TS or related markings.
-
 The test suite covers the all of the latest XSDs (V2022-NOV) published on dni.gov. Anything not implemented is skipped in tests, which you will see in output. As coverage is completed, skipped tests will be replaced with passing tests.
 
 See this by running tests:
@@ -44,6 +42,7 @@ PORT=9090 go run ./cmd/server
 | GET | `/api/v1/ref/country-codes` | Country/org codes |
 | GET | `/api/v1/ref/declass-exceptions` | Declassification exception codes |
 | GET | `/api/v1/ref/non-ic-markings` | Non-IC marking codes |
+| GET | `/api/v1/ref/sci-controls` | SCI control codes |
 | POST | `/api/v1/validate` | Validate a complete ISM object |
 | POST | `/api/v1/validate/portion` | Validate a portion-level ISM object |
 | POST | `/api/v1/guidance` | Get field-level guidance for partial ISM state |
@@ -125,8 +124,9 @@ A vanilla JavaScript/HTML demo application is included in [`examples/client/`](e
 3. **Walk through a demo flow:**
 
    - Click **Connect** to load reference data from the API
-   - Select a **classification level** (e.g., SECRET) — the wizard dynamically shows/hides fields based on the guidance engine
-   - Choose **Owner/Producer** countries (required for Confidential/Secret)
+   - Select a **classification level** (e.g., SECRET or TOP SECRET) — the wizard dynamically shows/hides fields based on the guidance engine
+   - For **TOP SECRET**, select **SCI controls** (e.g., SI, TK) — these appear only at the TS level
+   - Choose **Owner/Producer** countries (required for Confidential/Secret/Top Secret)
    - Add **dissemination controls** (e.g., NOFORN, REL) — conditional fields like "Releasable To" appear as needed
    - Fill in the **authority block** (classifiedBy, derivedFrom, etc.)
    - Set **declassification** date, event, or exception

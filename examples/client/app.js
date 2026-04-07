@@ -21,6 +21,7 @@
     countryCodes: [],
     declassExceptions: [],
     nonICMarkings: [],
+    sciControls: [],
   };
 
   // Current ISM object being built.
@@ -105,6 +106,7 @@
       apiGet("/api/v1/ref/country-codes"),
       apiGet("/api/v1/ref/declass-exceptions"),
       apiGet("/api/v1/ref/non-ic-markings"),
+      apiGet("/api/v1/ref/sci-controls"),
     ]).then(function (results) {
       refData.classifications = results[0].data || [];
       refData.cuiCategories = results[1].data || [];
@@ -113,6 +115,7 @@
       refData.countryCodes = results[4].data || [];
       refData.declassExceptions = results[5].data || [];
       refData.nonICMarkings = results[6].data || [];
+      refData.sciControls = results[7].data || [];
     });
   }
 
@@ -205,6 +208,7 @@
 
   function hideAllSections() {
     var sections = [
+      "section-sciControls",
       "section-ownerProducer",
       "section-categoryMarkings",
       "section-disseminationControls",
@@ -287,6 +291,10 @@
     var nic = getCheckedValues("field-nonICMarkings");
     if (nic.length) ism.nonICMarkings = nic;
 
+    // SCI Controls
+    var sci = getCheckedValues("field-sciControls");
+    if (sci.length) ism.sciControls = sci;
+
     return ism;
   }
 
@@ -344,6 +352,18 @@
 
     // Owner/Producer
     applyFieldSection("ownerProducer", byField);
+
+    // SCI Controls
+    var sciGuide = byField["sciControls"];
+    if (sciGuide && sciGuide.status !== "not_applicable") {
+      show("section-sciControls");
+      renderCheckboxes(
+        "field-sciControls",
+        sciGuide.allowedValues || [],
+        getCheckedValues("field-sciControls")
+      );
+      setHint("hint-sciControls", sciGuide);
+    }
 
     // CUI Categories
     var catGuide = byField["categoryMarkings"];
