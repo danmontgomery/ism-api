@@ -41,7 +41,7 @@ func TestDeclassResolver(t *testing.T) {
 			checks: []fieldCheck{
 				{field: "declassDate", status: guidance.StatusAvailable},
 				{field: "declassEvent", status: guidance.StatusAvailable},
-				{field: "declassException", status: guidance.StatusAvailable, hasAllowed: true, allowedCount: 11},
+				{field: "declassException", status: guidance.StatusAvailable, hasAllowed: true, allowedCount: 25},
 			},
 		},
 		{
