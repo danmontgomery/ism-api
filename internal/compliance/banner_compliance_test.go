@@ -207,11 +207,21 @@ func TestXSD_Banner_AuthorityBlock(t *testing.T) {
 	})
 }
 
-// TestXSD_Banner_SCI_NotRendered documents that SCI controls are not rendered.
-func TestXSD_Banner_SCI_NotRendered(t *testing.T) {
-	// SCI would appear between classification and dissemination in the banner
-	// e.g., "TOP SECRET//SI//NOFORN"
-	t.Skip("GAP: SCI controls not rendered in banner — no TS classification or SCI field support")
+// TestXSD_Banner_SCI verifies SCI controls render in banner and portion marks.
+func TestXSD_Banner_SCI(t *testing.T) {
+	ism := &model.ISM{
+		Classification:        model.ClassificationTS,
+		OwnerProducer:         []string{"USA"},
+		SCIControls:           []string{"SI"},
+		DisseminationControls: []string{"NOFORN"},
+	}
+	result := banner.Render(ism)
+	if result.BannerLine != "TOP SECRET//SI//NOFORN" {
+		t.Errorf("BannerLine = %q, want %q", result.BannerLine, "TOP SECRET//SI//NOFORN")
+	}
+	if result.PortionMark != "(TS//SI//NF)" {
+		t.Errorf("PortionMark = %q, want %q", result.PortionMark, "(TS//SI//NF)")
+	}
 }
 
 // TestXSD_Banner_FGI verifies FGI source rendering.

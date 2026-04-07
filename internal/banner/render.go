@@ -64,7 +64,7 @@ var portionAbbrev = map[string]string{
 }
 
 // Render produces the banner line and portion mark for the given ISM object.
-// Banner ordering: classification / SCI (future) / dissemination controls / FGI / non-IC.
+// Banner ordering: classification // SCI controls // dissemination controls / FGI / non-IC.
 func Render(ism *model.ISM) Result {
 	bannerClass := classificationBanner[ism.Classification]
 	portionClass := classificationPortion[ism.Classification]
@@ -78,6 +78,7 @@ func Render(ism *model.ISM) Result {
 
 	var bannerParts []string
 	var portionParts []string
+	var sciParts []string
 
 	// CUI category markings (rendered after classification for CUI).
 	if ism.Classification == model.ClassificationCUI && len(ism.CategoryMarkings) > 0 {
@@ -87,7 +88,13 @@ func Render(ism *model.ISM) Result {
 		}
 	}
 
-	// SCI controls — reserved for future TS support.
+	// SCI controls — sorted alphabetically, same code in banner and portion.
+	if len(ism.SCIControls) > 0 {
+		sorted := make([]string, len(ism.SCIControls))
+		copy(sorted, ism.SCIControls)
+		sort.Strings(sorted)
+		sciParts = sorted
+	}
 
 	// Dissemination controls in canonical order.
 	for _, ctrl := range sortControls(ism.DisseminationControls) {
@@ -110,11 +117,17 @@ func Render(ism *model.ISM) Result {
 	}
 
 	banner := bannerClass
+	if len(sciParts) > 0 {
+		banner += "//" + strings.Join(sciParts, "/")
+	}
 	if len(bannerParts) > 0 {
 		banner += "//" + strings.Join(bannerParts, "/")
 	}
 
 	portion := portionClass
+	if len(sciParts) > 0 {
+		portion += "//" + strings.Join(sciParts, "/")
+	}
 	if len(portionParts) > 0 {
 		portion += "//" + strings.Join(portionParts, "/")
 	}

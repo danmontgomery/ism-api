@@ -326,6 +326,51 @@ func TestRender(t *testing.T) {
 			wantPortion: "(S//LIMDIS/EXDIS)",
 		},
 
+		// --- Top Secret + SCI ---
+		{
+			name: "TS with single SCI",
+			ism: model.ISM{
+				Classification: model.ClassificationTS,
+				OwnerProducer:  []string{"USA"},
+				SCIControls:    []string{"SI"},
+			},
+			wantBanner:  "TOP SECRET//SI",
+			wantPortion: "(TS//SI)",
+		},
+		{
+			name: "TS with multiple SCI sorted alphabetically",
+			ism: model.ISM{
+				Classification: model.ClassificationTS,
+				OwnerProducer:  []string{"USA"},
+				SCIControls:    []string{"TK", "HCS", "SI"},
+			},
+			wantBanner:  "TOP SECRET//HCS/SI/TK",
+			wantPortion: "(TS//HCS/SI/TK)",
+		},
+		{
+			name: "TS with SCI and NOFORN",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				OwnerProducer:         []string{"USA"},
+				SCIControls:           []string{"SI"},
+				DisseminationControls: []string{"NOFORN"},
+			},
+			wantBanner:  "TOP SECRET//SI//NOFORN",
+			wantPortion: "(TS//SI//NF)",
+		},
+		{
+			name: "TS with SCI and dissem and FGI",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				OwnerProducer:         []string{"USA"},
+				SCIControls:           []string{"SI", "TK"},
+				DisseminationControls: []string{"NOFORN"},
+				FGISourceOpen:         []string{"GBR"},
+			},
+			wantBanner:  "TOP SECRET//SI/TK//NOFORN/FGI GBR",
+			wantPortion: "(TS//SI/TK//NF/FGI)",
+		},
+
 		// --- Combined ---
 		{
 			name: "S full combo: dissem + FGI + non-IC",
