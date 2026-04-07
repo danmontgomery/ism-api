@@ -10,7 +10,11 @@ func TestXSD_ModelAttributes_AllPresent(t *testing.T) {
 	for _, attr := range xsdISMAttributes {
 		t.Run(attr.Name, func(t *testing.T) {
 			if !requireStructField(t, attr.JSONTag) {
-				t.Skipf("GAP: ISM struct missing field for XSD attribute %s (expected json tag %q) — required by IC-ISM.xsd", attr.Name, attr.JSONTag)
+				if attr.JSONTag == "sciControls" || attr.JSONTag == "sarIdentifier" {
+					t.Skipf("GAP: ISM struct missing field for XSD attribute %s — SCI-related, not yet modeled", attr.Name)
+				} else {
+					t.Errorf("ISM struct missing field for XSD attribute %s (expected json tag %q) — required by IC-ISM.xsd", attr.Name, attr.JSONTag)
+				}
 			}
 		})
 	}
@@ -96,7 +100,11 @@ func TestXSD_ModelAttributes_MissingFields(t *testing.T) {
 				t.Logf("RESOLVED: %s (%s) is now in ISM struct", m.xsd, m.desc)
 				return
 			}
-			t.Skipf("GAP: ISM struct missing %s (%s) — required by IC-ISM.xsd", m.xsd, m.desc)
+			if m.json == "sciControls" || m.json == "sarIdentifier" {
+				t.Skipf("GAP: ISM struct missing %s (%s) — SCI-related, not yet modeled", m.xsd, m.desc)
+			} else {
+				t.Errorf("ISM struct missing %s (%s) — required by IC-ISM.xsd", m.xsd, m.desc)
+			}
 		})
 	}
 }

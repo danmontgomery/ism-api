@@ -13,7 +13,7 @@ func TestXSD_CUI_SpecifiedCategoriesPresent(t *testing.T) {
 			// The API uses SP- prefix for specified categories
 			spCode := "SP-" + code
 			if !r.ValidCUICategory(code) && !r.ValidCUICategory(spCode) {
-				t.Skipf("GAP: CUI specified category %s not in registry — required by CVEnumISMCUISpecified.xsd", code)
+				t.Errorf("CUI specified category %s not in registry — required by CVEnumISMCUISpecified.xsd", code)
 			}
 		})
 	}
@@ -59,12 +59,12 @@ func TestXSD_CUI_APICategoriesToXSD(t *testing.T) {
 func TestXSD_CUI_StructFieldPresent(t *testing.T) {
 	t.Run("cuiSpecified", func(t *testing.T) {
 		if !requireStructField(t, "cuiSpecified") {
-			t.Skip("GAP: ISM struct missing cuiSpecified field — required by IC-ISM.xsd")
+			t.Error("ISM struct missing cuiSpecified field — required by IC-ISM.xsd")
 		}
 	})
 	t.Run("cuiBasic", func(t *testing.T) {
 		if !requireStructField(t, "cuiBasic") {
-			t.Skip("GAP: ISM struct missing cuiBasic field — required by IC-ISM.xsd")
+			t.Error("ISM struct missing cuiBasic field — required by IC-ISM.xsd")
 		}
 	})
 	t.Run("categoryMarkings_exists", func(t *testing.T) {

@@ -55,10 +55,20 @@ type ISM struct {
 	AtomicEnergyMarkings []string `json:"atomicEnergyMarkings,omitempty"`
 
 	// Notices
-	NoticeType []string `json:"noticeType,omitempty"`
+	NoticeType    []string `json:"noticeType,omitempty"`
+	NoticeProseID string   `json:"noticeProseID,omitempty"`
+
+	// NATO
+	HighWaterNATO string `json:"highWaterNATO,omitempty"`
 
 	// Other
-	NonICMarkings []string `json:"nonICMarkings,omitempty"`
-	NonUSControls []string `json:"nonUSControls,omitempty"`
-	BannerLine    string   `json:"bannerLine,omitempty"`
+	NonICMarkings          []string `json:"nonICMarkings,omitempty"`
+	NonUSControls          []string `json:"nonUSControls,omitempty"`
+	BannerLine             string   `json:"bannerLine,omitempty"`
+	SecondBannerLine       string   `json:"secondBannerLine,omitempty"`
+	CreateDate             string   `json:"createDate,omitempty"`
+	HandleViaChannels      string   `json:"handleViaChannels,omitempty"`
+	HasApproximateMarkings bool     `json:"hasApproximateMarkings,omitempty"`
+	NoAggregation          bool     `json:"noAggregation,omitempty"`
+	POCType                string   `json:"pocType,omitempty"`
 }

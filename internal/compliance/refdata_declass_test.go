@@ -11,7 +11,7 @@ func TestXSD_Declass_AllExceptionsPresent(t *testing.T) {
 	for _, code := range xsdDeclassExceptions {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidDeclassException(code) {
-				t.Skipf("GAP: declass exception %s not in registry — required by CVEnumISM25X.xsd", code)
+				t.Errorf("declass exception %s not in registry — required by CVEnumISM25X.xsd", code)
 			}
 		})
 	}
@@ -24,7 +24,7 @@ func TestXSD_Declass_25XCodesPresent(t *testing.T) {
 	for _, code := range codes25X {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidDeclassException(code) {
-				t.Skipf("GAP: %s not in registry — required by CVEnumISM25X.xsd", code)
+				t.Errorf("%s not in registry — required by CVEnumISM25X.xsd", code)
 			}
 		})
 	}
@@ -40,7 +40,7 @@ func TestXSD_Declass_50XCodesPresent(t *testing.T) {
 	for _, code := range codes50X {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidDeclassException(code) {
-				t.Skipf("GAP: %s not in registry — required by CVEnumISM25X.xsd", code)
+				t.Errorf("%s not in registry — required by CVEnumISM25X.xsd", code)
 			}
 		})
 	}
@@ -62,7 +62,7 @@ func TestXSD_Declass_SpecialCodes(t *testing.T) {
 	for _, s := range special {
 		t.Run(s.code, func(t *testing.T) {
 			if !r.ValidDeclassException(s.code) {
-				t.Skipf("GAP: %s (%s) not in registry — required by CVEnumISM25X.xsd", s.code, s.desc)
+				t.Errorf("%s (%s) not in registry — required by CVEnumISM25X.xsd", s.code, s.desc)
 			}
 		})
 	}

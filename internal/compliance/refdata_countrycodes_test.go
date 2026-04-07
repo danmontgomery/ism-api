@@ -66,7 +66,7 @@ func TestXSD_CountryCodes_SamplePresent(t *testing.T) {
 	for _, code := range xsdCountryCodesSample {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidCountryCode(code) {
-				t.Skipf("GAP: country code %s not in registry — required by CVEnumISMCATOwnerProducer.xsd", code)
+				t.Errorf("country code %s not in registry — required by CVEnumISMCATOwnerProducer.xsd", code)
 				missing++
 			}
 		})
@@ -79,7 +79,7 @@ func TestXSD_CountryCodes_CoalitionsPresent(t *testing.T) {
 	for _, code := range xsdCoalitionCodes {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidCountryCode(code) {
-				t.Skipf("GAP: coalition %s not in registry — required by CVEnumISMCATOwnerProducer.xsd", code)
+				t.Errorf("coalition %s not in registry — required by CVEnumISMCATOwnerProducer.xsd", code)
 			}
 		})
 	}
@@ -109,6 +109,6 @@ func TestXSD_CountryCodes_CoverageReport(t *testing.T) {
 func TestXSD_CountryCodes_FGIMarker(t *testing.T) {
 	r := reg()
 	if !r.ValidCountryCode("FGI") {
-		t.Skip("GAP: FGI marker not in country code registry — required by CVEnumISMCATOwnerProducer.xsd")
+		t.Error("FGI marker not in country code registry — required by CVEnumISMCATOwnerProducer.xsd")
 	}
 }

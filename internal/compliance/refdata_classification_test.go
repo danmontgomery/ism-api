@@ -13,7 +13,11 @@ func TestXSD_Classification_AllLevelsPresent(t *testing.T) {
 	for _, code := range xsdClassifications {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidClassification(model.Classification(code)) {
-				t.Skipf("GAP: %s not in registry — required by CVEnumISMClassificationAll.xsd", code)
+				if code == "R" || code == "TS" {
+					t.Skipf("GAP: %s not in registry — R/TS not yet modeled", code)
+				} else {
+					t.Errorf("%s not in registry — required by CVEnumISMClassificationAll.xsd", code)
+				}
 			}
 		})
 	}

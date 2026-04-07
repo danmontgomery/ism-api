@@ -12,15 +12,13 @@ func TestXSD_Dissemination_AllControlsPresent(t *testing.T) {
 		t.Run(xsdCode, func(t *testing.T) {
 			apiCode, mapped := xsdToAPIDissemination[xsdCode]
 			if !mapped {
-				t.Skipf("GAP: %s has no API mapping — required by CVEnumISMDissem.xsd", xsdCode)
-				return
+				t.Fatalf("%s has no API mapping — required by CVEnumISMDissem.xsd", xsdCode)
 			}
 			if apiCode == "" {
-				t.Skipf("GAP: %s has no API equivalent — required by CVEnumISMDissem.xsd", xsdCode)
-				return
+				t.Fatalf("%s has no API equivalent — required by CVEnumISMDissem.xsd", xsdCode)
 			}
 			if !r.ValidDisseminationControl(apiCode) {
-				t.Skipf("GAP: %s (XSD: %s) not in registry — required by CVEnumISMDissem.xsd", apiCode, xsdCode)
+				t.Errorf("%s (XSD: %s) not in registry — required by CVEnumISMDissem.xsd", apiCode, xsdCode)
 			}
 		})
 	}
@@ -45,8 +43,7 @@ func TestXSD_Dissemination_CodeMapping(t *testing.T) {
 	for _, m := range knownMappings {
 		t.Run(m.xsd+"->"+m.api, func(t *testing.T) {
 			if !r.ValidDisseminationControl(m.api) {
-				t.Skipf("GAP: API code %s not in registry", m.api)
-				return
+				t.Fatalf("API code %s not in registry", m.api)
 			}
 			// Verify the lookup works with the API code
 			ctrl := r.LookupDisseminationControl(m.api)
@@ -77,7 +74,7 @@ func TestXSD_Dissemination_MissingControls(t *testing.T) {
 				t.Logf("RESOLVED: %s (%s) is now in registry", m.xsd, m.desc)
 				return
 			}
-			t.Skipf("GAP: %s (%s) not in registry — required by CVEnumISMDissem.xsd", m.xsd, m.desc)
+			t.Errorf("%s (%s) not in registry — required by CVEnumISMDissem.xsd", m.xsd, m.desc)
 		})
 	}
 }
@@ -112,8 +109,7 @@ func TestXSD_Dissemination_FOUO(t *testing.T) {
 	dissem := r.ValidDisseminationControl("FOUO")
 	nonIC := r.ValidNonICMarking("FOUO")
 	if !dissem && !nonIC {
-		t.Skip("GAP: FOUO not present in API (neither dissemination nor non-IC)")
-		return
+		t.Fatal("FOUO not present in API (neither dissemination nor non-IC)")
 	}
 	if nonIC && !dissem {
 		t.Log("NOTE: FOUO registered as non-IC marking, not dissemination control")

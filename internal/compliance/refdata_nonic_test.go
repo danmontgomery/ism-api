@@ -11,7 +11,7 @@ func TestXSD_NonIC_AllMarkingsPresent(t *testing.T) {
 	for _, code := range xsdNonICMarkings {
 		t.Run(code, func(t *testing.T) {
 			if !r.ValidNonICMarking(code) {
-				t.Skipf("GAP: non-IC marking %s not in registry — required by CVEnumISMNonIC.xsd", code)
+				t.Errorf("non-IC marking %s not in registry — required by CVEnumISMNonIC.xsd", code)
 			}
 		})
 	}
@@ -21,7 +21,7 @@ func TestXSD_NonIC_AllMarkingsPresent(t *testing.T) {
 func TestXSD_NonIC_NNPI(t *testing.T) {
 	r := reg()
 	if !r.ValidNonICMarking("NNPI") {
-		t.Skip("GAP: NNPI not in non-IC registry — required by CVEnumISMNonIC.xsd")
+		t.Error("NNPI not in non-IC registry — required by CVEnumISMNonIC.xsd")
 	}
 }
 

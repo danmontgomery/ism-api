@@ -14,7 +14,7 @@ func reg() *refdata.Registry {
 }
 
 // assertRegistryContains checks that every code in xsdCodes passes validFunc.
-// Codes that fail are reported as t.Skip("GAP: ...") with the given xsdSource.
+// Codes that fail are logged with the given xsdSource.
 // Returns the number of missing codes.
 func assertRegistryContains(t *testing.T, validFunc func(string) bool, xsdCodes []string, xsdSource string) int {
 	t.Helper()
