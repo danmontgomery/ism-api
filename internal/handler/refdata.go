@@ -56,3 +56,8 @@ func (h *Handler) RefAtomicEnergyMarkings(c *gin.Context) {
 func (h *Handler) RefNoticeTypes(c *gin.Context) {
 	respondData(c, h.reg.NoticeTypes)
 }
+
+// RefSCIControls returns all SCI control codes.
+func (h *Handler) RefSCIControls(c *gin.Context) {
+	respondData(c, h.reg.SCIControls)
+}

@@ -282,6 +282,34 @@ paths:
                     label: "ICD-710 Mandatory FD&R"
                     description: "Exemption from ICD-710 rules mandating Foreign Disclosure and Release markings"
 
+  /api/v1/ref/sci-controls:
+    get:
+      operationId: getSCIControls
+      summary: List SCI control codes
+      tags: [reference-data]
+      responses:
+        "200":
+          description: Envelope-wrapped array of SCI control entries
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/SCIControl"
+              example:
+                data:
+                  - code: SI
+                    label: SPECIAL INTELLIGENCE
+                    category: "SI (SPECIAL INTELLIGENCE)"
+                  - code: TK
+                    label: TALENT KEYHOLE
+                    category: "TK (TALENT KEYHOLE)"
+
   /api/v1/validate:
     post:
       operationId: validateISM
@@ -539,7 +567,7 @@ components:
         classification:
           type: string
           description: Classification level code
-          enum: [U, CUI, C, S]
+          enum: [U, CUI, C, S, TS]
         ownerProducer:
           type: array
           items:
@@ -641,6 +669,11 @@ components:
           items:
             type: string
           description: Compliance framework codes per CVEnumISMCompliesWith.xsd
+        sciControls:
+          type: array
+          items:
+            type: string
+          description: SCI control codes per CVEnumISMSCIControls.xsd (e.g. SI, TK, HCS)
         exemptFrom:
           type: array
           items:
@@ -676,7 +709,7 @@ components:
         code:
           type: string
           description: Classification code
-          enum: [U, CUI, C, S]
+          enum: [U, CUI, C, S, TS]
         label:
           type: string
           description: Human-readable label
@@ -723,7 +756,7 @@ components:
         minClassification:
           type: string
           description: Minimum classification level for this control
-          enum: [U, CUI, C, S]
+          enum: [U, CUI, C, S, TS]
         exclusiveWith:
           type: array
           items:
@@ -818,6 +851,21 @@ components:
           type: string
           description: What the exemption covers
       required: [code, label, description]
+
+    SCIControl:
+      type: object
+      description: Reference data entry for an SCI (Sensitive Compartmented Information) control marking per CVEnumISMSCIControls.xsd.
+      properties:
+        code:
+          type: string
+          description: SCI control code (e.g. SI, TK, HCS)
+        label:
+          type: string
+          description: Human-readable label
+        category:
+          type: string
+          description: Control family/category (e.g. "SI (SPECIAL INTELLIGENCE)")
+      required: [code, label, category]
 
     ValidationResult:
       type: object

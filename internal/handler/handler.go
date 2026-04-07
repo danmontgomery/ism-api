@@ -50,6 +50,7 @@ func (h *Handler) Register(r *gin.Engine) {
 			ref.GET("/complies-with", h.RefCompliesWith)
 			ref.GET("/atomic-energy-markings", h.RefAtomicEnergyMarkings)
 			ref.GET("/notice-types", h.RefNoticeTypes)
+			ref.GET("/sci-controls", h.RefSCIControls)
 		}
 
 		v1.POST("/validate", h.Validate)
