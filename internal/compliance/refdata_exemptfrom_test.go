@@ -4,22 +4,19 @@ import (
 	"testing"
 )
 
-// TestXSD_ExemptFrom_NotModeled documents that exemptFrom is not modeled.
-func TestXSD_ExemptFrom_NotModeled(t *testing.T) {
+// TestXSD_ExemptFrom_StructFieldPresent verifies the ISM struct has an exemptFrom field.
+func TestXSD_ExemptFrom_StructFieldPresent(t *testing.T) {
 	if !requireStructField(t, "exemptFrom") {
-		t.Skip("GAP: ISM struct missing exemptFrom field — 2 values from CVEnumISMExemptFrom.xsd not modeled")
+		t.Fatal("ISM struct must have exemptFrom field")
 	}
 }
 
-// TestXSD_ExemptFrom_AllValuesPresent checks each exemptFrom value.
+// TestXSD_ExemptFrom_AllValuesPresent checks each XSD exemptFrom value against the registry.
 func TestXSD_ExemptFrom_AllValuesPresent(t *testing.T) {
-	if !requireStructField(t, "exemptFrom") {
-		t.Skip("GAP: ISM struct missing exemptFrom field — cannot test values")
-		return
-	}
-	for _, code := range xsdExemptFrom {
-		t.Run(code, func(t *testing.T) {
-			t.Skipf("GAP: exemptFrom value %s not in registry — required by CVEnumISMExemptFrom.xsd", code)
-		})
+	r := reg()
+	missing := assertRegistryContains(t, r.ValidExemptFrom, xsdExemptFrom,
+		"CVEnumISMExemptFrom.xsd")
+	if missing > 0 {
+		t.Errorf("%d exemptFrom values from XSD missing in registry", missing)
 	}
 }

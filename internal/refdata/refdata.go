@@ -61,6 +61,13 @@ type NonUSControl struct {
 	Label string `json:"label"`
 }
 
+// ExemptFromEntry is a reference data entry for an ISM exemption.
+type ExemptFromEntry struct {
+	Code        string `json:"code"`
+	Label       string `json:"label"`
+	Description string `json:"description"`
+}
+
 // Registry aggregates all compiled-in reference data for the ISM API.
 type Registry struct {
 	Classifications        []ClassificationEntry
@@ -71,6 +78,7 @@ type Registry struct {
 	DeclassExceptions      []DeclassException
 	NonICMarkings          []NonICMarking
 	NonUSControls          []NonUSControl
+	ExemptFrom             []ExemptFromEntry
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
@@ -84,6 +92,7 @@ func NewRegistry() *Registry {
 		DeclassExceptions:      DeclassExceptions(),
 		NonICMarkings:          NonICMarkings(),
 		NonUSControls:          NonUSControls(),
+		ExemptFrom:             ExemptFrom(),
 	}
 }
 
@@ -161,6 +170,16 @@ func (r *Registry) ValidNonICMarking(code string) bool {
 func (r *Registry) ValidNonUSControl(code string) bool {
 	for _, n := range r.NonUSControls {
 		if n.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
+// ValidExemptFrom returns true if code is a known exemptFrom value.
+func (r *Registry) ValidExemptFrom(code string) bool {
+	for _, e := range r.ExemptFrom {
+		if e.Code == code {
 			return true
 		}
 	}

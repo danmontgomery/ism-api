@@ -36,3 +36,8 @@ func (h *Handler) RefDeclassExceptions(c *gin.Context) {
 func (h *Handler) RefNonICMarkings(c *gin.Context) {
 	respondData(c, h.reg.NonICMarkings)
 }
+
+// RefExemptFrom returns all exemptFrom values.
+func (h *Handler) RefExemptFrom(c *gin.Context) {
+	respondData(c, h.reg.ExemptFrom)
+}

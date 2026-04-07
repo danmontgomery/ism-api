@@ -43,6 +43,9 @@ type ISM struct {
 	FGISourceOpen      []string `json:"fgiSourceOpen,omitempty"`
 	FGISourceProtected []string `json:"fgiSourceProtected,omitempty"`
 
+	// Exemptions
+	ExemptFrom []string `json:"exemptFrom,omitempty"`
+
 	// Other
 	NonICMarkings []string `json:"nonICMarkings,omitempty"`
 	NonUSControls []string `json:"nonUSControls,omitempty"`

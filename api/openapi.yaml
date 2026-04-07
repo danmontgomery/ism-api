@@ -233,6 +233,31 @@ paths:
                   - code: LIMDIS
                     label: Limited Distribution
 
+  /api/v1/ref/exempt-from:
+    get:
+      operationId: getExemptFrom
+      summary: List exemptFrom values
+      tags: [reference-data]
+      responses:
+        "200":
+          description: Envelope-wrapped array of exemptFrom entries
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/ExemptFromEntry"
+              example:
+                data:
+                  - code: IC_710_MANDATORY_FDR
+                    label: "ICD-710 Mandatory FD&R"
+                    description: "Exemption from ICD-710 rules mandating Foreign Disclosure and Release markings"
+
   /api/v1/validate:
     post:
       operationId: validateISM
@@ -587,6 +612,11 @@ components:
           items:
             type: string
           description: Non-US control marking codes
+        exemptFrom:
+          type: array
+          items:
+            type: string
+          description: Exemption codes per CVEnumISMExemptFrom.xsd
         bannerLine:
           type: string
           description: Pre-computed banner line (if already rendered)
@@ -732,6 +762,21 @@ components:
           type: string
           description: Human-readable label
       required: [code, label]
+
+    ExemptFromEntry:
+      type: object
+      description: Reference data entry for an ISM exemption per CVEnumISMExemptFrom.xsd.
+      properties:
+        code:
+          type: string
+          description: Exemption code (e.g. IC_710_MANDATORY_FDR)
+        label:
+          type: string
+          description: Human-readable label
+        description:
+          type: string
+          description: What the exemption covers
+      required: [code, label, description]
 
     ValidationResult:
       type: object

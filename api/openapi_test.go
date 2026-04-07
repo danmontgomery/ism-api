@@ -48,6 +48,7 @@ func TestOpenAPISpec(t *testing.T) {
 		{"/api/v1/ref/country-codes", "get"},
 		{"/api/v1/ref/declass-exceptions", "get"},
 		{"/api/v1/ref/non-ic-markings", "get"},
+		{"/api/v1/ref/exempt-from", "get"},
 		{"/api/v1/validate", "post"},
 		{"/api/v1/validate/portion", "post"},
 		{"/api/v1/guidance", "post"},
@@ -65,8 +66,8 @@ func TestOpenAPISpec(t *testing.T) {
 		}
 	}
 
-	if len(spec.Paths) != 12 {
-		t.Errorf("expected 12 paths, got %d", len(spec.Paths))
+	if len(spec.Paths) != 13 {
+		t.Errorf("expected 13 paths, got %d", len(spec.Paths))
 	}
 
 	// All expected schemas must exist.
@@ -82,6 +83,7 @@ func TestOpenAPISpec(t *testing.T) {
 		"CountryCode",
 		"DeclassException",
 		"NonICMarking",
+		"ExemptFromEntry",
 		"ValidationResult",
 		"FieldError",
 		"FieldGuidance",
