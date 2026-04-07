@@ -68,6 +68,12 @@ type ExemptFromEntry struct {
 	Description string `json:"description"`
 }
 
+// CompliesWithEntry is a reference data entry for an ISM compliance framework.
+type CompliesWithEntry struct {
+	Code  string `json:"code"`
+	Label string `json:"label"`
+}
+
 // Registry aggregates all compiled-in reference data for the ISM API.
 type Registry struct {
 	Classifications        []ClassificationEntry
@@ -79,6 +85,7 @@ type Registry struct {
 	NonICMarkings          []NonICMarking
 	NonUSControls          []NonUSControl
 	ExemptFrom             []ExemptFromEntry
+	CompliesWith           []CompliesWithEntry
 }
 
 // NewRegistry returns a Registry populated with all compiled-in reference data.
@@ -93,6 +100,7 @@ func NewRegistry() *Registry {
 		NonICMarkings:          NonICMarkings(),
 		NonUSControls:          NonUSControls(),
 		ExemptFrom:             ExemptFrom(),
+		CompliesWith:           CompliesWith(),
 	}
 }
 
@@ -180,6 +188,16 @@ func (r *Registry) ValidNonUSControl(code string) bool {
 func (r *Registry) ValidExemptFrom(code string) bool {
 	for _, e := range r.ExemptFrom {
 		if e.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
+// ValidCompliesWith returns true if code is a known compliesWith value.
+func (r *Registry) ValidCompliesWith(code string) bool {
+	for _, c := range r.CompliesWith {
+		if c.Code == code {
 			return true
 		}
 	}

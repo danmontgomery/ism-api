@@ -37,6 +37,7 @@ func NewEngine(reg *refdata.Registry) *Engine {
 			&FGIRule{},
 			&NonUSControlsRule{},
 			&ExemptFromRule{},
+			&CompliesWithRule{},
 		},
 	}
 }

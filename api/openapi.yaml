@@ -233,6 +233,30 @@ paths:
                   - code: LIMDIS
                     label: Limited Distribution
 
+  /api/v1/ref/complies-with:
+    get:
+      operationId: getCompliesWith
+      summary: List compliesWith values
+      tags: [reference-data]
+      responses:
+        "200":
+          description: Envelope-wrapped array of compliesWith entries
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/CompliesWithEntry"
+              example:
+                data:
+                  - code: USGov
+                    label: US Government
+
   /api/v1/ref/exempt-from:
     get:
       operationId: getExemptFrom
@@ -612,6 +636,11 @@ components:
           items:
             type: string
           description: Non-US control marking codes
+        compliesWith:
+          type: array
+          items:
+            type: string
+          description: Compliance framework codes per CVEnumISMCompliesWith.xsd
         exemptFrom:
           type: array
           items:
@@ -758,6 +787,18 @@ components:
         code:
           type: string
           description: Marking code
+        label:
+          type: string
+          description: Human-readable label
+      required: [code, label]
+
+    CompliesWithEntry:
+      type: object
+      description: Reference data entry for an ISM compliance framework per CVEnumISMCompliesWith.xsd.
+      properties:
+        code:
+          type: string
+          description: Compliance code (e.g. USGov, USIC)
         label:
           type: string
           description: Human-readable label

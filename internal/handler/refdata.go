@@ -41,3 +41,8 @@ func (h *Handler) RefNonICMarkings(c *gin.Context) {
 func (h *Handler) RefExemptFrom(c *gin.Context) {
 	respondData(c, h.reg.ExemptFrom)
 }
+
+// RefCompliesWith returns all compliesWith values.
+func (h *Handler) RefCompliesWith(c *gin.Context) {
+	respondData(c, h.reg.CompliesWith)
+}

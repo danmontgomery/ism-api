@@ -47,6 +47,7 @@ func (h *Handler) Register(r *gin.Engine) {
 			ref.GET("/declass-exceptions", h.RefDeclassExceptions)
 			ref.GET("/non-ic-markings", h.RefNonICMarkings)
 			ref.GET("/exempt-from", h.RefExemptFrom)
+			ref.GET("/complies-with", h.RefCompliesWith)
 		}
 
 		v1.POST("/validate", h.Validate)

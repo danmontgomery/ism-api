@@ -4,23 +4,23 @@ import (
 	"testing"
 )
 
-// TestXSD_CompliesWith_NotModeled documents that compliesWith is not modeled.
+// TestXSD_CompliesWith_NotModeled verifies the ISM struct has a compliesWith field.
 func TestXSD_CompliesWith_NotModeled(t *testing.T) {
 	if !requireStructField(t, "compliesWith") {
-		t.Skip("GAP: ISM struct missing compliesWith field — 6 values from CVEnumISMCompliesWith.xsd not modeled")
+		t.Fatal("ISM struct must have compliesWith field")
 	}
 }
 
-// TestXSD_CompliesWith_AllValuesPresent checks each compliesWith value.
+// TestXSD_CompliesWith_AllValuesPresent checks each XSD compliesWith value against the registry.
 func TestXSD_CompliesWith_AllValuesPresent(t *testing.T) {
 	if !requireStructField(t, "compliesWith") {
-		t.Skip("GAP: ISM struct missing compliesWith field — cannot test values")
-		return
+		t.Fatal("ISM struct must have compliesWith field")
 	}
-	for _, code := range xsdCompliesWith {
-		t.Run(code, func(t *testing.T) {
-			t.Skipf("GAP: compliesWith value %s not in registry — required by CVEnumISMCompliesWith.xsd", code)
-		})
+	r := reg()
+	missing := assertRegistryContains(t, r.ValidCompliesWith, xsdCompliesWith,
+		"CVEnumISMCompliesWith.xsd")
+	if missing > 0 {
+		t.Errorf("%d compliesWith values from XSD missing in registry", missing)
 	}
 }
 
@@ -28,9 +28,15 @@ func TestXSD_CompliesWith_AllValuesPresent(t *testing.T) {
 // compliesWith and CUI classification in the API.
 func TestXSD_CompliesWith_CUIRelationship(t *testing.T) {
 	// The XSD defines CUI compliance via compliesWith=USA-CUI-ONLY or USA-CUI.
-	// The API instead treats CUI as a classification level.
-	// This is a fundamental architectural divergence from the XSD model.
+	// The API models compliesWith as a first-class attribute per CVEnumISMCompliesWith.xsd.
 	if !requireStructField(t, "compliesWith") {
-		t.Skip("GAP: compliesWith not modeled — CUI is handled as classification level instead of compliance attribute per CVEnumISMCompliesWith.xsd")
+		t.Fatal("ISM struct must have compliesWith field")
+	}
+	r := reg()
+	if !r.ValidCompliesWith("USA-CUI-ONLY") {
+		t.Error("USA-CUI-ONLY must be a valid compliesWith value")
+	}
+	if !r.ValidCompliesWith("USA-CUI") {
+		t.Error("USA-CUI must be a valid compliesWith value")
 	}
 }

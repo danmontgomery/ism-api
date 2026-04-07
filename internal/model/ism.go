@@ -46,6 +46,9 @@ type ISM struct {
 	// Exemptions
 	ExemptFrom []string `json:"exemptFrom,omitempty"`
 
+	// Compliance
+	CompliesWith []string `json:"compliesWith,omitempty"`
+
 	// Other
 	NonICMarkings []string `json:"nonICMarkings,omitempty"`
 	NonUSControls []string `json:"nonUSControls,omitempty"`
