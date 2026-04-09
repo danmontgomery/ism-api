@@ -146,8 +146,8 @@ func TestRender(t *testing.T) {
 				DisseminationControls: []string{"REL"},
 				ReleasableTo:          []string{"USA", "GBR", "CAN"},
 			},
-			wantBanner:  "SECRET//REL TO USA, GBR, CAN",
-			wantPortion: "(S//REL TO USA, GBR, CAN)",
+			wantBanner:  "SECRET//REL TO USA, CAN, GBR",
+			wantPortion: "(S//REL TO USA, CAN, GBR)",
 		},
 		{
 			name: "S with OC and NOFORN",

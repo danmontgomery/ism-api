@@ -257,8 +257,9 @@ func sortControls(controls []string) []string {
 func renderControl(ctrl string, ism *model.ISM) (banner, portion string) {
 	switch ctrl {
 	case "REL":
-		countries := strings.Join(ism.ReleasableTo, ", ")
-		return "REL TO " + countries, "REL TO " + countries
+		countries := sortCountriesUSAFirst(ism.ReleasableTo)
+		joined := strings.Join(countries, ", ")
+		return "REL TO " + joined, "REL TO " + joined
 	case "DISPLAY ONLY":
 		countries := strings.Join(ism.DisplayOnlyTo, ", ")
 		return "DISPLAY ONLY " + countries, "DISPLAY ONLY " + countries
@@ -269,6 +270,25 @@ func renderControl(ctrl string, ism *model.ISM) (banner, portion string) {
 		}
 		return ctrl, abbr
 	}
+}
+
+// sortCountriesUSAFirst returns a sorted copy of the country list with USA
+// first (if present), followed by the remaining countries in alphabetical
+// order. This implements CC-1 (E4-S10.d.4).
+func sortCountriesUSAFirst(countries []string) []string {
+	sorted := make([]string, len(countries))
+	copy(sorted, countries)
+	sort.Strings(sorted)
+
+	// Move USA to front if present.
+	for i, c := range sorted {
+		if c == "USA" {
+			sorted = append(sorted[:i], sorted[i+1:]...)
+			sorted = append([]string{"USA"}, sorted...)
+			break
+		}
+	}
+	return sorted
 }
 
 // renderFGI returns the banner and portion mark representations for FGI

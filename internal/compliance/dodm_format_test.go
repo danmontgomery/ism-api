@@ -299,11 +299,11 @@ func TestDoDM_CC1_RELTO_USANotFirst_Invalid(t *testing.T) {
 		ReleasableTo:          []string{"GBR", "USA", "AUS"},
 	}
 	result := banner.Render(ism)
-	// Check whether the renderer always puts USA first regardless of input order.
-	if strings.Contains(result.BannerLine, "REL TO GBR, USA") {
-		t.Skipf("GAP: BannerLine = %q, USA must be first in REL TO list per CC-1; "+
-			"renderer passes through ReleasableTo order as-is without enforcing USA-first",
-			result.BannerLine)
+	// Renderer must put USA first regardless of input order per CC-1.
+	want := "REL TO USA, AUS, GBR"
+	if !strings.Contains(result.BannerLine, want) {
+		t.Errorf("BannerLine = %q, want %q per CC-1 (USA first, others alphabetical)",
+			result.BannerLine, want)
 	}
 }
 
