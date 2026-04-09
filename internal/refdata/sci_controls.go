@@ -122,6 +122,11 @@ func SCIControls() []SCIControl {
 			Category: "TK (TALENT KEYHOLE)",
 		},
 		{
+			Code:     "TK-GEOCAP",
+			Label:    "GEOCAP",
+			Category: "TK (TALENT KEYHOLE)",
+		},
+		{
 			Code:     "TK-KAND",
 			Label:    "KANDIK",
 			Category: "TK (TALENT KEYHOLE)",

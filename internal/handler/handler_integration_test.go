@@ -1090,8 +1090,8 @@ func TestRefSCIControlsShape(t *testing.T) {
 	}
 	json.Unmarshal(env.Data, &items)
 
-	if len(items) != 20 {
-		t.Fatalf("got %d SCI controls, want 20", len(items))
+	if len(items) != 21 {
+		t.Fatalf("got %d SCI controls, want 21", len(items))
 	}
 	for _, item := range items {
 		if item.Code == "" || item.Label == "" || item.Category == "" {
@@ -1149,8 +1149,8 @@ func TestGuidance_TS_SCIControlsAvailable(t *testing.T) {
 	if sciField.Status != "available" {
 		t.Errorf("sciControls status = %q, want available for TS", sciField.Status)
 	}
-	if len(sciField.AllowedValues) != 20 {
-		t.Errorf("sciControls allowedValues count = %d, want 20", len(sciField.AllowedValues))
+	if len(sciField.AllowedValues) != 21 {
+		t.Errorf("sciControls allowedValues count = %d, want 21", len(sciField.AllowedValues))
 	}
 }
 

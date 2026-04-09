@@ -46,10 +46,10 @@ func TestSCIResolver(t *testing.T) {
 			},
 		},
 		{
-			name: "TS — sciControls available with 20 controls",
+			name: "TS — sciControls available with 21 controls",
 			ism:  model.ISM{Classification: model.ClassificationTS},
 			checks: []fieldCheck{
-				{field: "sciControls", status: guidance.StatusAvailable, hasAllowed: true, allowedCount: 20},
+				{field: "sciControls", status: guidance.StatusAvailable, hasAllowed: true, allowedCount: 21},
 			},
 		},
 	}

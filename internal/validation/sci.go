@@ -1,6 +1,8 @@
 package validation
 
 import (
+	"strings"
+
 	"expr.ai/ism-api/internal/model"
 	"expr.ai/ism-api/internal/refdata"
 )
@@ -30,6 +32,23 @@ func (r *SCIRule) Validate(ism *model.ISM, reg *refdata.Registry) *ValidationRes
 		if !reg.ValidSCIControl(code) {
 			res.AddError("sciControls", "sci.invalid_control",
 				"unknown SCI control code: "+code)
+		}
+	}
+
+	// HCS/HCS-* and TK-GEOCAP require NOFORN (E4-S6.f, E4-S6.f.tk).
+	hasNOFORN := false
+	for _, dc := range ism.DisseminationControls {
+		if dc == "NOFORN" {
+			hasNOFORN = true
+			break
+		}
+	}
+	if !hasNOFORN {
+		for _, code := range ism.SCIControls {
+			if code == "HCS" || strings.HasPrefix(code, "HCS-") || code == "TK-GEOCAP" {
+				res.AddError("sciControls", "sci.requires_noforn",
+					code+" requires NOFORN in disseminationControls")
+			}
 		}
 	}
 
