@@ -338,17 +338,17 @@ func TestRender(t *testing.T) {
 				OwnerProducer:  []string{"USA"},
 				FGISourceOpen:  []string{"GBR", "FRA"},
 			},
-			wantBanner:  "SECRET//FGI GBR FRA",
+			wantBanner:  "SECRET//FGI FRA GBR",
 			wantPortion: "(S//FGI)",
 		},
 		{
-			name: "S with FGI protected source",
+			name: "S with FGI protected source (concealed per E4-S9.e)",
 			ism: model.ISM{
 				Classification:     model.ClassificationS,
 				OwnerProducer:      []string{"USA"},
 				FGISourceProtected: []string{"DEU"},
 			},
-			wantBanner:  "SECRET//FGI DEU",
+			wantBanner:  "SECRET//FGI",
 			wantPortion: "(S//FGI)",
 		},
 

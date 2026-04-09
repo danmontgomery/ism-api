@@ -326,13 +326,17 @@ func sortCountriesUSAFirst(countries []string) []string {
 }
 
 // renderFGI returns the banner and portion mark representations for FGI
-// sources. The banner line lists all source countries; the portion mark uses
-// the abbreviated "FGI" form.
+// sources. Open sources list country codes alphabetically (E4-S9.d.alpha);
+// protected sources are concealed — no country codes shown (E4-S9.e).
 func renderFGI(ism *model.ISM) (banner, portion string) {
-	var sources []string
-	sources = append(sources, ism.FGISourceOpen...)
-	sources = append(sources, ism.FGISourceProtected...)
-	return "FGI " + strings.Join(sources, " "), "FGI"
+	if len(ism.FGISourceOpen) == 0 {
+		// Only protected sources — conceal all country codes per E4-S9.e.
+		return "FGI", "FGI"
+	}
+	sorted := make([]string, len(ism.FGISourceOpen))
+	copy(sorted, ism.FGISourceOpen)
+	sort.Strings(sorted)
+	return "FGI " + strings.Join(sorted, " "), "FGI"
 }
 
 // renderAEA returns the banner and portion parts for Atomic Energy Act markings.
