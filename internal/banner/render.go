@@ -128,7 +128,12 @@ func Render(ism *model.ISM) Result {
 	}
 
 	// Dissemination controls in canonical order.
+	classified := ism.Classification.AtLeast(model.ClassificationC)
 	for _, ctrl := range sortControls(ism.DisseminationControls) {
+		// BP-7: FOUO is U/CUI-only; suppress from classified banners.
+		if ctrl == "FOUO" && classified {
+			continue
+		}
 		b, p := renderControl(ctrl, ism)
 		bannerParts = append(bannerParts, b)
 		portionParts = append(portionParts, p)
@@ -141,8 +146,11 @@ func Render(ism *model.ISM) Result {
 		portionParts = append(portionParts, p)
 	}
 
-	// Non-IC markings (passed through as-is).
+	// Non-IC markings — BP-7: suppress FOUO in classified context.
 	for _, m := range ism.NonICMarkings {
+		if m == "FOUO" && classified {
+			continue
+		}
 		bannerParts = append(bannerParts, m)
 		portionParts = append(portionParts, m)
 	}
