@@ -71,7 +71,7 @@ func TestXSD_Validation_REL_RequiresReleasableTo(t *testing.T) {
 			Classification:        model.ClassificationS,
 			OwnerProducer:         []string{"USA"},
 			DisseminationControls: []string{"REL"},
-			ReleasableTo:          []string{"GBR", "CAN"},
+			ReleasableTo:          []string{"USA", "GBR", "CAN"},
 			ClassifiedBy:          "Test",
 			DeclassDate:           "20350101",
 		}

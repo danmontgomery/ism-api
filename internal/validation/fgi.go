@@ -39,6 +39,12 @@ func (r *FGIRule) Validate(ism *model.ISM, reg *refdata.Registry) *ValidationRes
 			"FGI requires at least CONFIDENTIAL classification per E4-S9.b")
 	}
 
+	// MX-10: JOINT and FGI classification systems are mutually exclusive (E4-S1.d).
+	if ism.Joint {
+		res.AddError("joint", "fgi.joint_fgi_conflict",
+			"JOINT classification and FGI are mutually exclusive per E4-S1.d")
+	}
+
 	// E4-S9.l: REL TO with FGI — FGI source countries must be in the REL TO list.
 	hasREL := false
 	for _, ctrl := range ism.DisseminationControls {

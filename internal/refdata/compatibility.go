@@ -31,6 +31,8 @@ func ExclusiveDisseminationPairs() []ExclusivePair {
 	return []ExclusivePair{
 		{A: "NOFORN", B: "REL"},
 		{A: "NOFORN", B: "RELIDO"},
+		{A: "DISPLAY ONLY", B: "NOFORN"},  // MX-6: E4-S10.e.4
+		{A: "DISPLAY ONLY", B: "RELIDO"},  // MX-7: E4-S10.e.4
 	}
 }
 
@@ -58,7 +60,9 @@ func DisseminationClassificationGates() []ClassificationGate {
 		{Control: "FISA", MinClassification: model.ClassificationC},
 		{Control: "RAWFISA", MinClassification: model.ClassificationC},
 		{Control: "NOCON", MinClassification: model.ClassificationC},
+		{Control: "REL", MinClassification: model.ClassificationCUI},       // CL-6: E4-S10.d.3
 		{Control: "RELIDO", MinClassification: model.ClassificationC},
+		{Control: "DISPLAY ONLY", MinClassification: model.ClassificationC}, // CL-7: E4-S10.e.3
 		{Control: "SCI", MinClassification: model.ClassificationTS},
 	}
 }

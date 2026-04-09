@@ -78,6 +78,51 @@ func (r *DisseminationRule) Validate(ism *model.ISM, reg *refdata.Registry) *Val
 			"FOUO is only permitted at UNCLASSIFIED classification")
 	}
 
+	// CR-3: REL TO requires at least one non-USA country (E4-S10.d.5).
+	if controlSet["REL"] && len(ism.ReleasableTo) > 0 {
+		hasNonUSA := false
+		for _, code := range ism.ReleasableTo {
+			if code != "USA" {
+				hasNonUSA = true
+				break
+			}
+		}
+		if !hasNonUSA {
+			res.AddError("releasableTo", "dissemination.rel_to_usa_only",
+				"REL TO requires at least one country besides USA per E4-S10.d.5")
+		}
+	}
+
+	// CR-4: REL TO must include USA (E4-S10.d.4).
+	if controlSet["REL"] && len(ism.ReleasableTo) > 0 {
+		hasUSA := false
+		for _, code := range ism.ReleasableTo {
+			if code == "USA" {
+				hasUSA = true
+				break
+			}
+		}
+		if !hasUSA {
+			res.AddError("releasableTo", "dissemination.rel_to_missing_usa",
+				"REL TO must include USA per E4-S10.d.4")
+		}
+	}
+
+	// MX-8: US dissemination controls require USA in ownerProducer (E4-S1.d).
+	if len(ism.DisseminationControls) > 0 && len(ism.OwnerProducer) > 0 {
+		hasUSAOwner := false
+		for _, owner := range ism.OwnerProducer {
+			if owner == "USA" {
+				hasUSAOwner = true
+				break
+			}
+		}
+		if !hasUSAOwner {
+			res.AddError("disseminationControls", "dissemination.non_us_owner",
+				"US dissemination controls require USA in ownerProducer per E4-S1.d")
+		}
+	}
+
 	// Validate releasableTo country codes.
 	for _, code := range ism.ReleasableTo {
 		if !reg.ValidCountryCode(code) {
