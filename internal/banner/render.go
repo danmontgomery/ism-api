@@ -2,6 +2,7 @@ package banner
 
 import (
 	"sort"
+	"strconv"
 	"strings"
 
 	"expr.ai/ism-api/internal/model"
@@ -120,6 +121,12 @@ func Render(ism *model.ISM) Result {
 		}
 	}
 
+	// AEA markings — rendered between SCI and dissemination with own // separator.
+	var aeaBanner, aeaPortion []string
+	if len(ism.AtomicEnergyMarkings) > 0 {
+		aeaBanner, aeaPortion = renderAEA(ism.AtomicEnergyMarkings, ism.Classification)
+	}
+
 	// Dissemination controls in canonical order.
 	for _, ctrl := range sortControls(ism.DisseminationControls) {
 		b, p := renderControl(ctrl, ism)
@@ -147,6 +154,9 @@ func Render(ism *model.ISM) Result {
 	if sarBanner != "" {
 		banner += "//" + sarBanner
 	}
+	if len(aeaBanner) > 0 {
+		banner += "//" + strings.Join(aeaBanner, "/")
+	}
 	if len(bannerParts) > 0 {
 		banner += "//" + strings.Join(bannerParts, "/")
 	}
@@ -157,6 +167,9 @@ func Render(ism *model.ISM) Result {
 	}
 	if sarPortion != "" {
 		portion += "//" + sarPortion
+	}
+	if len(aeaPortion) > 0 {
+		portion += "//" + strings.Join(aeaPortion, "/")
 	}
 	if len(portionParts) > 0 {
 		portion += "//" + strings.Join(portionParts, "/")
@@ -266,4 +279,84 @@ func renderFGI(ism *model.ISM) (banner, portion string) {
 	sources = append(sources, ism.FGISourceOpen...)
 	sources = append(sources, ism.FGISourceProtected...)
 	return "FGI " + strings.Join(sources, " "), "FGI"
+}
+
+// renderAEA returns the banner and portion parts for Atomic Energy Act markings.
+// AEA codes: RD, FRD, RD-CNWDI, RD-SG-{n}, FRD-SG-{n}, DCNI, UCNI, TFNI.
+// AEA markings are suppressed for UNCLASSIFIED and CUI.
+func renderAEA(markings []string, cls model.Classification) (bannerParts, portionParts []string) {
+	if cls == model.ClassificationU || cls == model.ClassificationCUI {
+		return nil, nil
+	}
+
+	var hasRD, hasFRD, hasCNWDI bool
+	var rdSigmas, frdSigmas []int
+	var otherBanner, otherPortion []string
+
+	for _, code := range markings {
+		switch {
+		case code == "RD":
+			hasRD = true
+		case code == "FRD":
+			hasFRD = true
+		case code == "RD-CNWDI":
+			hasCNWDI = true
+		case strings.HasPrefix(code, "RD-SG-"):
+			if n, err := strconv.Atoi(code[6:]); err == nil {
+				rdSigmas = append(rdSigmas, n)
+			}
+		case strings.HasPrefix(code, "FRD-SG-"):
+			if n, err := strconv.Atoi(code[7:]); err == nil {
+				frdSigmas = append(frdSigmas, n)
+			}
+		default:
+			// DCNI, UCNI, TFNI — pass through as-is.
+			otherBanner = append(otherBanner, code)
+			otherPortion = append(otherPortion, code)
+		}
+	}
+
+	// RD-based markings: CNWDI takes precedence over plain RD.
+	if hasCNWDI {
+		bannerParts = append(bannerParts, "RESTRICTED DATA-N")
+		portionParts = append(portionParts, "RD-N")
+	} else if hasRD {
+		bannerParts = append(bannerParts, "RESTRICTED DATA")
+		portionParts = append(portionParts, "RD")
+	}
+
+	if len(rdSigmas) > 0 {
+		sort.Ints(rdSigmas)
+		nums := joinInts(rdSigmas)
+		bannerParts = append(bannerParts, "RD-SIGMA "+nums)
+		portionParts = append(portionParts, "RD-SG "+nums)
+	}
+
+	// FRD-based markings.
+	if hasFRD {
+		bannerParts = append(bannerParts, "FORMERLY RESTRICTED DATA")
+		portionParts = append(portionParts, "FRD")
+	}
+
+	if len(frdSigmas) > 0 {
+		sort.Ints(frdSigmas)
+		nums := joinInts(frdSigmas)
+		bannerParts = append(bannerParts, "FRD-SIGMA "+nums)
+		portionParts = append(portionParts, "FRD-SG "+nums)
+	}
+
+	// Other AEA markings (DCNI, UCNI, TFNI).
+	bannerParts = append(bannerParts, otherBanner...)
+	portionParts = append(portionParts, otherPortion...)
+
+	return bannerParts, portionParts
+}
+
+// joinInts converts a slice of ints to a space-separated string.
+func joinInts(nums []int) string {
+	strs := make([]string, len(nums))
+	for i, n := range nums {
+		strs[i] = strconv.Itoa(n)
+	}
+	return strings.Join(strs, " ")
 }
