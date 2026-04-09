@@ -445,15 +445,15 @@ func TestDoDM_E4S9k_FGI_NOFORN_Semantics(t *testing.T) {
 			name:        "SECRET_FGI_NOFORN",
 			class:       model.ClassificationS,
 			fgiSources:  []string{"GBR"},
-			wantBanner:  "SECRET//NOFORN/FGI GBR",
-			wantPortion: "(S//NF/FGI)",
+			wantBanner:  "SECRET//FGI GBR//NOFORN",
+			wantPortion: "(S//FGI//NF)",
 		},
 		{
 			name:        "TS_FGI_multiple_NOFORN",
 			class:       model.ClassificationTS,
 			fgiSources:  []string{"DEU", "FRA"},
-			wantBanner:  "TOP SECRET//NOFORN/FGI DEU FRA",
-			wantPortion: "(TS//NF/FGI)",
+			wantBanner:  "TOP SECRET//FGI DEU FRA//NOFORN",
+			wantPortion: "(TS//FGI//NF)",
 		},
 	}
 	for _, tt := range tests {

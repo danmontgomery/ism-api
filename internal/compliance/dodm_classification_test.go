@@ -240,8 +240,7 @@ func TestDoDM_E4S1a_CategoryOrdering(t *testing.T) {
 				DisseminationControls: []string{"NOFORN"},
 			},
 			// Per Figure 25: SCI(2) → FGI(5) → Dissem(6)
-			// Current renderer places dissem before FGI — flagged as gap below
-			orderedKeys: nil,
+			orderedKeys: []string{"TOP SECRET", "SI", "FGI", "NOFORN"},
 		},
 	}
 	for _, tt := range tests {
@@ -266,9 +265,8 @@ func TestDoDM_E4S1a_CategoryOrdering(t *testing.T) {
 		})
 	}
 
-	// GAP: Figure 25 requires FGI(pos 5) before Dissemination(pos 6),
-	// but the current renderer places dissem controls before FGI sources.
-	t.Run("GAP_FGI_should_precede_dissem", func(t *testing.T) {
+	// Figure 25 requires FGI(pos 5) before Dissemination(pos 6).
+	t.Run("FGI_precedes_dissem", func(t *testing.T) {
 		ism := &model.ISM{
 			Classification:        model.ClassificationTS,
 			OwnerProducer:         []string{"USA"},
@@ -283,8 +281,8 @@ func TestDoDM_E4S1a_CategoryOrdering(t *testing.T) {
 			t.Fatalf("BannerLine %q missing FGI or NOFORN", result.BannerLine)
 		}
 		if fgiIdx > nfIdx {
-			t.Skipf("GAP: FGI(idx=%d) appears after NOFORN(idx=%d) in %q — Figure 25 requires FGI before dissem",
-				fgiIdx, nfIdx, result.BannerLine)
+			t.Errorf("BannerLine %q: FGI(idx=%d) must appear before NOFORN(idx=%d) per Figure 25",
+				result.BannerLine, fgiIdx, nfIdx)
 		}
 	})
 }

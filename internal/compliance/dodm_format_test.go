@@ -1304,7 +1304,7 @@ func TestDoDM_CategoryOrdering_MultipleSCI_Alphabetical(t *testing.T) {
 // TestDoDM_CategoryOrdering_FGIAfterDissem verifies that FGI markings appear
 // in the correct position relative to other categories.
 // [E4-S1.a, Figure 25]
-func TestDoDM_CategoryOrdering_FGIAfterDissem(t *testing.T) {
+func TestDoDM_CategoryOrdering_FGIBeforeDissem(t *testing.T) {
 	ism := &model.ISM{
 		Classification:        model.ClassificationS,
 		OwnerProducer:         []string{"USA"},
@@ -1312,19 +1312,18 @@ func TestDoDM_CategoryOrdering_FGIAfterDissem(t *testing.T) {
 		DisseminationControls: []string{"NOFORN"},
 	}
 	result := banner.Render(ism)
-	// FGI should appear in the banner alongside dissem.
 	if !strings.Contains(result.BannerLine, "NOFORN") {
 		t.Errorf("BannerLine = %q, want NOFORN present", result.BannerLine)
 	}
 	if !strings.Contains(result.BannerLine, "FGI") {
 		t.Errorf("BannerLine = %q, want FGI present", result.BannerLine)
 	}
-	// FGI position should be after classification (per Figure 25 position 5).
-	classIdx := strings.Index(result.BannerLine, "SECRET")
+	// FGI must appear before dissemination per Figure 25 (position 5 < position 6).
 	fgiIdx := strings.Index(result.BannerLine, "FGI")
-	if classIdx >= 0 && fgiIdx >= 0 && fgiIdx < classIdx {
-		t.Errorf("BannerLine = %q, FGI must appear after classification per Figure 25",
-			result.BannerLine)
+	nfIdx := strings.Index(result.BannerLine, "NOFORN")
+	if fgiIdx >= 0 && nfIdx >= 0 && fgiIdx > nfIdx {
+		t.Errorf("BannerLine = %q, FGI(idx=%d) must appear before NOFORN(idx=%d) per Figure 25",
+			result.BannerLine, fgiIdx, nfIdx)
 	}
 }
 

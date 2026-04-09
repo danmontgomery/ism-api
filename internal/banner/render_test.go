@@ -254,8 +254,8 @@ func TestRender(t *testing.T) {
 				FGISourceOpen:         []string{"FRA"},
 				NonICMarkings:         []string{"LIMDIS"},
 			},
-			wantBanner:  "//JOINT SECRET GBR USA//OC/REL TO USA, GBR/FGI FRA/LIMDIS",
-			wantPortion: "(//JOINT S GBR USA//OC/REL TO USA, GBR/FGI/LIMDIS)",
+			wantBanner:  "//JOINT SECRET GBR USA//FGI FRA//OC/REL TO USA, GBR//LIMDIS",
+			wantPortion: "(//JOINT S GBR USA//FGI//OC/REL TO USA, GBR//LIMDIS)",
 		},
 
 		// --- FGI non-US (single non-US OwnerProducer) ---
@@ -318,7 +318,7 @@ func TestRender(t *testing.T) {
 			wantPortion: "(S//OC/NF/PR)",
 		},
 		{
-			name: "dissemination then FGI then non-IC",
+			name: "FGI then dissemination then non-IC",
 			ism: model.ISM{
 				Classification:        model.ClassificationS,
 				OwnerProducer:         []string{"USA"},
@@ -326,8 +326,8 @@ func TestRender(t *testing.T) {
 				FGISourceOpen:         []string{"GBR"},
 				NonICMarkings:         []string{"LIMDIS"},
 			},
-			wantBanner:  "SECRET//NOFORN/FGI GBR/LIMDIS",
-			wantPortion: "(S//NF/FGI/LIMDIS)",
+			wantBanner:  "SECRET//FGI GBR//NOFORN//LIMDIS",
+			wantPortion: "(S//FGI//NF//LIMDIS)",
 		},
 
 		// --- FGI ---
@@ -415,8 +415,8 @@ func TestRender(t *testing.T) {
 				DisseminationControls: []string{"NOFORN"},
 				FGISourceOpen:         []string{"GBR"},
 			},
-			wantBanner:  "TOP SECRET//SI/TK//NOFORN/FGI GBR",
-			wantPortion: "(TS//SI/TK//NF/FGI)",
+			wantBanner:  "TOP SECRET//SI/TK//FGI GBR//NOFORN",
+			wantPortion: "(TS//SI/TK//FGI//NF)",
 		},
 
 		// --- Combined ---
@@ -430,8 +430,8 @@ func TestRender(t *testing.T) {
 				FGISourceOpen:         []string{"FRA"},
 				NonICMarkings:         []string{"LIMDIS"},
 			},
-			wantBanner:  "SECRET//OC/REL TO USA, GBR/FGI FRA/LIMDIS",
-			wantPortion: "(S//OC/REL TO USA, GBR/FGI/LIMDIS)",
+			wantBanner:  "SECRET//FGI FRA//OC/REL TO USA, GBR//LIMDIS",
+			wantPortion: "(S//FGI//OC/REL TO USA, GBR//LIMDIS)",
 		},
 	}
 

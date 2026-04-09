@@ -65,7 +65,8 @@ var portionAbbrev = map[string]string{
 }
 
 // Render produces the banner line and portion mark for the given ISM object.
-// Banner ordering: classification // SCI controls // dissemination controls / FGI / non-IC.
+// Banner ordering per DoDM Figure 25:
+// classification // SCI // AEA // SAR // FGI // dissemination // non-IC.
 func Render(ism *model.ISM) Result {
 	bannerClass := classificationBanner[ism.Classification]
 	portionClass := classificationPortion[ism.Classification]
@@ -89,15 +90,16 @@ func Render(ism *model.ISM) Result {
 		portionClass = "//" + country + " " + portionClass
 	}
 
-	var bannerParts []string
-	var portionParts []string
 	var sciParts []string
+	var fgiBannerParts, fgiPortionParts []string
+	var dissemBannerParts, dissemPortionParts []string
+	var nonICBannerParts, nonICPortionParts []string
 
-	// CUI category markings (rendered after classification for CUI).
+	// CUI category markings (rendered before dissem controls in the dissem section).
 	if ism.Classification == model.ClassificationCUI && len(ism.CategoryMarkings) > 0 {
 		for _, cat := range ism.CategoryMarkings {
-			bannerParts = append(bannerParts, cat)
-			portionParts = append(portionParts, cat)
+			dissemBannerParts = append(dissemBannerParts, cat)
+			dissemPortionParts = append(dissemPortionParts, cat)
 		}
 	}
 
@@ -147,15 +149,15 @@ func Render(ism *model.ISM) Result {
 			continue
 		}
 		b, p := renderControl(ctrl, ism)
-		bannerParts = append(bannerParts, b)
-		portionParts = append(portionParts, p)
+		dissemBannerParts = append(dissemBannerParts, b)
+		dissemPortionParts = append(dissemPortionParts, p)
 	}
 
 	// FGI sources.
 	if len(ism.FGISourceOpen) > 0 || len(ism.FGISourceProtected) > 0 {
 		b, p := renderFGI(ism)
-		bannerParts = append(bannerParts, b)
-		portionParts = append(portionParts, p)
+		fgiBannerParts = append(fgiBannerParts, b)
+		fgiPortionParts = append(fgiPortionParts, p)
 	}
 
 	// Non-IC markings — BP-7: suppress FOUO in classified context.
@@ -163,36 +165,49 @@ func Render(ism *model.ISM) Result {
 		if m == "FOUO" && classified {
 			continue
 		}
-		bannerParts = append(bannerParts, m)
-		portionParts = append(portionParts, m)
+		nonICBannerParts = append(nonICBannerParts, m)
+		nonICPortionParts = append(nonICPortionParts, m)
 	}
 
+	// Assemble banner: classification // SCI // AEA // SAR // FGI // dissem // nonIC
 	banner := bannerClass
 	if len(sciParts) > 0 {
 		banner += "//" + strings.Join(sciParts, "/")
 	}
-	if sarBanner != "" {
-		banner += "//" + sarBanner
-	}
 	if len(aeaBanner) > 0 {
 		banner += "//" + strings.Join(aeaBanner, "/")
 	}
-	if len(bannerParts) > 0 {
-		banner += "//" + strings.Join(bannerParts, "/")
+	if sarBanner != "" {
+		banner += "//" + sarBanner
+	}
+	if len(fgiBannerParts) > 0 {
+		banner += "//" + strings.Join(fgiBannerParts, "/")
+	}
+	if len(dissemBannerParts) > 0 {
+		banner += "//" + strings.Join(dissemBannerParts, "/")
+	}
+	if len(nonICBannerParts) > 0 {
+		banner += "//" + strings.Join(nonICBannerParts, "/")
 	}
 
 	portion := portionClass
 	if len(sciParts) > 0 {
 		portion += "//" + strings.Join(sciParts, "/")
 	}
-	if sarPortion != "" {
-		portion += "//" + sarPortion
-	}
 	if len(aeaPortion) > 0 {
 		portion += "//" + strings.Join(aeaPortion, "/")
 	}
-	if len(portionParts) > 0 {
-		portion += "//" + strings.Join(portionParts, "/")
+	if sarPortion != "" {
+		portion += "//" + sarPortion
+	}
+	if len(fgiPortionParts) > 0 {
+		portion += "//" + strings.Join(fgiPortionParts, "/")
+	}
+	if len(dissemPortionParts) > 0 {
+		portion += "//" + strings.Join(dissemPortionParts, "/")
+	}
+	if len(nonICPortionParts) > 0 {
+		portion += "//" + strings.Join(nonICPortionParts, "/")
 	}
 
 	return Result{
