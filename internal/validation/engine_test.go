@@ -963,6 +963,250 @@ func TestFGIRule_DoesNotApplyWhenEmpty(t *testing.T) {
 	}
 }
 
+// --- AtomicEnergyRule ---
+
+func TestAtomicEnergyRule(t *testing.T) {
+	tests := []struct {
+		name     string
+		ism      model.ISM
+		wantCode string
+		valid    bool
+	}{
+		{
+			name: "RD at TS — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationTS,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD"},
+			},
+			valid: true,
+		},
+		{
+			name: "RD at S — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationS,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD"},
+			},
+			valid: true,
+		},
+		{
+			name: "RD at C — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationC,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD"},
+			},
+			valid: true,
+		},
+		{
+			name: "RD at U — insufficient",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"RD"},
+			},
+			wantCode: "atomic_energy.insufficient_classification",
+			valid:    false,
+		},
+		{
+			name: "RD at CUI — insufficient",
+			ism: model.ISM{
+				Classification:       model.ClassificationCUI,
+				AtomicEnergyMarkings: []string{"RD"},
+			},
+			wantCode: "atomic_energy.insufficient_classification",
+			valid:    false,
+		},
+		{
+			name: "FRD at C — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationC,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"FRD"},
+			},
+			valid: true,
+		},
+		{
+			name: "FRD at U — insufficient",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"FRD"},
+			},
+			wantCode: "atomic_energy.insufficient_classification",
+			valid:    false,
+		},
+		{
+			name: "CNWDI at TS — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationTS,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD-CNWDI"},
+			},
+			valid: true,
+		},
+		{
+			name: "CNWDI at S — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationS,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD-CNWDI"},
+			},
+			valid: true,
+		},
+		{
+			name: "CNWDI at C — insufficient",
+			ism: model.ISM{
+				Classification:       model.ClassificationC,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD-CNWDI"},
+			},
+			wantCode: "atomic_energy.insufficient_classification",
+			valid:    false,
+		},
+		{
+			name: "CNWDI at U — insufficient",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"RD-CNWDI"},
+			},
+			wantCode: "atomic_energy.insufficient_classification",
+			valid:    false,
+		},
+		{
+			name: "SIGMA (RD-SG-14) at C — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationC,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"RD-SG-14"},
+			},
+			valid: true,
+		},
+		{
+			name: "SIGMA (RD-SG-14) at U — insufficient",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"RD-SG-14"},
+			},
+			wantCode: "atomic_energy.insufficient_classification",
+			valid:    false,
+		},
+		{
+			name: "FRD SIGMA (FRD-SG-18) at S — valid",
+			ism: model.ISM{
+				Classification:       model.ClassificationS,
+				OwnerProducer:        []string{"USA"},
+				AtomicEnergyMarkings: []string{"FRD-SG-18"},
+			},
+			valid: true,
+		},
+		{
+			name: "DCNI at U — no classification gate",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"DCNI"},
+			},
+			valid: true,
+		},
+		{
+			name: "UCNI at U — no classification gate",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"UCNI"},
+			},
+			valid: true,
+		},
+		{
+			name: "TFNI at U — no classification gate",
+			ism: model.ISM{
+				Classification:       model.ClassificationU,
+				AtomicEnergyMarkings: []string{"TFNI"},
+			},
+			valid: true,
+		},
+	}
+
+	rule := &AtomicEnergyRule{}
+	r := reg()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if !rule.Applies(&tt.ism) {
+				t.Fatal("rule should apply when atomicEnergyMarkings present")
+			}
+			res := rule.Validate(&tt.ism, r)
+			if res.Valid != tt.valid {
+				t.Errorf("valid=%v, want %v; errors: %+v", res.Valid, tt.valid, res.Errors)
+			}
+			if tt.wantCode != "" && !res.HasCode(tt.wantCode) {
+				t.Errorf("expected code %q in %+v", tt.wantCode, res.Errors)
+			}
+		})
+	}
+}
+
+func TestAtomicEnergyRule_DoesNotApplyWhenEmpty(t *testing.T) {
+	rule := &AtomicEnergyRule{}
+	if rule.Applies(&model.ISM{Classification: model.ClassificationU}) {
+		t.Error("atomic_energy rule should not apply when no markings")
+	}
+}
+
+// --- DisseminationRule FOUO max classification ---
+
+func TestDisseminationRule_FOUO_MaxClassification(t *testing.T) {
+	tests := []struct {
+		name     string
+		ism      model.ISM
+		wantCode string
+		valid    bool
+	}{
+		{
+			name: "FOUO at U — valid",
+			ism: model.ISM{
+				Classification:        model.ClassificationU,
+				DisseminationControls: []string{"FOUO"},
+			},
+			valid: true,
+		},
+		{
+			name: "FOUO at S — exceeds max",
+			ism: model.ISM{
+				Classification:        model.ClassificationS,
+				OwnerProducer:         []string{"USA"},
+				DisseminationControls: []string{"FOUO"},
+			},
+			wantCode: "dissemination.exceeds_max_classification",
+			valid:    false,
+		},
+		{
+			name: "FOUO at TS — exceeds max",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				OwnerProducer:         []string{"USA"},
+				DisseminationControls: []string{"FOUO"},
+			},
+			wantCode: "dissemination.exceeds_max_classification",
+			valid:    false,
+		},
+	}
+
+	rule := &DisseminationRule{}
+	r := reg()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if !rule.Applies(&tt.ism) {
+				t.Fatal("rule should apply when disseminationControls present")
+			}
+			res := rule.Validate(&tt.ism, r)
+			if res.Valid != tt.valid {
+				t.Errorf("valid=%v, want %v; errors: %+v", res.Valid, tt.valid, res.Errors)
+			}
+			if tt.wantCode != "" && !res.HasCode(tt.wantCode) {
+				t.Errorf("expected code %q in %+v", tt.wantCode, res.Errors)
+			}
+		})
+	}
+}
+
 // --- Result helpers ---
 
 func TestValidationResult_AddErrorAndWarning(t *testing.T) {

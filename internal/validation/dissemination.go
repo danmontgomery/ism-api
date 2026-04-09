@@ -72,6 +72,12 @@ func (r *DisseminationRule) Validate(ism *model.ISM, reg *refdata.Registry) *Val
 		}
 	}
 
+	// Maximum classification gate: FOUO is U-only (CL-12, CR-11).
+	if controlSet["FOUO"] && ism.Classification != model.ClassificationU {
+		res.AddError("disseminationControls", "dissemination.exceeds_max_classification",
+			"FOUO is only permitted at UNCLASSIFIED classification")
+	}
+
 	// Validate releasableTo country codes.
 	for _, code := range ism.ReleasableTo {
 		if !reg.ValidCountryCode(code) {

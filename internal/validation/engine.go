@@ -39,6 +39,7 @@ func NewEngine(reg *refdata.Registry) *Engine {
 			&ExemptFromRule{},
 			&CompliesWithRule{},
 			&SCIRule{},
+			&AtomicEnergyRule{},
 		},
 	}
 }
