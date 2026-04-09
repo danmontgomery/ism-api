@@ -148,6 +148,11 @@ func Render(ism *model.ISM) Result {
 		if ctrl == "FOUO" && classified {
 			continue
 		}
+		// SCI is the umbrella category; suppress when individual compartments
+		// (SI, TK, etc.) are already rendered in the SCI section.
+		if ctrl == "SCI" && len(ism.SCIControls) > 0 {
+			continue
+		}
 		b, p := renderControl(ctrl, ism)
 		dissemBannerParts = append(dissemBannerParts, b)
 		dissemPortionParts = append(dissemPortionParts, p)

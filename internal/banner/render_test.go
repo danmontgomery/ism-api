@@ -419,6 +419,40 @@ func TestRender(t *testing.T) {
 			wantPortion: "(TS//SI/TK//FGI//NF)",
 		},
 
+		// --- SCI dissemination suppression ---
+		{
+			name: "TS with SCI dissem suppressed when sciControls present",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				OwnerProducer:         []string{"USA"},
+				SCIControls:           []string{"SI", "TK"},
+				DisseminationControls: []string{"SCI"},
+			},
+			wantBanner:  "TOP SECRET//SI/TK",
+			wantPortion: "(TS//SI/TK)",
+		},
+		{
+			name: "TS with SCI dissem suppressed alongside other dissem controls",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				OwnerProducer:         []string{"USA"},
+				SCIControls:           []string{"SI", "TK"},
+				DisseminationControls: []string{"SCI", "NOFORN"},
+			},
+			wantBanner:  "TOP SECRET//SI/TK//NOFORN",
+			wantPortion: "(TS//SI/TK//NF)",
+		},
+		{
+			name: "TS with SCI dissem rendered when no sciControls",
+			ism: model.ISM{
+				Classification:        model.ClassificationTS,
+				OwnerProducer:         []string{"USA"},
+				DisseminationControls: []string{"SCI"},
+			},
+			wantBanner:  "TOP SECRET//SCI",
+			wantPortion: "(TS//SCI)",
+		},
+
 		// --- Combined ---
 		{
 			name: "S full combo: dissem + FGI + non-IC",
