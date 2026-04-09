@@ -96,6 +96,30 @@ func Render(ism *model.ISM) Result {
 		sciParts = sorted
 	}
 
+	// SAR identifiers — after SCI, before dissemination controls.
+	// 1-2 SARs: SAR-[name] separated by / (FMT-11).
+	// 3+ SARs: banner uses SAR-MULTIPLE PROGRAMS (FMT-13); portions always list all PIDs.
+	var sarBanner, sarPortion string
+	if len(ism.SARIdentifier) > 0 {
+		sorted := make([]string, len(ism.SARIdentifier))
+		copy(sorted, ism.SARIdentifier)
+		sort.Strings(sorted)
+
+		// Portion marks always list all PIDs individually, alphabetically.
+		pids := make([]string, len(sorted))
+		for i, id := range sorted {
+			pids[i] = "SAR-" + id
+		}
+		sarPortion = strings.Join(pids, "/")
+
+		// Banner: 3+ SAPs collapse to SAR-MULTIPLE PROGRAMS.
+		if len(sorted) >= 3 {
+			sarBanner = "SAR-MULTIPLE PROGRAMS"
+		} else {
+			sarBanner = strings.Join(pids, "/")
+		}
+	}
+
 	// Dissemination controls in canonical order.
 	for _, ctrl := range sortControls(ism.DisseminationControls) {
 		b, p := renderControl(ctrl, ism)
@@ -120,6 +144,9 @@ func Render(ism *model.ISM) Result {
 	if len(sciParts) > 0 {
 		banner += "//" + strings.Join(sciParts, "/")
 	}
+	if sarBanner != "" {
+		banner += "//" + sarBanner
+	}
 	if len(bannerParts) > 0 {
 		banner += "//" + strings.Join(bannerParts, "/")
 	}
@@ -127,6 +154,9 @@ func Render(ism *model.ISM) Result {
 	portion := portionClass
 	if len(sciParts) > 0 {
 		portion += "//" + strings.Join(sciParts, "/")
+	}
+	if sarPortion != "" {
+		portion += "//" + sarPortion
 	}
 	if len(portionParts) > 0 {
 		portion += "//" + strings.Join(portionParts, "/")
