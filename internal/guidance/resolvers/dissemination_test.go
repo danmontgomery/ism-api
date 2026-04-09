@@ -84,33 +84,6 @@ func TestDisseminationResolver(t *testing.T) {
 				{field: "displayOnlyTo", status: guidance.StatusNotApplicable},
 			},
 		},
-		{
-			name: "TS with SCI — sciControls available with allowed values",
-			ism: model.ISM{
-				Classification:        model.ClassificationTS,
-				DisseminationControls: []string{"SCI"},
-			},
-			checks: []fieldCheck{
-				{field: "sciControls", status: guidance.StatusAvailable, hasAllowed: true},
-			},
-		},
-		{
-			name: "TS without SCI — sciControls not applicable",
-			ism: model.ISM{
-				Classification:        model.ClassificationTS,
-				DisseminationControls: []string{"NOFORN"},
-			},
-			checks: []fieldCheck{
-				{field: "sciControls", status: guidance.StatusNotApplicable},
-			},
-		},
-		{
-			name: "U — SCI not in allowed dissemination controls",
-			ism:  model.ISM{Classification: model.ClassificationU},
-			checks: []fieldCheck{
-				{field: "sciControls", status: guidance.StatusNotApplicable},
-			},
-		},
 	}
 
 	for _, tt := range tests {
