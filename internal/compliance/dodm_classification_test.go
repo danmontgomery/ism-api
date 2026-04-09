@@ -508,7 +508,7 @@ func TestDoDM_E4S1d_MutualExclusivity(t *testing.T) {
 			result := banner.Render(&tt.ism)
 			isUS := !tt.ism.Joint && len(tt.ism.OwnerProducer) > 0 &&
 				tt.ism.OwnerProducer[0] == "USA" && !strings.HasPrefix(result.BannerLine, "//")
-			isJoint := strings.HasPrefix(result.BannerLine, "JOINT")
+			isJoint := strings.HasPrefix(result.BannerLine, "//JOINT")
 
 			if isUS && isJoint {
 				t.Errorf("BannerLine %q mixes US and JOINT systems", result.BannerLine)
@@ -528,7 +528,7 @@ func TestDoDM_E4S1d_MutualExclusivity(t *testing.T) {
 		}
 	})
 
-	// Verify JOINT doc starts with JOINT, not bare classification
+	// Verify JOINT doc starts with //JOINT per E4-S5.c
 	t.Run("JOINT_starts_with_JOINT", func(t *testing.T) {
 		ism := &model.ISM{
 			Classification: model.ClassificationS,
@@ -536,8 +536,8 @@ func TestDoDM_E4S1d_MutualExclusivity(t *testing.T) {
 			Joint:          true,
 		}
 		result := banner.Render(ism)
-		if !strings.HasPrefix(result.BannerLine, "JOINT") {
-			t.Errorf("JOINT BannerLine %q should start with 'JOINT'", result.BannerLine)
+		if !strings.HasPrefix(result.BannerLine, "//JOINT") {
+			t.Errorf("JOINT BannerLine %q should start with '//JOINT'", result.BannerLine)
 		}
 	})
 }
@@ -704,19 +704,16 @@ func TestDoDM_E4S3b_note_DoubleSlashPrefixIndicatesFGI(t *testing.T) {
 		}
 	})
 
-	// JOINT documents: banner starts with "JOINT", not "//"
-	t.Run("JOINT_no_leading_double_slash", func(t *testing.T) {
+	// JOINT documents: banner starts with "//JOINT" per E4-S5.c
+	t.Run("JOINT_leading_double_slash", func(t *testing.T) {
 		ism := &model.ISM{
 			Classification: model.ClassificationS,
 			OwnerProducer:  []string{"USA", "GBR"},
 			Joint:          true,
 		}
 		result := banner.Render(ism)
-		if strings.HasPrefix(result.BannerLine, "//") {
-			t.Errorf("JOINT BannerLine %q should NOT start with '//'", result.BannerLine)
-		}
-		if !strings.HasPrefix(result.BannerLine, "JOINT") {
-			t.Errorf("JOINT BannerLine %q should start with 'JOINT'", result.BannerLine)
+		if !strings.HasPrefix(result.BannerLine, "//JOINT") {
+			t.Errorf("JOINT BannerLine %q should start with '//JOINT'", result.BannerLine)
 		}
 	})
 }

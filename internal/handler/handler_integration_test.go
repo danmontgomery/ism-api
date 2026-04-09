@@ -794,7 +794,7 @@ func TestSmoke_Secret_Joint(t *testing.T) {
 		ClassifiedBy:         "OCA Name",
 		ClassificationReason: "Reason 1.4(a)",
 		DeclassDate:          "20360101",
-	}, "JOINT SECRET USA GBR", "(JS USA GBR)")
+	}, "//JOINT SECRET GBR USA", "(//JOINT S GBR USA)")
 }
 
 func TestSmoke_Secret_Joint_WithNOFORN(t *testing.T) {
@@ -806,7 +806,7 @@ func TestSmoke_Secret_Joint_WithNOFORN(t *testing.T) {
 		ClassifiedBy:          "OCA Name",
 		ClassificationReason:  "Reason 1.4(a)",
 		DeclassDate:           "20360101",
-	}, "JOINT SECRET USA GBR//NOFORN", "(JS USA GBR//NF)")
+	}, "//JOINT SECRET GBR USA//NOFORN", "(//JOINT S GBR USA//NF)")
 }
 
 // ============================================================

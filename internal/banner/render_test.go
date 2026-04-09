@@ -209,8 +209,8 @@ func TestRender(t *testing.T) {
 				OwnerProducer:  []string{"USA", "GBR"},
 				Joint:          true,
 			},
-			wantBanner:  "JOINT SECRET USA GBR",
-			wantPortion: "(JS USA GBR)",
+			wantBanner:  "//JOINT SECRET GBR USA",
+			wantPortion: "(//JOINT S GBR USA)",
 		},
 		{
 			name: "C joint with two owners",
@@ -219,8 +219,8 @@ func TestRender(t *testing.T) {
 				OwnerProducer:  []string{"USA", "GBR"},
 				Joint:          true,
 			},
-			wantBanner:  "JOINT CONFIDENTIAL USA GBR",
-			wantPortion: "(JC USA GBR)",
+			wantBanner:  "//JOINT CONFIDENTIAL GBR USA",
+			wantPortion: "(//JOINT C GBR USA)",
 		},
 		{
 			name: "S joint with three owners",
@@ -229,8 +229,8 @@ func TestRender(t *testing.T) {
 				OwnerProducer:  []string{"USA", "GBR", "CAN"},
 				Joint:          true,
 			},
-			wantBanner:  "JOINT SECRET USA GBR CAN",
-			wantPortion: "(JS USA GBR CAN)",
+			wantBanner:  "//JOINT SECRET CAN GBR USA",
+			wantPortion: "(//JOINT S CAN GBR USA)",
 		},
 		{
 			name: "S joint with NOFORN",
@@ -240,8 +240,8 @@ func TestRender(t *testing.T) {
 				Joint:                 true,
 				DisseminationControls: []string{"NOFORN"},
 			},
-			wantBanner:  "JOINT SECRET USA GBR//NOFORN",
-			wantPortion: "(JS USA GBR//NF)",
+			wantBanner:  "//JOINT SECRET GBR USA//NOFORN",
+			wantPortion: "(//JOINT S GBR USA//NF)",
 		},
 		{
 			name: "S joint with dissem + FGI + non-IC",
@@ -254,8 +254,8 @@ func TestRender(t *testing.T) {
 				FGISourceOpen:         []string{"FRA"},
 				NonICMarkings:         []string{"LIMDIS"},
 			},
-			wantBanner:  "JOINT SECRET USA GBR//OC/REL TO USA, GBR/FGI FRA/LIMDIS",
-			wantPortion: "(JS USA GBR//OC/REL TO USA, GBR/FGI/LIMDIS)",
+			wantBanner:  "//JOINT SECRET GBR USA//OC/REL TO USA, GBR/FGI FRA/LIMDIS",
+			wantPortion: "(//JOINT S GBR USA//OC/REL TO USA, GBR/FGI/LIMDIS)",
 		},
 
 		// --- FGI non-US (single non-US OwnerProducer) ---

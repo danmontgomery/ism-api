@@ -140,14 +140,14 @@ func TestXSD_Banner_JointDocument(t *testing.T) {
 		Joint:          true,
 	}
 	result := banner.Render(ism)
-	if !strings.HasPrefix(result.BannerLine, "JOINT") {
-		t.Errorf("joint BannerLine %q should start with 'JOINT'", result.BannerLine)
+	if !strings.HasPrefix(result.BannerLine, "//JOINT") {
+		t.Errorf("joint BannerLine %q should start with '//JOINT'", result.BannerLine)
 	}
 	if !strings.Contains(result.BannerLine, "USA") || !strings.Contains(result.BannerLine, "GBR") {
 		t.Errorf("joint BannerLine %q should contain ownerProducer countries", result.BannerLine)
 	}
-	if !strings.HasPrefix(result.PortionMark, "(J") {
-		t.Errorf("joint PortionMark %q should start with '(J'", result.PortionMark)
+	if !strings.HasPrefix(result.PortionMark, "(//JOINT") {
+		t.Errorf("joint PortionMark %q should start with '(//JOINT'", result.PortionMark)
 	}
 }
 

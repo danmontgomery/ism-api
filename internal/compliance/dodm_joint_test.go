@@ -37,22 +37,12 @@ func TestDoDM_E4S5c_JOINTMarkingsBeginWithJOINT(t *testing.T) {
 				Joint:          true,
 			}
 			result := banner.Render(ism)
-			// The banner should contain "JOINT" as the system prefix.
-			// The current renderer produces "JOINT SECRET GBR USA" (without leading //);
-			// per E4-S5.c the format should be "//JOINT ...".
-			if !strings.Contains(result.BannerLine, "JOINT") {
-				t.Errorf("BannerLine %q should contain 'JOINT' per E4-S5.c",
-					result.BannerLine)
-			}
 			if !strings.HasPrefix(result.BannerLine, "//JOINT") {
-				t.Skipf("GAP: BannerLine %q should start with '//JOINT' per E4-S5.c; "+
-					"renderer currently omits leading '//' for JOINT banners",
+				t.Errorf("BannerLine %q should start with '//JOINT' per E4-S5.c",
 					result.BannerLine)
 			}
-			// Portion mark must also contain JOINT prefix.
-			if !strings.Contains(result.PortionMark, "JOINT") &&
-				!strings.Contains(result.PortionMark, "J") {
-				t.Errorf("PortionMark %q should contain JOINT-related prefix per E4-S5.c",
+			if !strings.Contains(result.PortionMark, "//JOINT") {
+				t.Errorf("PortionMark %q should contain '//JOINT' prefix per E4-S5.c",
 					result.PortionMark)
 			}
 		})
@@ -101,12 +91,12 @@ func TestDoDM_E4S5d_JOINTBannerFormat(t *testing.T) {
 			}
 			result := banner.Render(ism)
 			if result.BannerLine != tt.wantBanner {
-				t.Skipf("GAP: BannerLine = %q, want %q; renderer does not yet produce "+
-					"//JOINT [classification] [countries] format per E4-S5.d",
+				t.Errorf("BannerLine = %q, want %q per E4-S5.d",
 					result.BannerLine, tt.wantBanner)
 			}
 			if result.PortionMark != tt.wantPortion {
-				t.Errorf("PortionMark = %q, want %q", result.PortionMark, tt.wantPortion)
+				t.Errorf("PortionMark = %q, want %q per E4-S5.d",
+					result.PortionMark, tt.wantPortion)
 			}
 		})
 	}
@@ -176,8 +166,7 @@ func TestDoDM_E4S5e_CountryCodesAlphabetical(t *testing.T) {
 			}
 			result := banner.Render(ism)
 			if !strings.Contains(result.BannerLine, tt.wantCountryPart) {
-				t.Skipf("GAP: BannerLine %q should contain countries in alphabetical order %q per E4-S5.e; "+
-					"renderer may not sort OwnerProducer alphabetically",
+				t.Errorf("BannerLine %q should contain countries in alphabetical order %q per E4-S5.e",
 					result.BannerLine, tt.wantCountryPart)
 			}
 		})
@@ -207,7 +196,7 @@ func TestDoDM_E4S5e_note_USAAlphabeticalNotFirst(t *testing.T) {
 			t.Fatalf("BannerLine %q missing GBR or USA", result.BannerLine)
 		}
 		if gbrIdx > usaIdx {
-			t.Skipf("GAP: BannerLine %q has USA before GBR; E4-S5.e.note requires "+
+			t.Errorf("BannerLine %q has USA before GBR; E4-S5.e.note requires "+
 				"alphabetical ordering (GBR before USA), not REL TO ordering (USA first)",
 				result.BannerLine)
 		}
@@ -222,9 +211,8 @@ func TestDoDM_E4S5e_note_USAAlphabeticalNotFirst(t *testing.T) {
 			ReleasableTo:          []string{"USA", "GBR"},
 		}
 		result := banner.Render(ism)
-		if !strings.Contains(result.BannerLine, "REL TO USA, GBR") &&
-			!strings.Contains(result.BannerLine, "REL TO") {
-			t.Skipf("GAP: REL TO banner %q — expected USA first in REL TO per standard",
+		if !strings.Contains(result.BannerLine, "REL TO USA, GBR") {
+			t.Errorf("REL TO banner %q should have USA first per CC-1",
 				result.BannerLine)
 		}
 	})
@@ -316,8 +304,7 @@ func TestDoDM_E4S5f_extract_ExtractedPortionIncludesCountries(t *testing.T) {
 			}
 			result := banner.Render(ism)
 			if result.PortionMark != tt.wantPortion {
-				t.Skipf("GAP: PortionMark = %q, want %q; E4-S5.f.extract requires "+
-					"country codes in extracted JOINT portions",
+				t.Errorf("PortionMark = %q, want %q per E4-S5.f.extract",
 					result.PortionMark, tt.wantPortion)
 			}
 		})
@@ -519,8 +506,7 @@ func TestDoDM_E4S5fig31_JOINTWithRELTO(t *testing.T) {
 	// Check expected full format: //JOINT SECRET GBR USA//REL TO USA, AUS, CAN, GBR, NZL
 	wantBanner := "//JOINT SECRET GBR USA//REL TO USA, AUS, CAN, GBR, NZL"
 	if result.BannerLine != wantBanner {
-		t.Skipf("GAP: BannerLine = %q, want %q; renderer may not yet produce "+
-			"//JOINT [classification] [countries]//REL TO [countries] format per E4-S5.fig31",
+		t.Errorf("BannerLine = %q, want %q per E4-S5.fig31",
 			result.BannerLine, wantBanner)
 	}
 }
@@ -571,9 +557,8 @@ func TestDoDM_E4S5h_AuthorityBlockOnlyWithUSCoOwner(t *testing.T) {
 		}
 		result := banner.Render(ism)
 		if result.AuthorityBlock == "" {
-			t.Skipf("GAP: AuthorityBlock empty for JOINT with US co-owner; "+
-				"E4-S5.h requires authority block when US is a co-owner; "+
-				"renderer may not produce authority block for JOINT documents")
+			t.Errorf("AuthorityBlock empty for JOINT with US co-owner; "+
+				"E4-S5.h requires authority block when US is a co-owner")
 		}
 		if !strings.Contains(result.AuthorityBlock, "Classified By:") {
 			t.Errorf("AuthorityBlock %q should contain 'Classified By:' for JOINT with US co-owner",
@@ -592,12 +577,9 @@ func TestDoDM_E4S5h_AuthorityBlockOnlyWithUSCoOwner(t *testing.T) {
 			DeclassDate:          "20350101",
 		}
 		result := banner.Render(ism)
-		// The current renderer checks classification level, not JOINT co-ownership.
-		// Per E4-S5.h, the authority block should only appear when US is a co-owner.
 		if result.AuthorityBlock != "" {
-			t.Skipf("GAP: AuthorityBlock = %q for JOINT without US co-owner; "+
-				"E4-S5.h says authority block is used ONLY when US is a co-owner — "+
-				"renderer currently does not filter by JOINT co-ownership",
+			t.Errorf("AuthorityBlock = %q for JOINT without US co-owner; "+
+				"E4-S5.h says authority block is used ONLY when US is a co-owner",
 				result.AuthorityBlock)
 		}
 	})

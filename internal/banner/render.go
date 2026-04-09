@@ -70,11 +70,15 @@ func Render(ism *model.ISM) Result {
 	bannerClass := classificationBanner[ism.Classification]
 	portionClass := classificationPortion[ism.Classification]
 
-	// Joint documents: prepend "JOINT" and append ownerProducer countries.
+	// Joint documents: //JOINT [classification] [countries] per E4-S5.c/d.
+	// Countries are sorted alphabetically (E4-S5.e), NOT USA-first.
 	if ism.Joint && len(ism.OwnerProducer) > 1 {
-		countries := strings.Join(ism.OwnerProducer, " ")
-		bannerClass = "JOINT " + bannerClass + " " + countries
-		portionClass = "J" + portionClass + " " + countries
+		countries := make([]string, len(ism.OwnerProducer))
+		copy(countries, ism.OwnerProducer)
+		sort.Strings(countries)
+		countryStr := strings.Join(countries, " ")
+		bannerClass = "//JOINT " + bannerClass + " " + countryStr
+		portionClass = "//JOINT " + portionClass + " " + countryStr
 	}
 
 	// FGI non-US documents: //[country] [classification] format (E4-S4.a.1).
@@ -203,6 +207,20 @@ func Render(ism *model.ISM) Result {
 func renderAuthorityBlock(ism *model.ISM) string {
 	if ism.Classification != model.ClassificationC && ism.Classification != model.ClassificationS && ism.Classification != model.ClassificationTS {
 		return ""
+	}
+
+	// E4-S5.h: authority block is used only when US is a co-owner in JOINT documents.
+	if ism.Joint {
+		hasUSA := false
+		for _, c := range ism.OwnerProducer {
+			if c == "USA" {
+				hasUSA = true
+				break
+			}
+		}
+		if !hasUSA {
+			return ""
+		}
 	}
 
 	var lines []string
