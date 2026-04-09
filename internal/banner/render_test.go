@@ -258,6 +258,54 @@ func TestRender(t *testing.T) {
 			wantPortion: "(JS USA GBR//OC/REL TO USA, GBR/FGI/LIMDIS)",
 		},
 
+		// --- FGI non-US (single non-US OwnerProducer) ---
+		{
+			name: "FGI non-US: GBR SECRET",
+			ism: model.ISM{
+				Classification: model.ClassificationS,
+				OwnerProducer:  []string{"GBR"},
+			},
+			wantBanner:  "//GBR SECRET",
+			wantPortion: "(//GBR S)",
+		},
+		{
+			name: "FGI non-US: DEU CONFIDENTIAL",
+			ism: model.ISM{
+				Classification: model.ClassificationC,
+				OwnerProducer:  []string{"DEU"},
+			},
+			wantBanner:  "//DEU CONFIDENTIAL",
+			wantPortion: "(//DEU C)",
+		},
+		{
+			name: "FGI non-US: FRA TOP SECRET",
+			ism: model.ISM{
+				Classification: model.ClassificationTS,
+				OwnerProducer:  []string{"FRA"},
+			},
+			wantBanner:  "//FRA TOP SECRET",
+			wantPortion: "(//FRA TS)",
+		},
+		{
+			name: "FGI non-US: GBR UNCLASSIFIED",
+			ism: model.ISM{
+				Classification: model.ClassificationU,
+				OwnerProducer:  []string{"GBR"},
+			},
+			wantBanner:  "//GBR UNCLASSIFIED",
+			wantPortion: "(//GBR U)",
+		},
+		{
+			name: "FGI non-US: GBR SECRET with NOFORN",
+			ism: model.ISM{
+				Classification:        model.ClassificationS,
+				OwnerProducer:         []string{"GBR"},
+				DisseminationControls: []string{"NOFORN"},
+			},
+			wantBanner:  "//GBR SECRET//NOFORN",
+			wantPortion: "(//GBR S//NF)",
+		},
+
 		// --- Ordering ---
 		{
 			name: "controls sorted into canonical order",

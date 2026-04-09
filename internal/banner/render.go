@@ -77,6 +77,14 @@ func Render(ism *model.ISM) Result {
 		portionClass = "J" + portionClass + " " + countries
 	}
 
+	// FGI non-US documents: //[country] [classification] format (E4-S4.a.1).
+	// NATO has its own rendering rules (E4-S4.b) and is excluded here.
+	if !ism.Joint && len(ism.OwnerProducer) == 1 && ism.OwnerProducer[0] != "USA" && ism.OwnerProducer[0] != "NATO" {
+		country := ism.OwnerProducer[0]
+		bannerClass = "//" + country + " " + bannerClass
+		portionClass = "//" + country + " " + portionClass
+	}
+
 	var bannerParts []string
 	var portionParts []string
 	var sciParts []string
