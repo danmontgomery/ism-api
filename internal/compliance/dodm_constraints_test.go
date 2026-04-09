@@ -1133,8 +1133,7 @@ func TestDoDM_CL10_RELIDO_ClassificationLevels(t *testing.T) {
 		}
 		result := engine.Validate(ism)
 		if result.Valid {
-			t.Skipf("GAP: RELIDO with U should be invalid per CL-10; "+
-				"validator may not have a classification gate for RELIDO")
+			t.Error("RELIDO with U should be invalid per CL-10 — DoDM E4-A1-S4.c requires TS/S/C")
 		}
 	})
 }

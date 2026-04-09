@@ -123,15 +123,11 @@ func TestDoDM_E4S2e_NOFORN_CUI(t *testing.T) {
 		t.Errorf("BannerLine %q should contain NOFORN", result.BannerLine)
 	}
 
-	// Validation: CUI + NOFORN should be valid per E4-A1-S2.c (CUI is in the
-	// allowed list). However, the classification gate currently uses
-	// MinClassification=C, and CUI ranks below C in the ordering.
+	// Validation: CUI + NOFORN should be valid per E4-A1-S2.c.
 	engine := validation.NewEngine(reg())
 	vr := engine.Validate(ism)
 	if !vr.Valid {
-		// GAP: The classification gate rejects CUI because CUI.Level() < C.Level(),
-		// but DoDM E4-A1-S2.c explicitly allows CUI with NOFORN.
-		t.Skipf("GAP: NOFORN + CUI rejected by classification gate — DoDM E4-A1-S2.c allows CUI; errors: %v", vr.Errors)
+		t.Errorf("CUI + NOFORN should be valid per DoDM E4-A1-S2.c; errors: %v", vr.Errors)
 	}
 }
 
@@ -236,7 +232,7 @@ func TestDoDM_E4A1S2c_NOFORN_ClassificationLevels(t *testing.T) {
 
 		vr := engine.Validate(ism)
 		if vr.HasCode("dissemination.insufficient_classification") {
-			t.Skipf("GAP: CUI + NOFORN rejected by classification gate — DoDM E4-A1-S2.c allows CUI")
+			t.Errorf("CUI + NOFORN should not be rejected by classification gate per DoDM E4-A1-S2.c")
 		}
 	})
 

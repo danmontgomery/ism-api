@@ -51,13 +51,14 @@ func DisseminationClassificationGates() []ClassificationGate {
 	return []ClassificationGate{
 		{Control: "OC", MinClassification: model.ClassificationC},
 		{Control: "OC-USGOV", MinClassification: model.ClassificationC},
-		{Control: "IMCON", MinClassification: model.ClassificationC},
-		{Control: "NOFORN", MinClassification: model.ClassificationC},
+		{Control: "IMCON", MinClassification: model.ClassificationS},
+		{Control: "NOFORN", MinClassification: model.ClassificationCUI},
 		{Control: "EYES", MinClassification: model.ClassificationC},
 		{Control: "DSEN", MinClassification: model.ClassificationC},
 		{Control: "FISA", MinClassification: model.ClassificationC},
 		{Control: "RAWFISA", MinClassification: model.ClassificationC},
 		{Control: "NOCON", MinClassification: model.ClassificationC},
+		{Control: "RELIDO", MinClassification: model.ClassificationC},
 		{Control: "SCI", MinClassification: model.ClassificationTS},
 	}
 }

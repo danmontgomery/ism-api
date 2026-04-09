@@ -833,12 +833,11 @@ func TestDoDM_InvalidBannerExamples(t *testing.T) {
 		}
 		vr := eng.Validate(ism)
 		if vr.Valid {
-			t.Skipf("GAP: IMCON at CONFIDENTIAL should be invalid (CL-11); "+
-				"validator may not yet enforce IMCON classification level constraint")
+			t.Error("IMCON at CONFIDENTIAL should be invalid (CL-11) — DoDM E4-A1-S1.b requires SECRET minimum")
 		}
 		if !vr.HasCode("dissemination.insufficient_classification") {
 			logValidationErrors(t, vr)
-			t.Skipf("GAP: expected dissemination.insufficient_classification for IMCON at C (CL-11)")
+			t.Error("expected dissemination.insufficient_classification for IMCON at C (CL-11)")
 		}
 	})
 
@@ -1101,12 +1100,11 @@ func TestDoDM_InvalidBannerExamples(t *testing.T) {
 		}
 		vr := eng.Validate(ism)
 		if vr.Valid {
-			t.Skipf("GAP: RELIDO at UNCLASSIFIED should be invalid (CL-10); "+
-				"validator may not yet enforce RELIDO classification constraint")
+			t.Error("RELIDO at UNCLASSIFIED should be invalid (CL-10) — DoDM E4-A1-S4.c requires TS/S/C")
 		}
 		if !vr.HasCode("dissemination.insufficient_classification") {
 			logValidationErrors(t, vr)
-			t.Skipf("GAP: expected dissemination.insufficient_classification for RELIDO at U (CL-10)")
+			t.Error("expected dissemination.insufficient_classification for RELIDO at U (CL-10)")
 		}
 	})
 

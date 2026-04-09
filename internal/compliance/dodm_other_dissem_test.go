@@ -235,7 +235,7 @@ func TestDoDM_E4A1S1b_IMCON_SecretOnlyConstraint(t *testing.T) {
 		}
 		vr := engine.Validate(ism)
 		if vr.Valid {
-			t.Skipf("GAP: CONFIDENTIAL + IMCON not rejected — DoDM E4-A1-S1.b requires SECRET minimum")
+			t.Error("CONFIDENTIAL + IMCON should be rejected — DoDM E4-A1-S1.b requires SECRET minimum")
 		}
 	})
 
@@ -604,7 +604,7 @@ func TestDoDM_E4A1S4c_RELIDO_ClassificationLevels(t *testing.T) {
 		}
 		result := engine.Validate(ism)
 		if result.Valid {
-			t.Skipf("GAP: RELIDO with UNCLASSIFIED not rejected — DoDM E4-A1-S4.c requires TS/S/C")
+			t.Error("RELIDO with UNCLASSIFIED should be rejected — DoDM E4-A1-S4.c requires TS/S/C")
 		}
 	})
 }
