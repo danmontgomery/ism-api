@@ -47,6 +47,7 @@ PORT=9090 go run ./cmd/server
 | POST | `/api/v1/validate/portion` | Validate a portion-level ISM object |
 | POST | `/api/v1/guidance` | Get field-level guidance for partial ISM state |
 | POST | `/api/v1/banner` | Render banner line and portion mark |
+| POST | `/api/v1/parse` | Parse a banner line or portion mark into an ISM object (a marking with no country prefix is inferred as `ownerProducer: ["USA"]`, reported in `inferred[]`) |
 
 All responses use the envelope format: `{ "data": ..., "errors": [...] }`.
 

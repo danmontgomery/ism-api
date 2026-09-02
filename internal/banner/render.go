@@ -38,7 +38,7 @@ var classificationPortion = map[model.Classification]string{
 var disseminationOrder = map[string]int{
 	"RS":           0,
 	"OC":           1,
-	"OC-USGOV":    2,
+	"OC-USGOV":     2,
 	"IMCON":        3,
 	"NOFORN":       4,
 	"PROPIN":       5,

@@ -9,8 +9,8 @@ import (
 
 // openAPISpec is the minimal structure we need to validate the spec.
 type openAPISpec struct {
-	OpenAPI    string                       `yaml:"openapi"`
-	Paths      map[string]map[string]any    `yaml:"paths"`
+	OpenAPI    string                    `yaml:"openapi"`
+	Paths      map[string]map[string]any `yaml:"paths"`
 	Components struct {
 		Schemas map[string]any `yaml:"schemas"`
 	} `yaml:"components"`
@@ -55,6 +55,7 @@ func TestOpenAPISpec(t *testing.T) {
 		{"/api/v1/validate/portion", "post"},
 		{"/api/v1/guidance", "post"},
 		{"/api/v1/banner", "post"},
+		{"/api/v1/parse", "post"},
 	}
 
 	for _, ep := range expectedPaths {
@@ -68,8 +69,8 @@ func TestOpenAPISpec(t *testing.T) {
 		}
 	}
 
-	if len(spec.Paths) != 15 {
-		t.Errorf("expected 15 paths, got %d", len(spec.Paths))
+	if len(spec.Paths) != 16 {
+		t.Errorf("expected 16 paths, got %d", len(spec.Paths))
 	}
 
 	// All expected schemas must exist.
@@ -93,6 +94,8 @@ func TestOpenAPISpec(t *testing.T) {
 		"FieldGuidance",
 		"AllowedValue",
 		"BannerResult",
+		"ParseResult",
+		"RoundTrip",
 	}
 
 	for _, name := range expectedSchemas {

@@ -24,6 +24,8 @@ tags:
     description: Field-level guidance for ISM form building
   - name: banner
     description: Banner line and portion mark rendering
+  - name: parse
+    description: Parse a banner line or portion mark back into an ISM object
 
 paths:
   /healthz:
@@ -532,6 +534,78 @@ paths:
                 errors:
                   - message: "malformed request: invalid character '}' after top-level value"
 
+  /api/v1/parse:
+    post:
+      operationId: parseMarking
+      summary: Parse a banner line or portion mark into an ISM object
+      description: >-
+        Inverse of /api/v1/banner. Accepts a banner line or a parenthesized
+        portion mark, auto-detected by the presence of wrapping parentheses,
+        and returns a best-effort ISM object. Never fails on unrecognized or
+        ambiguous content in the marking itself — such content produces
+        warnings[] instead of an error, plus a round-trip check that reports
+        whether re-rendering the parsed ISM reproduces the input exactly, and
+        the validation engine's findings against the parsed ISM. 400 is
+        reserved for malformed JSON and a missing/empty marking.
+
+
+        A marking with no country prefix is read as US-owned
+        (ownerProducer: ["USA"]), per DoDM E4-S4.a.1 — non-US owners are
+        required to carry their country code in the banner, so the absence
+        of one means USA. Fields populated this way (rather than from a
+        literal token in the input) are listed in inferred[].
+      tags: [parse]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [marking]
+              properties:
+                marking:
+                  type: string
+                  description: A banner line or a parenthesized portion mark
+            example:
+              marking: "TOP SECRET//SI/TK//RESTRICTED DATA//REL TO USA, GBR"
+      responses:
+        "200":
+          description: Envelope-wrapped parse result
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/ParseResult"
+              example:
+                data:
+                  form: banner
+                  ism:
+                    classification: TS
+                    ownerProducer: [USA]
+                    sciControls: [SI, TK]
+                    atomicEnergyMarkings: [RD]
+                    disseminationControls: [REL]
+                    releasableTo: [USA, GBR]
+                  inferred: [ownerProducer]
+                  roundTrip:
+                    matches: true
+                    rendered: "TOP SECRET//SI/TK//RESTRICTED DATA//REL TO USA, GBR"
+                  validation:
+                    valid: true
+        "400":
+          description: Malformed request, or marking is missing/empty
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Envelope"
+              example:
+                errors:
+                  - message: "malformed request: marking is required"
+
 components:
   schemas:
     Envelope:
@@ -956,3 +1030,51 @@ components:
           type: string
           description: Classification authority block text (empty for U/CUI)
       required: [bannerLine, portionMark, authorityBlock]
+
+    RoundTrip:
+      type: object
+      description: >-
+        Whether re-rendering the parsed ISM reproduces the (normalized)
+        input marking exactly.
+      properties:
+        matches:
+          type: boolean
+          description: True if the rendered output equals the normalized input
+        rendered:
+          type: string
+          description: >-
+            The banner line (form=banner) or portion mark (form=portion)
+            rendered from the parsed ISM
+      required: [matches, rendered]
+
+    ParseResult:
+      type: object
+      description: Best-effort ISM object parsed from a banner line or portion mark.
+      properties:
+        form:
+          type: string
+          description: Which form was auto-detected in the input
+          enum: [banner, portion]
+        ism:
+          $ref: "#/components/schemas/ISM"
+        roundTrip:
+          $ref: "#/components/schemas/RoundTrip"
+        warnings:
+          type: array
+          description: >-
+            Findings for unrecognized, ambiguous, or lossy content in the
+            marking. Uses the same shape as /validate findings.
+          items:
+            $ref: "#/components/schemas/FieldError"
+        inferred:
+          type: array
+          description: >-
+            Fields populated by decoding marking convention rather than from
+            a literal token in the input, e.g. "ownerProducer" when a bare
+            classification (no country prefix) was read as US-owned per
+            DoDM E4-S4.a.1.
+          items:
+            type: string
+        validation:
+          $ref: "#/components/schemas/ValidationResult"
+      required: [form, ism, roundTrip]

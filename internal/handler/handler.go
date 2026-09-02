@@ -57,5 +57,6 @@ func (h *Handler) Register(r *gin.Engine) {
 		v1.POST("/validate/portion", h.ValidatePortion)
 		v1.POST("/guidance", h.Guidance)
 		v1.POST("/banner", h.Banner)
+		v1.POST("/parse", h.Parse)
 	}
 }

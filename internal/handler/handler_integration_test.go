@@ -330,10 +330,10 @@ func TestValidate_MissingOwnerProducerForSecret(t *testing.T) {
 	r := testRouter()
 	body := map[string]any{
 		"ism": map[string]any{
-			"classification": "S",
-			"classifiedBy":   "OCA Name",
+			"classification":       "S",
+			"classifiedBy":         "OCA Name",
 			"classificationReason": "Reason",
-			"declassDate": "20360101",
+			"declassDate":          "20360101",
 		},
 	}
 	w := postJSON(r, "/api/v1/validate", body)
@@ -615,6 +615,225 @@ func TestBanner_AuthorityBlockEmpty(t *testing.T) {
 }
 
 // ============================================================
+// Parse endpoint
+// ============================================================
+
+func TestParse_MalformedRequest(t *testing.T) {
+	r := testRouter()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/parse", bytes.NewReader([]byte("not-json")))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	if w.Code != 400 {
+		t.Fatalf("status = %d, want 400", w.Code)
+	}
+	assertContentType(t, w)
+	env := parseEnvelope(t, w.Body)
+	if len(env.Errors) == 0 {
+		t.Error("expected errors in response")
+	}
+}
+
+func TestParse_EmptyBody(t *testing.T) {
+	r := testRouter()
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/parse", bytes.NewReader([]byte("")))
+	req.Header.Set("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	if w.Code != 400 {
+		t.Errorf("empty body status = %d, want 400", w.Code)
+	}
+}
+
+func TestParse_MissingMarking(t *testing.T) {
+	r := testRouter()
+
+	cases := []map[string]any{
+		{},
+		{"marking": ""},
+		{"marking": "   "},
+	}
+	for _, body := range cases {
+		w := postJSON(r, "/api/v1/parse", body)
+		if w.Code != 400 {
+			t.Errorf("body %+v: status = %d, want 400", body, w.Code)
+		}
+	}
+}
+
+func TestParse_BannerLine(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{"marking": "SECRET//SI/TK//NOFORN"}
+	w := postJSON(r, "/api/v1/parse", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+	assertContentType(t, w)
+	assertRequestID(t, w)
+
+	env := parseEnvelope(t, w.Body)
+	if len(env.Errors) != 0 {
+		t.Fatalf("unexpected envelope errors: %v", env.Errors)
+	}
+
+	var result struct {
+		Form string `json:"form"`
+		ISM  struct {
+			Classification        string   `json:"classification"`
+			SCIControls           []string `json:"sciControls"`
+			DisseminationControls []string `json:"disseminationControls"`
+		} `json:"ism"`
+		RoundTrip struct {
+			Matches  bool   `json:"matches"`
+			Rendered string `json:"rendered"`
+		} `json:"roundTrip"`
+		Validation struct {
+			Valid bool `json:"valid"`
+		} `json:"validation"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	if result.Form != "banner" {
+		t.Errorf("form = %q, want banner", result.Form)
+	}
+	if result.ISM.Classification != "S" {
+		t.Errorf("classification = %q, want S", result.ISM.Classification)
+	}
+	if !result.RoundTrip.Matches {
+		t.Errorf("roundTrip.matches = false, want true (rendered=%q)", result.RoundTrip.Rendered)
+	}
+	if result.RoundTrip.Rendered != "SECRET//SI/TK//NOFORN" {
+		t.Errorf("roundTrip.rendered = %q, want SECRET//SI/TK//NOFORN", result.RoundTrip.Rendered)
+	}
+}
+
+func TestParse_PortionMark(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{"marking": "(S//SI//NF)"}
+	w := postJSON(r, "/api/v1/parse", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	var result struct {
+		Form string `json:"form"`
+		ISM  struct {
+			Classification string `json:"classification"`
+		} `json:"ism"`
+		RoundTrip struct {
+			Matches  bool   `json:"matches"`
+			Rendered string `json:"rendered"`
+		} `json:"roundTrip"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	if result.Form != "portion" {
+		t.Errorf("form = %q, want portion", result.Form)
+	}
+	if result.ISM.Classification != "S" {
+		t.Errorf("classification = %q, want S", result.ISM.Classification)
+	}
+	if !result.RoundTrip.Matches {
+		t.Errorf("roundTrip.matches = false, want true (rendered=%q)", result.RoundTrip.Rendered)
+	}
+	if result.RoundTrip.Rendered != "(S//SI//NF)" {
+		t.Errorf("roundTrip.rendered = %q, want (S//SI//NF)", result.RoundTrip.Rendered)
+	}
+}
+
+func TestParse_UnknownToken(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{"marking": "SECRET//FROBNIZ"}
+	w := postJSON(r, "/api/v1/parse", body)
+
+	// Never 400 on content — unrecognized tokens produce warnings, not an error.
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	var result struct {
+		Warnings []struct {
+			Field    string `json:"field"`
+			Code     string `json:"code"`
+			Severity string `json:"severity"`
+		} `json:"warnings"`
+		RoundTrip struct {
+			Matches bool `json:"matches"`
+		} `json:"roundTrip"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	if len(result.Warnings) == 0 {
+		t.Fatal("expected at least one warning for unrecognized token")
+	}
+	found := false
+	for _, w := range result.Warnings {
+		if w.Code == "PARSE_UNKNOWN_TOKEN" {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("expected PARSE_UNKNOWN_TOKEN warning, got: %+v", result.Warnings)
+	}
+	if result.RoundTrip.Matches {
+		t.Error("expected roundTrip.matches = false when a token was dropped")
+	}
+}
+
+// TestParse_InfersUSOwnerProducer is the regression test for the reported
+// bug: parse("SECRET//NOFORN") produced a correct ISM with an empty
+// ownerProducer, which then failed the endpoint's own validation block
+// (core.owner_producer_required) even though the marking was well-formed.
+// A bare marking (no country prefix) is now read as US-owned.
+func TestParse_InfersUSOwnerProducer(t *testing.T) {
+	r := testRouter()
+	body := map[string]any{"marking": "SECRET//NOFORN"}
+	w := postJSON(r, "/api/v1/parse", body)
+
+	if w.Code != 200 {
+		t.Fatalf("status = %d, want 200", w.Code)
+	}
+
+	env := parseEnvelope(t, w.Body)
+	if len(env.Errors) != 0 {
+		t.Fatalf("unexpected envelope errors: %v", env.Errors)
+	}
+
+	var result struct {
+		ISM struct {
+			OwnerProducer []string `json:"ownerProducer"`
+		} `json:"ism"`
+		Inferred  []string `json:"inferred"`
+		RoundTrip struct {
+			Matches bool `json:"matches"`
+		} `json:"roundTrip"`
+		Validation struct {
+			Valid bool `json:"valid"`
+		} `json:"validation"`
+	}
+	json.Unmarshal(env.Data, &result)
+
+	if len(result.ISM.OwnerProducer) != 1 || result.ISM.OwnerProducer[0] != "USA" {
+		t.Errorf("ism.ownerProducer = %v, want [USA]", result.ISM.OwnerProducer)
+	}
+	if len(result.Inferred) != 1 || result.Inferred[0] != "ownerProducer" {
+		t.Errorf("inferred = %v, want [ownerProducer]", result.Inferred)
+	}
+	if !result.RoundTrip.Matches {
+		t.Error("roundTrip.matches = false, want true (inferred USA must render bare)")
+	}
+	if !result.Validation.Valid {
+		t.Error("validation.valid = false, want true — inferring ownerProducer should satisfy core.owner_producer_required")
+	}
+}
+
+// ============================================================
 // Middleware: X-Request-ID pass-through
 // ============================================================
 
@@ -723,11 +942,11 @@ func TestSmoke_CUI_WithCategories(t *testing.T) {
 
 func TestSmoke_Confidential(t *testing.T) {
 	smokeISM(t, "C-basic", model.ISM{
-		Classification:     model.ClassificationC,
-		OwnerProducer:      []string{"USA"},
-		ClassifiedBy:       "OCA Name",
+		Classification:       model.ClassificationC,
+		OwnerProducer:        []string{"USA"},
+		ClassifiedBy:         "OCA Name",
 		ClassificationReason: "Reason 1.4(a)",
-		DeclassDate:        "20360101",
+		DeclassDate:          "20360101",
 	}, "CONFIDENTIAL", "(C)")
 }
 
@@ -767,12 +986,12 @@ func TestSmoke_Secret_MultipleControls(t *testing.T) {
 
 func TestSmoke_Secret_FGI(t *testing.T) {
 	smokeISM(t, "S-FGI", model.ISM{
-		Classification:     model.ClassificationS,
-		OwnerProducer:      []string{"USA"},
-		FGISourceOpen:      []string{"GBR"},
-		ClassifiedBy:       "OCA Name",
+		Classification:       model.ClassificationS,
+		OwnerProducer:        []string{"USA"},
+		FGISourceOpen:        []string{"GBR"},
+		ClassifiedBy:         "OCA Name",
 		ClassificationReason: "Reason 1.4(a)",
-		DeclassDate:        "20360101",
+		DeclassDate:          "20360101",
 	}, "SECRET//FGI GBR", "(S//FGI)")
 }
 
