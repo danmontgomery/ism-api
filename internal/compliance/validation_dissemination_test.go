@@ -3,9 +3,9 @@ package compliance_test
 import (
 	"testing"
 
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
-	"expr.ai/ism-api/internal/validation"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/validation"
 )
 
 // TestXSD_Validation_NOFORN_REL_Exclusive verifies ISM.USGov.12: NOFORN and REL

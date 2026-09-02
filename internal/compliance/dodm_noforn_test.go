@@ -4,10 +4,10 @@ import (
 	"strings"
 	"testing"
 
-	"expr.ai/ism-api/internal/banner"
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
-	"expr.ai/ism-api/internal/validation"
+	"dmontgomery/ism-api/internal/banner"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/validation"
 )
 
 // DoDM 5200.01-V2 Enclosure 4, Sections 2 + Appendix 1 Section 2

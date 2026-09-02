@@ -4,7 +4,7 @@ import (
 	"cmp"
 	"slices"
 
-	"expr.ai/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/model"
 )
 
 // ClassificationEntry is a reference data entry for a classification level.

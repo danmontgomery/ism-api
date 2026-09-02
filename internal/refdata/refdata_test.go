@@ -3,7 +3,7 @@ package refdata
 import (
 	"testing"
 
-	"expr.ai/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/model"
 )
 
 func TestNewRegistry(t *testing.T) {

@@ -3,8 +3,8 @@ package compliance_test
 import (
 	"testing"
 
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/validation"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/validation"
 )
 
 // TestXSD_Validation_ClassifiedRequiresAuthority verifies Schematron rules for

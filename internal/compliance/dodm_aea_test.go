@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"expr.ai/ism-api/internal/banner"
-	"expr.ai/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/banner"
+	"dmontgomery/ism-api/internal/model"
 )
 
 // DoDM 5200.01-V2 Enclosure 4, Section 8

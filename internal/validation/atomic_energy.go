@@ -3,8 +3,8 @@ package validation
 import (
 	"strings"
 
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
 )
 
 // AtomicEnergyRule validates Atomic Energy Act classification level gates:

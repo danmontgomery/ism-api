@@ -1,8 +1,8 @@
 package validation
 
 import (
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
 )
 
 // NonUSControlsRule validates that every entry in nonUSControls is a known

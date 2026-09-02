@@ -3,8 +3,8 @@ package validation
 import (
 	"testing"
 
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
 )
 
 func reg() *refdata.Registry { return refdata.NewRegistry() }

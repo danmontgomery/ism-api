@@ -1,6 +1,6 @@
 package refdata
 
-import "expr.ai/ism-api/internal/model"
+import "dmontgomery/ism-api/internal/model"
 
 // ExclusivePair represents two dissemination controls that cannot coexist.
 type ExclusivePair struct {

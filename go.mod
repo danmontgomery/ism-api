@@ -1,4 +1,4 @@
-module expr.ai/ism-api
+module dmontgomery/ism-api
 
 go 1.23
 

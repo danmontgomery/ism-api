@@ -3,9 +3,9 @@ package resolvers
 import (
 	"testing"
 
-	"expr.ai/ism-api/internal/guidance"
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/guidance"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
 )
 
 func TestSCIResolver(t *testing.T) {

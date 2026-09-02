@@ -1,9 +1,9 @@
 package resolvers
 
 import (
-	"expr.ai/ism-api/internal/guidance"
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/guidance"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
 )
 
 // CUIResolver provides guidance for CUI-specific fields: categoryMarkings,

@@ -3,7 +3,7 @@ package compliance_test
 import (
 	"testing"
 
-	"expr.ai/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/model"
 )
 
 // TestXSD_Classification_AllLevelsPresent verifies that every classification

@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"expr.ai/ism-api/internal/model"
-	"expr.ai/ism-api/internal/refdata"
+	"dmontgomery/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/refdata"
 )
 
 // reg returns a fresh registry for each test.

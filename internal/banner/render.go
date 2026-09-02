@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"expr.ai/ism-api/internal/model"
+	"dmontgomery/ism-api/internal/model"
 )
 
 // Result holds the rendered banner line, portion mark, and authority block for an ISM object.
